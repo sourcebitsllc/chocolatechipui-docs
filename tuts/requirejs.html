@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RequireJS</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../prettify/prettify.css">
+  <script type='text/javascript' src='../prettify/prettify.js'></script>
+  <script type='text/javascript' src='../prettify/lang-css.js'></script>
+</head>
+<body>
+<article>
+<h4>Tutorials</h4>
+<h5>ChocolateChip-UI version 3.5.3</h5>
+<h1>Using ChocolateChip-UI with RequireJS</h1>
+
+<p>You can use ChocolateChip-UI with <a href='http://requirejs.org'>RequireJS</a> to control the order that scripts load to handle dependencies. You can then build your app with support for Backbone, Underscore, Knockout, Angular, etc. This also allows you to break out your app's code  into modules that you import with RequireJS. You can do this with ChocolateChip-UI using either ChocolateChipJS or jQuery.</p>
+
+
+<p>RequireJS handles importing all of your scripts, so the only script tag you need in your app is the one that gets RequireJS. RequireJS uses a data attribute on its script tag to point to the file that defines what scripts to import. So you might have something like this:</p>
+<pre class="prettyprint"><code>&lt;script data-main="../chui/main" src="../chui/require.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>Once this is set up, you'll need to define a shim for RequireJS in the main.js file. Remember that RequireJS automatically tags on the js file extension to the files you reference, so you don't need to include it. Doing so will result in the file not being found. In the following examples, please substitute the ChocolateChip-UI version you are using. The following paths assume you have you main.js file in the same folder as the ChUI ones. Notice that besides defining paths, we also create a shim that exports the dollar sign value. This makes the ChocolateChipJS object available to other modules and frameworks being imported by RequireJS.</p>
+
+<p>In the main.js file, you could include something like the following</p>
+
+<pre class="prettyprint"><code>require.config({
+   paths: {
+      'ChocolateChip': 'chui-3.0.4.min',
+      'ChUI': 'chui-3.0.4',
+   },
+   shim: {
+      'ChocolateChip': {
+         exports: '$'
+      },
+      'ChUI': {
+         exports: '$'
+      }
+   }
+});
+</code></pre>
+
+
+<p>Here we're setting up RequireJS, but with jQuery. The appoach is exactly the same. Notice that we left off the file extension form the reference to jQuery in the path, since RequireJS automatically attaches it when it evaluates a path. We also create a shim to pass the value of the jQuery object as the dollar sign.</p>
+<pre class="prettyprint"><code>require.config({
+   paths: {
+      'jQuery': 'http://code.jquery.com/jquery-2.0.3.min',
+      'ChUI': 'chui-3.0.4',
+   },
+   shim: {
+      'jQuery': {
+         exports: '$'
+      },
+      'ChUI': {
+         exports: '$'
+      }
+   }
+});
+</code></pre>
+
+<p>With either of the above methods of setting up your inital dependencies, you can then create a block of code in our main.js file to use those dependencies:</p>
+<pre class="prettyprint"><code>require(['ChocolateChip', 'ChUI'], function ($) {
+   $(function() {
+      $.UISheet();
+      $('.sheet').find('section').append("&lt;ul class='list'&gt;&lt;/li&gt;");
+      $('.sheet .list').append("&lt;li&gt;&lt;a class='button' href='javascript:void(null)'&gt;Save&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a class='button' href='javascript:void(null)'&gt;Delete&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a class='button' href='javascript:void(null)'&gt;Cancel&lt;/a&gt;&lt;/li&gt;");
+      $('.sheet .list').append ('&lt;h2 style="text-align: center; margin: 20px;"&gt;The End&lt;/h2&gt;');
+      
+      $('.sheet .list').on('singletap', '.button', function() {
+         $.UIHideSheet();
+      });
+      
+      // Initialize button to show sheet:
+      $('#showSheet').on('singletap', function() {
+         $.UIShowSheet();
+      });
+   });
+});
+</code></pre>
+
+<p>This will work as expected. However this is just a quick illustration of how RequireJS works. In real life you would define all your app's code into self contained modules that you would also import into your app with the require method. Please consult the RequireJS documentation or other online tutorials for more information about how best to use RequireJS.</p>
+</article>
+
+<script>
+   (function() {
+      prettyPrint();
+   })();
+</script>
+</body>
+</html>

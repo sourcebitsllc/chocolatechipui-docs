@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Navigation</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../prettify/prettify.css">
+  <script type='text/javascript' src='../prettify/prettify.js'></script>
+  <script type='text/javascript' src='../prettify/lang-css.js'></script>
+</head>
+<body>
+<article>
+<h4>Tutorials</h4>
+<h5>ChocolateChip-UI version 3.5.3</h5>
+<h1>Navigation</h1>
+
+<p>ChocolateChip-UI provides a convenient solution for implementing navigation lists. This is a common way for uses to get to deeper screens of information. Unlike Web pages, where navigation leads to a new page and subsequent page load, ChocolateChip-UI apps are a single page. The user is transitions for one part of the page to another. The navigation module creates the experience of navigating to another place.</p>
+
+<p>Navigation is from one article to another. During this process, the current article and its nav are slid off out of view while the destination article and its nav are slid into view. You don't need to do anything to make this happen other than set up your articles for navigation.</p>
+
+<p>ChocolateChip-UI uses the HTML5 data attribute to mark a list item as navigable. Its name is <code>data-goto</code>. This attribute indicates the id of the article to which the list item will navigate. List items with this attribute will have hover states on the desktop and touch states on mobile devices. </p>
+
+<p>Notice in the example below we have the <code>data-goto</code> attribute pointing to an article with an id <code>people</code>. We also put the class <code>nav</code> on the list item. On iOS this displays the right pointing chevron, which iOS uses to mark navigable items. This gets ignored on Android and Windows Phone 8 since these use no markers for navigation.</p>
+
+<pre class="prettyprint"><code>&lt;li class='nav' data-goto="#people"&gt;
+    &lt;h3&gt;People&lt;/h3&gt;
+&lt;/li&gt;
+</code></pre>
+
+<p>Here's a comp list item leading to the a detail article for a song. You would probably want one detail page for all the songs and load the correct data into it based on what list item the user pressed. You could accomplish this easily by putting an id or a data attribute with the information to identify each song whose detail information you will need to show. This would be easy if your data structure already has a unique id for each song.</p>
+
+<pre class="prettyprint"><code>&lt;li class='comp' data-goto="#songDetail"&gt;
+    &lt;aside&gt;
+        &lt;img title='Imagine Dragons' src="../images/music/Imagine Dragons.png" height="80px"&gt;
+    &lt;/aside&gt;
+    &lt;div&gt;
+        &lt;h3&gt;Imagine Dragons&lt;/h3&gt;
+        &lt;h4&gt;Radioactive&lt;/h4&gt;
+    &lt;/div&gt;
+    &lt;aside&gt;
+        &lt;span class='show-detail'&gt;&lt;/span&gt;
+    &lt;/aside&gt;
+&lt;/li&gt;
+</code></pre>
+
+<p>To register a delegated event for the list items to handle populating the detail page, you could do something like this:</p>
+
+<pre class="prettyprint"><code>// If the list has an id of 'songs':
+$('#song').on('singletap', 'li', function() {
+    var whichSong = this.id;
+    // output the chosen song's data to the songDetail article:
+    $('#songDetail').find(h2).text(songs[whichSong].title);
+    $('#songDetail').find(h3).text(songs[whichSong].artist);
+    $('#songDetail').find(p).text(songs[whichSong].description);
+})
+</code></pre>
+
+<p>In real life you'd want to use a template for this. The above is just concept.</p>
+
+<p>With navigation lists you can create any number of drill down events. However, your users will probably get irritated if they are required to drill down past two or three screens on a regular basis to accomplish regular tasks.</p>
+
+<h2>Nonlinear Navigation</h2>
+
+<p>Sometimes you want to give the user a way to hop over to another article, or to give the user a way to quick return to an earlier article after several navigation steps. ChocolateChip-UI provides several methods to make this possible.</p>
+
+<h3>$.UIGoToArticle()</h3>
+
+<p>This method works by passing it a selector for the article you wish to go to. YOu could hook this method up to a button or any other interactive element so that when the user presses it, he gets directed to the intended article.</p>
+
+<pre class="prettyprint">$(function() {
+   // Attach event to 'gotToLast' button:
+   $("#goToLast").on("singletap", function() {
+      $.UIGoToArticle("#article3");
+   });
+}
+</pre>
+
+<p>Like navigation lists, <code>$.UIGoToArticle</code> also uses <code>$.UINavigationHistory</code> for keeping track of where the user is. You can there use a <code>back button</code> in the nav of the destination article to enable the user to return to the previous article. This type of automatic back navigation requires no scripting, merely the presence of the back button in the nav.</p>
+
+<pre class="prettyprint"><code>&lt;nav class='current'&gt;
+    &lt;a class='button back'&gt;Back&lt;/a&gt;
+    &lt;h1&gt;Candies&lt;/h1&gt;
+&lt;/nav&gt;
+</code></pre>
+
+<h2>Non-Linear Back Navigation</h2>
+
+<p>Sometimes you need to be able to give the user the ability to return to an article several stages back in navigation history. By default, the <code>back button</code> always returns the user to the previous article. You can get around this by using a <code>backTo button</code> with the method <code>$.UIGoBackToArticle</code>. A "backTo" button is just a normal button with the class "backTo" instead of "back". This styles the button the same as a normal back button, but does not automatically execute back navigation. Instead you need to wire that up with the <code>$.UIGoBackToArticle</code> method. You provide the method the article to which you wish to return the user.</p>
+
+<pre class="prettyprint"><code>&lt;nav class='current'&gt;
+    &lt;a id='backToMain' class='button backTo'&amp;gt;Back&amp;lt;/a&gt;
+    &lt;h1&gt;Candies&lt;/h1&gt;
+&lt;/nav&gt;
+
+$(function() {
+    $('#backToMain').on('singletap', function() {
+        $.UIGoBackToArticle('#main')
+    });
+});
+</code></pre>
+
+<h3>Example</h3>
+<p>Try out this live example on <a href="http://codepen.io/rbiggs/pen/FhKps">Codepen</a></p>
+
+<h3>Pub/Sub</h3>
+
+<p>Navigation in ChocolateChip-UI publishes to four channels which you can subscribe to using the built-in sub/sub methods. The four channels are:</p>
+
+<ul>
+  <li>chui/navigate/leave</li>
+  <li>chui/navigate/enter</li>
+  <li>chui/navigateBack/leave</li>
+  <li>chui/navigateBack/enter</li>
+</ul>
+
+<p>When you subscribe to these, you receive the id of the article for that channel. For example, 'chui/navigate/leave' will give you the id of the article you are leaving as you navigate forward, and 'chui/navigate/enter' will give you the id of the article you are entering. The other two chanels are published during back navigation.</p>
+
+<p>To subscribe to these channels you first need to write function to handle the information you will receive from the publication. The you pass it to the channel you subscribe to. See the example below:</p>
+
+<pre class="prettyprint"><code>$(function() {
+  // Function for revealing tab:
+  var subscribeTabEnter = function(topic, id) {
+     var article = $('#' + id).prev().find('h1').text();
+     alert('You just entered ' + article);
+  }
+  // Function for leaving tab:
+  var subscribeTabLeave = function(topic, id) {
+     var article = $('#' + id).prev().find('h1').text();
+     alert('You are leaving  ' + article);
+  };
+  // Handle entering a tab:
+  var enterTabSubscription = $.subscribe('chui/navigate/enter', subscribeTabEnter);
+  // Handle leaving a tab:
+  var leaveTabSubscription = $.subscribe('chui/navigate/leave', subscribeTabLeave);
+});
+</code></pre>
+
+<p>Obviously this is a completely useless use of the pub/sub feature. You would want to do something practical. This might enclude cleanup when leaving an article, or preparation/data loading when entering an article.</p>
+
+
+<h3>NavigationEnd Event</h3>
+
+<p>ChococlateChip-UI also provides a navigation event: <code>navigationend</code>. This fires when the forward navigation completes. This allows you to do something with the article after the user lands on it. Because this event fires after the navigation is complete, this would not be something you would use to load data on the page, as the user would first just see an empty article slide in. Instead you'd want to subscribe to one of the pub/sub channels described above. You would use the <code>navigationend</code> event to do something with the newly loaded content, perhaps displaying some options to the user.</p>
+
+<pre class="prettyprint"><code>function() {
+   $('article').on('navigationend', function(e) {
+       // e.target is the current article that loaded
+       if (e.target.id === 'detail') {
+          // do stuff here.
+       }
+   })
+});
+</code></pre>
+
+</article>
+<script>
+   (function() {
+      prettyPrint();
+   })();
+</script>
+</body>
+</html>

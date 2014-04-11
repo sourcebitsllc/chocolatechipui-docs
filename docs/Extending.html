@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Extending</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../prettify/prettify.css">
+  <script type='text/javascript' src='../prettify/prettify.js'></script>
+  <script type='text/javascript' src='../prettify/lang-css.js'></script>
+</head>
+<body>
+<article>
+<h4>Documentation</h4>
+<h5>ChocolateChip-UI version 3.5.3</h5>
+<h1>Extending ChocolateChip-UI</h1>
+
+<p>ChocolateChip-UI provides a large number of widgets for your apps. If you would like to modify the default behavior of a widget or create a new widget, you can do so easily by extending ChocolateChip-UI.</p>
+
+<p>You can use the following methods of extending ChocolateChip-UI.</p>
+
+<a name="extend"></a>
+<h3>$.extend()</h3>
+
+<p>This method allows your to extend or add new methods to an object. To do so, you define the new object or method in an object literal which you pass as the main argument. You can also designate a specific object/function you would like to extend.</p>
+
+<pre class="prettyprint">//Extend the $ object:
+$({
+   // Expects and object with the property "name":
+   myNewFunction(options) {
+      // Do stuff with options
+      if (options && options.name) {
+         console.log('Glad to meet you, ' + name + '!');
+      } else {
+         console.log('You haven't given us your name yet.');
+      }
+   }
+});
+</pre>
+
+<p>From the above code we would then be able to use the function so:</p>
+
+<pre class="prettyprint">$.myNewFunction({name: 'Joe Bodoni'});
+// returns 'Glad to meet you, Joe Bodoni!'
+</pre>
+
+<a name="default_values"></a>
+<h3>Default Values</h3>
+<p>With the above collection method defined, you could then operate on nodes returned by a query selector:</p>
+
+<pre class="prettyprint">var options = {
+   // Define your options here
+}
+$('.list > li').mySpecialNodeMethod(options);
+</pre>
+
+<a name="error_checking"></a>
+<p><strong>Note:</strong></p>
+
+<p>When writing methods that expect arguments or attempt to get elements, always check to see if the user supplied the arguments you expect or whether the query selector found anything. That way you can avoid unpleasant errors marring the performance of your app.</p>
+
+<pre class="prettyprint">// Write a function that gets the first name,
+// last name and address of a person:
+var getInfo = function(firstName, lastName, address) {
+   if (!firstName) {
+      return;
+   } else {
+      // do stuff with firstName
+   }
+   // Deal with other parameters too
+}
+</pre>
+
+<a name="overriding_defaults"></a>
+<h3>Overriding Default Values</h3>
+
+<p>You can also provide default values and allow the user to override them in a more flexible manner:</p>
+
+<pre class="prettyprint">// Define a new function with defaults.
+// This method colors all H3s with defaults,
+// unless the user provides other colors:
+$.extend({
+   colorize : function(options) {
+      // If no options are supplied, use {}:
+      options = options || {};
+      // Define default values:
+      var defaults = {
+         color: 'red',
+         backgroundColor: 'yellow'
+      };
+      // Extend the defaults with 
+      // the values the user provides:
+      $.extend(defaults, options);
+      // Find all h3s and colorize them:
+      return $('h3').css({
+         color: defaults.color, 
+         'background-color': defaults: backgroundColor
+      });
+   }
+});
+</pre>
+
+<p>With the above plugin, the user could use just the default colors, or provide new colors:</p>
+
+<pre class="prettyprint">// Use default colors:
+$.colorize();
+// Provide new colors to override the defaults:
+$.colorize({color: 'orange', backgroundColor: 'black'});
+</pre>
+
+<p>Using the above pattern, you can define new methods to use with ChocolateChip-UI. This is the simplest pattern for a reusable plugin. For plugins that operate on nodes, see the explanation below.</p>
+
+<a name="plugin_architecture"></a>
+<h2>Plugin Architecture</h2>
+<h3>$.fn.extend()</h3>
+
+<p>If you want to create a plugin to operate on an array of values or a collection of elements, you can use the <code>$.fn.extend</code> method. This allows you to add functions that operate on an array or collection of elements. In this pattern, <code>this</code> refers to the array, and you would use <code>each</code> to loop over all the items in the array.</p>
+
+<p>When working with an array, be sure to check if it is empty or not. If it is empty and you try to perform actions on its contents, you will throw an exception. So, before doing anything, check its length. If it has no length, stop right there and return an empty array. Doing this will allow other chained collection methods to examine the array and avoid throwing exceptions too.<p>
+
+<pre class="prettyprint">$.fn.extend({
+   colorize : function(options) {
+      // If this array is empty, return an empty array;
+      if (!this.length) return [];
+      // If no options are supplied, use {}:
+      options = options || {};
+      // Define default values:
+      var defaults = {
+         color: 'red',
+         backgroundColor: 'yellow'
+      };
+      // Extend the defaults with 
+      // the values the user provides:
+      $.extend(defaults, options);
+      this.each(function(ctx, idx) {
+         // Colorize each element in the collection:
+         $(ctx).css({
+            color: defaults.color, 
+            'background-color': defaults: backgroundColor
+         });
+      });
+   }
+});
+</pre>
+
+<p>With the above method, we can colorize any element:</p>
+
+<pre class="prettyprint">// Colorize list item details with the defaults:
+$('li p').colorize();
+// Colorize list titles with new colors:
+$('li h3').colorize({
+   color: 'purple',
+   backgroundColor: 'orange'
+});
+</pre>
+
+<p>Using the plugin pattern is the best way to add new functionality to ChocolateChip-UI that you can reuse throughout your app and in other apps.</p>
+
+</article>
+
+<script>
+   (function() {
+      prettyPrint();
+   })();
+</script>
+</body>
+</html>

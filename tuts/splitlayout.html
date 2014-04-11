@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Split Layout</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../prettify/prettify.css">
+  <script type='text/javascript' src='../prettify/prettify.js'></script>
+  <script type='text/javascript' src='../prettify/lang-css.js'></script>
+</head>
+<body>
+<article>
+<h4>Tutorials</h4>
+<h5>ChocolateChip-UI version 3.5.3</h5>
+<h1>Split Layout</h1>
+
+<p>ChocolateChip-UI provides the split layout for tablets. This has two parts: master and detail. The master article is the area on the side with content or controls for the user to interact with. Those interactions will affect the content displayed in the detail article. You need to put the class <code>split-layout</code> on the body tag so that ChocolateChip-UI knows that it is dealing with a split layout. Each article also has its corresponding nav. Here is the typical structure:</p>
+
+<pre class="prettyprint"><code>&lt;body class='splitlayout'&gt;
+   &lt;nav&gt;
+      &lt;h1&gt;Pick One&lt;/h1&gt;
+   &lt;/nav&gt;
+   &lt;article class='master'&gt;
+      &lt;section id="scroller2"&gt;
+          &lt;ul class='list'&gt;
+          &lt;/ul&gt;
+      &lt;/section&gt;
+   &lt;/article&gt;
+   &lt;nav&gt;
+      &lt;h1 id='detailTitle'&gt;Detail 1&lt;/h1&gt;
+   &lt;/nav&gt;
+   &lt;article class='detail' class='master'&gt;
+      &lt;section&gt;
+          &lt;ul class='list'&gt;
+      &lt;/section&gt;
+   &lt;/article&gt;
+&lt;/body&gt;
+</code></pre>
+
+<p>ChocolateChip-UI will take care of making this layout display properly with orientation change. The master and detail articles have sections tags within them that provide vertical scrolling with the content is greater than can fit on the screen.</p>
+
+<p>Please note that this layout is static. Other than adjustments for orientation change, it provides no other functionality. Anything else you want to have happen will require writing code. The idea behind the split layout is that as the user selects something in the master article, it displays that in greater detail in the detail article. Open up the split layout file in the examples folder to see how it is implemented. </p>
+
+<p>At page load you could perform an Ajax request for some JSON data that you use to populate the master article. You can easily create a simple template to do this. See the split layout example for details. Then you could just register a delegate event on the master list to insert live data into the detail:</p>
+
+<pre class="prettyprint"><code>$('.master ul').on('singletap', 'li', function() {
+   // Handle the user interaction:
+   $(this).siblings().removeClass('selected');
+   $(this).addClass('selected');
+   $('#detailTitle').text(this.textContent);
+   var detail = $('.detail section');
+   detail.empty();
+   detail.UIBusy({'color':'#000', 'size': '100px'});
+   var url = '../data/splitlayout/' + this.dataset.url + '.html';
+   $.get(url, function(data) {
+       detail.html(data);
+   });
+});
+</code></pre>
+
+
+<h3>Pub/Sub</h3>
+
+<p>While selecting items in the Slideout menu,  ChocolateChip-UI publishes to two channels which you can subscribe to using the built-in sub/sub methods. The channels are:</p>
+
+<ul>
+  <li>chui/navigate/leave</li>
+  <li>chui/navigate/enter</li>
+</ul>
+
+<p>By subscribing to these, you can get the ids of the article you are leaving and the article you are bringing forward.</p>
+<pre class="prettyprint"><code>$(function() {
+   // Function for opening an article:
+   var subscribeNavForward = function(topic, id) {
+      var article = $('#' + id).prev().find('h1').text();
+      alert('Welcome to ' + article);
+   }
+   // Function for leaving an article:
+   var subscribeNavReturn = function(topic, id) {
+      var article = $('#' + id).prev().find('h1').text();
+      alert('Welcome back to ' + article);
+   };
+   // Subscribe to channel for opening an article:
+   var navForwardSubscription = $.subscribe('chui/navigate/enter', subscribeNavForward);
+   // Subscribe to channel for leaving an article:
+   var navReturnSubscription = $.subscribe('chui/navigateBack/enter', subscribeNavReturn);
+});
+</code></pre>
+</article>
+
+<script>
+   (function() {
+      prettyPrint();
+   })();
+</script>
+</script>
+</body>
+</html>

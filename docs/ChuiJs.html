@@ -1,0 +1,889 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ChUI JS</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../prettify/prettify.css">
+  <script type='text/javascript' src='../prettify/prettify.js'></script>
+  <script type='text/javascript' src='../prettify/lang-css.js'></script>
+</head>
+<body>
+<article>
+<h4>Documentation</h4>
+<h5>ChocolateChip-UI version 3.5.3</h5>
+<h1>ChUI.js</h1>
+<ul class='submenu'>
+  <li><a href="#events">Events</a></li>
+  <li><a href="#Uuid">$.Uuid</a></li>
+  <li><a href="#UITrackHashNavigation">$.UITrackHashNavigation</a></li>
+  <li><a href="#UISetHashOnUrl">$.UISetHashOnUrl</a></li>
+  <li><a href="#UIGoBackToArticle">$.UIGoBackToArticle</a></li>
+  <li><a href="#UIGoBack">$.UIGoBack</a></li>
+  <li><a href="#isNavigating">$.isNavigating</a></li>
+  <li><a href="#UIGoToArticle">$.UIGoToArticle</a></li>
+  <li><a href="#NavigationEnd">NavigationEnd Event</a></li>
+  <li><a href="#UIDeletable">$.UIDeletable</a></li>
+  <li><a href="#UIPaging">$.UIPaging</a></li>
+  <li><a href="#UISlideout">$.UISlideout</a></li>
+  <li><a href="#UISlideout_populate">$.UISlideout.populate</a></li>
+  <li><a href="#UICreateSwitch">$.UICreateSwitch</a></li>
+  <li><a href="#UISwitch">[].UISwitch</a></li>
+  <li><a href="#UICreateSegmented">$.UICreateSegmented</a></li>
+  <li><a href="#UISegmented">[].UISegmented</a></li>
+  <li><a href="#UIPopup">$.UIPopup</a></li>
+  <li><a href="#UIPopupClose">[].UIPopupClose</a></li>
+  <li><a href="#UICenterPopup">$.UICenterPopup</a></li>
+  <li><a href="#UITabbar">$.UITabbar</a></li>
+  <li><a href="#UISheet">$.UISheet</a></li>
+  <li><a href="#UIShowSheet">$.UIShowSheet</a></li>
+  <li><a href="#UIHideSheet">$.UIHideSheet</a></li>
+  <li><a href="#body">$.body</a></li>
+  <li><a href="#UINavigationHistory">$.UINavigationHistory</a></li>
+  <li><a href="#UIPanelToggle">[].UIPanelToggle</a></li>
+  <li><a href="#UISelectList">[].UISelectList</a></li>
+  <li><a href="#UIStepper">[].UIStepper</a></li>
+  <li><a href="#UIBusy">[].UIBusy</a></li>
+  <li><a href="#UICenter">[].UICenter</a></li>
+  <li><a href="#UIBlock">[].UIBlock</a></li>
+  <li><a href="#UIUnblock">[].UIUnblock</a></li>
+  <li><a href="#UIPopover">[].UIPopover</a></li>
+  <li><a href="#UIAlignPopover">$.UIAlignPopover</a></li>
+  <li><a href="#UIPopoverClose">$.UIPopoverClose</a></li>
+  <li><a href="#Gestures">Gestures</a></li>
+  <li><a href="#pubSub">Pub/Sub</a></li>
+  <li><a href="#subscriptions">$.subscriptions</a></li>
+  <li><a href="#subscribe">$.subscribe</a></li>
+  <li><a href="#publish">$.publish</a></li>
+  <li><a href="#unsubscribe">$.unsubscribe</a></li>
+  <li><a href="#search">$.UISearch</a></li>
+  <li><a href="#UISetupCarousel">$.UISetupCarousel</a></li>
+</ul>
+<p>ChUI.js is the file that brings all the layouts and widgets to life. It provides methods to create widgets on the fly, or to initialize existing markup. There is only one ChUI.js file for all three operating systems. It detects the operating system at load type and when needed, makes adjustments to widgets. If you are experiencing some OS specific problem that you would like to adjust for, you can use the properties that ChocolateChipJS exposes. Please consult the documentation for ChocolateChipJS to see these.</p>
+
+<a name="events"></a>
+<h2>Events</h2>
+
+<p>ChUI.js provides a number of variables to abstract the user input interaction from the device input. This allows you to use one event input for mouse, finger or stylus on desktop and mobile.</p>
+
+<h3>$.eventStart</h3>
+
+<p>This is equivalent to a mousedown, touchstart or MSPointerDown event.</p>
+
+<h3>$.eventMove</h3>
+
+<p>This is equivalent to a mousemove, touchmove or MSPointerMove event.</p>
+
+<h3>$.eventEnd</h3>
+
+<p>This is equivalent to a mouseup, touchend or MSPointerUP event.</p>
+
+<h3>$.eventCancel</h3>
+
+<p>This is equivalent to a mousecancel, touchcancel or MSPointerCancel event.</p>
+
+<h3>$.gestureLength</h3>
+
+<p>This is used by ChUI.js to define how far a user must drag the mouse, stylus or finger before a swipe gesture is registered. The default value is 30 pixels. Decreasing this might cause swipe gestures being registered too easily for the user to interact with other controls that expect taps/clicks/touches. Increasing it will make the shorter swipes harder to detect. If you want to register swipe events, 30 to 50 is the optimal amount.</p>
+
+<a name="Uuid"></a>
+<h2>$.Uuid</h2>
+
+<p>This is a method that creates a uuid. This is used internally by ChUI when it needs to dynamically create ids for elements that don't have one. You can also use it when you need a unique identification value.</p>
+
+<a name="UITrackHashNavigation"></a>
+<h2>$.UITrackHashNavigation</h2>
+
+<p>This method is used internally by ChUI.js with navigation list. It puts a hash value in the url of the window.location, allowing you to use client side routing with your navigation.</p>
+
+<a name="UISetHashOnUrl"></a>
+<h2>$.UISetHashOnUrl</h2>
+
+<p>This method is used by $.UITrackHashNavigation.</p>
+
+<a name="UIGoBackToArticle"></a>
+<h2>$.UIGoBackToArticle</h2>
+
+<p>This method is used for non-linear navigation back to an arbitrary article. By default a button with the class 'back' will always navigate back to the previous article (which will also have a class of 'previous'). If you want the enable the user to return to an article further back in the navigation history, you can use this method. It will also reset the navigation history array so that it reflects the current navigation state.</p>
+
+<a name="UIGoBack"></a>
+<h2>$.UIGoBack</h2>
+
+<p>This method returns the user to the previous article. It gets executed automatically when the user interacts with a back button. You do not every need to use it.</p>
+
+<a name="isNavigating"></a>
+<h2>$.isNavigating</h2>
+
+<p>This is a value used by ChUI.js to keep track of the progress of a navigation animation. By default it is false, when navigation begins it is set to true, and when navigation is complete it is set back to false. This is tested during user interaction with navigation lists so that the user cannot fire more than one navigation event at a time.</p>
+
+<a name="UIGoToArticle"></a>
+<h2>$.UIGoToArticle</h2>
+
+<p>This method is used by navigation lists. When you set up a navigation list, user interaction with it will automatically execute this method. You can also use it to direct a user to a specific article, perhaps through interaction with a button. In that case you would need to hook up an event listener to do so. To navigate to a particule article, just provide its id. The method will implement the animate effect for you:</p>
+
+<pre class="prettyprint"><code>$.UIGoToArticle('#picutres');
+</code></pre>
+
+<a name="NavigationEnd"></a>
+<h2>NavigationEnd Event</h2>
+
+<p>ChocolateChip-UI creates a navigationend event that you can use to know when an article has finished transitioning. This event fires everytime an article transitions into view, so this will happen with the user naivgates forward and backward. For Android and iOS this only fires for navigation lists. On Windows 8.x or Windows Phone 8 this also happens with tab bars because they slide the article in and out.</p>
+
+<p>The following example shows how to filter out back navigation to an article with an id of "main":</p>
+<pre class="prettyprint"><code>$(function() {
+   $('article').on('navigationend', function() {
+      if (this.id !== 'main') {
+         console.log('Navigation just ended: ' + this.id);
+      }
+   })
+});
+</code></pre>
+
+<a name="UIDeletable"></a>
+<h2>$.UIDeletable</h2>
+
+<p>This method will enable the deletion of list items. It does this by inserting an 'Edit' button on the right side of the nav. You can also provide a callback to execute when and item is deleted.</p>
+
+<pre class="prettyprint"><code>$(function() {
+   $.UIDeletable({
+     list: '#myList',
+     callback: function(item) {
+       var text = $(item).siblings('h3').text();
+       $('#response').html('You deleted: &lt;strong&gt;' + text + '&lt;/strong&gt;');
+     }
+   });
+});
+</code></pre>
+
+<p>If you allow the user to delete items from a list, you may walso want to also update your server side data. You could do this by posting the necessary info when the user deletes an item.</p>
+
+<p>If you want to add list items to a deletable list after it's inital load, you can do so. Just insert the list items with the markup necessary to match your other list items, then reinitialize the deleteable list with the same options that you used originally. If you are going to do this often, you might want to just assign the $.UIDeletable setup to a variable so you can just use that:</p>
+
+<pre class="prettyprint"><code>var initDeletables = $.UIDeletable({
+ list: '#myList',
+ callback: function(item) {
+   var text = $(item).siblings('h3').text();
+   $('#response').html('You deleted: &lt;strong&gt;' + text + '&lt;/strong&gt;');
+ }
+});
+</code></pre>
+
+<p>Then later, after adding more items to the deletable list you can reinitialize it like this:</p>
+
+<pre class="prettyprint"><code>initDeletables();
+</code></pre>
+
+
+<a name="UIPaging"></a>
+<h2>$.UIPaging</h2>
+
+<p>To make a paging control, you first need to have the necessary markup for the paging mechanism. Initialization is simple: $.UIPaging(). You need to have a segmented control that will toggle an article's sections. </p>
+
+<p><strong>Example:</strong></p>
+
+<pre class="prettyprint"><code>&lt;nav&gt;
+   &lt;h1&gt;Paging&lt;/h1&gt;
+   &lt;div class='segmented paging horizontal align-flush'&gt;
+     &lt;a class='button' href='javascript:void(null)' title='previous panel'&gt;&lt;/a&gt;
+     &lt;a class='button' href='javascript:void(null)' title='next panel'&gt;&lt;/a&gt;
+   &lt;/div&gt;
+&lt;/nav&gt;
+&lt;article id="main" class="current paging"&gt;
+   &lt;section class='current'&gt;
+     &lt;h2&gt;First Article&lt;/h2&gt;
+     &lt;ul class='list'&gt;
+       &lt;li&gt;
+         &lt;h3&gt;Thing One&lt;/h3&gt;
+       &lt;/li&gt;
+     &lt;/ul&gt;
+   &lt;/section&gt;
+   &lt;section&gt;
+     &lt;h2&gt;Second Article&lt;/h2&gt;
+       &lt;ul class='list'&gt;
+         &lt;li&gt;
+            &lt;h3&gt;Item One&lt;/h3&gt;
+         &lt;/li&gt;
+     &lt;/ul&gt;
+   &lt;/section&gt;
+   &lt;section&gt;
+     &lt;h2&gt;Third Article&lt;/h2&gt;
+     &lt;ul class='list'&gt;
+       &lt;li&gt;
+         &lt;h3&gt;Item 1&lt;/h3&gt;
+         &lt;cellsubtitle&gt;Item 1 Subtitle&lt;/cellsubtitle&gt;
+       &lt;/li&gt;
+     &lt;/ul&gt;
+   &lt;/section&gt;
+&lt;/article&gt;
+</code></pre>
+
+<a name="UISlideout"></a>
+<h2>$.UISlideout</h2>
+
+<p>This method creates an empty slide-out menu for your app. It also puts the slide out icon in the top left of your nav bar. By executing the function, all interactions are automatic, you just need to provide the interactive content inside the slide out for your uses to use. You could use the [].append() method or a template to do this or any of the other ways to output content to the slide out. Your choice.</p>
+
+<p><strong>Example:</strong></p>
+
+<pre class="prettyprint"><code>// Create an empty slide out menu:
+$.UISlideout();
+</code></pre>
+
+<p>The easiest way to make the slide out interactive is to use the <code>$.UISlideout.populate</code> method described below.</p>
+
+<a name="UISlideout_populate"></a>
+<h2>$.UISlideout.populate</h2>
+
+<p>As of Version 3.0.6, ChocolateChip-UI offers this method to quickly create an interactive navigable list for slide outs.</code>.</p>
+
+<p>This method takes one argument, an array of objects with key/values. The key is the id of the article you to show when touched, and the value is the Label that will show in the slide out list.</p>
+
+<pre class="prettyprint"><code>// Create an empty slide out menu:
+$.UISlideout();
+// Populate the slide out:
+$.UISlideout.populate([{music:'Music'},{pictures:'Pictures'},{recipes:'Recipes'},{contacts:'Contacts'}]);
+</code></pre>
+
+<p>The above would result in a list as follows:</p>
+
+<pre class="prettyprint"><code>&lt;ul class="list"&gt;
+  &lt;li data-show-article="music"&gt;
+    &lt;h3&gt;Music&lt;/h3&gt;
+  &lt;/li&gt;
+  &lt;li data-show-article="pictures"&gt;
+    &lt;h3&gt;Pictures&lt;/h3&gt;
+  &lt;/li&gt;
+  &lt;li data-show-article="recipes"&gt;
+    &lt;h3&gt;Recipes&lt;/h3&gt;
+  &lt;/li&gt;
+  &lt;li data-show-article="contacts"&gt;
+    &lt;h3&gt;Contacts&lt;/h3&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>You can also add headers to the slideout list using the keyword "header" and the value for its label. This will be output a list item with the class "slideout-header" and an <code>h2</code> for the header itself. We'll take the above example and add two headers to break the list up. We just need to add two new key/value pairs with a key of 'header' and the value for our header. The headers will be "Media" and "Miscellaneous."</p>
+
+
+<pre class="prettyprint"><code>// Create an empty slide out menu:
+$.UISlideout();
+// Populate the slide out:
+$.UISlideout.populate([{header:'Media'},{music:'Music'},{pictures:'Pictures'},{header:'Miscellaneous'},{recipes:'Recipes'},{contacts:'Contacts'}]);
+</code></pre>
+
+<p>This will produce the following:</p>
+
+<pre class="prettyprint"><code>&lt;ul class="list"&gt;
+  &lt;li class="slideout-header"&gt;
+    &lt;h2&gt;Media&lt;/h2&gt;
+  &lt;/li&gt;
+  &lt;li data-show-article="music"&gt;
+    &lt;h3&gt;Music&lt;/h3&gt;
+  &lt;/li&gt;
+  &lt;li data-show-article="pictures"&gt;
+    &lt;h3&gt;Pictures&lt;/h3&gt;
+  &lt;/li&gt;
+  &lt;li class="slideout-header"&gt;
+    &lt;h2&gt;Miscellaneous&lt;/h2&gt;
+  &lt;/li&gt;
+  &lt;li data-show-article="recipes"&gt;
+    &lt;h3&gt;Recipes&lt;/h3&gt;
+  &lt;/li&gt;
+  &lt;li data-show-article="contacts"&gt;
+    &lt;h3&gt;Contacts&lt;/h3&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>Because the populate method uses the keyword "header" to create headers in the slideout, you wont be able to have it work with an article that has an id of "header". Anyway, you should never have an article named header. And article is not a header for anything.</p>
+
+<a name="UICreateSwitch"></a>
+<h2>$.UICreateSwitch</h2>
+
+<p>A switch control can be created manually using a span with a class 'switch'. You can set its state to on by adding it as a class. Without the class 'on' is the off state. Add a checkbox input and give it a value. At load time ChUI.js will initialize the switch with basic interactivity. You'll need to register and event to do something with it. Check the example below:</p>
+
+<pre class="prettyprint"><code>&lt;li class='comp'&gt;
+   &lt;div&gt;
+     &lt;h3&gt;Sleep&lt;/h3&gt;
+   &lt;/div&gt;
+   &lt;aside&gt;
+     &lt;span class="switch on" id="sleepSwitch"&gt;
+       &lt;input type="checkbox" value="Sleep" name="sleepSwitch"&gt;
+     &lt;/span&gt;
+   &lt;/aside&gt;
+&lt;/li&gt;
+
+&lt;script&gt;
+   $('#sleepSwitch').on('singletap', function() {
+     if (this.classList.contains('on')) {
+       $('#response').html($(this).find('input').val());
+     } else {
+       $('#response').empty();
+     }
+   });
+&lt;/script&gt;
+</code></pre>
+
+<p>You can also create a switch dynamically using the $.UICreateSwitch method.
+You give it an object with the values for your switch:</p>
+
+<pre class="prettyprint">var sleepSwitch = {
+      id : "sleepSwitch",
+      state : "on",
+      name : "activity.choice",
+      value: "sleep"
+   };
+   // Insert switch into the aside of list item 4:
+   $('.list > li').eq(3).find('aside').prepend( $.UICreateSwitch(sleepSwitch) );
+   // Initialize the switch:
+   $('.switch').UISwitch();</pre>
+
+<a name="UISwitch"></a>
+<h2>[].UISwitch</h2>
+
+<p>This method initializes any uninitialized switches. You execute it by doing a search for switches using the ".switch" selector:</p>
+
+<pre class="prettyprint"><code>$('.switch').UISwitch();
+</code></pre>
+
+<a name="UICreateSegmented"></a>
+<h2>$.UICreateSegmented</h2>
+
+<p>You can create a segmented control dynamically with this method. You supply the following values:</p>
+
+<pre class="prettyprint"><code>var segmentedOptions = {
+   id: 'mySegmented',
+   labels : ['Radioactive','Hurt','Yeah, Yeah'],
+   selected: 0
+};
+var newSegmented = $.UICreateSegmented(segmentedOptions);
+// Insert the segemented control into the document:
+$('#segmentedPanel').append(newSegmented);
+</code></pre>
+
+<p>After inserting the segmented control, you need to initialize it, at which time you can also attach and event listener to handle user interaction:</p>
+
+<pre class="prettyprint"><code>// The parameter "item" will refer to the selected segmented:
+var segmentedResponse = function(item) {
+   // Output the index number of the selected segment:
+   $('#output').find('h3').html(($(item).index()));
+};
+// Initialize the segmented control:
+$('#mySegmented').UISegmented({ callback:segmentedResponse });
+</code></pre>
+
+<a name="UISegmented"></a>
+<h2>[].UISegmented</h2>
+
+<p>This method is executed on a segmented selector to initialize it. You can provide a callback to execute when the user interacts with it:</p>
+
+<pre class="prettyprint"><code>$('#mySegmented').UISegmented({ callback:segmentedResponse });
+</code></pre>
+
+<a name="UIPopup"></a>
+<h2>$.UIPopup</h2>
+
+<p>You can create a popup using the $.UIPopup method. Every popup will have at least a cancel button. This button will close the popup without you needed to write any code. You can also provide another button to perform an affirmative action (continueButton). You can provide a callback that will be executed when this button is pressed. You can provide label values for both buttons to customize them. </p>
+
+<p>When you show a popover, the method will also create a semi transparent mask over the app to prevent user interaction. When you dispel the popup, the mask is also dispelled. </p>
+
+<p>You can register an event to dynamically create and show the popup:</p>
+
+<pre class="prettyprint"><code>// Bind event to show the popup:
+$("#openPopup").bind("singletap", function() {
+   $.UIPopup({
+     selector: "#main",
+     id: "warning",
+     title: 'Attention Viewers!',
+     message: 'This is a message from the sponsors. Please be seated while we are getting ready. Thank you for your patience.',
+     cancelButton: 'Skip',
+     continueButton: 'Stay for it',
+     callback: function() {
+       var popupMessageTarget = document.querySelector('#popupMessageTarget');
+       popupMessageTarget.textContent = 'Thanks for staying with us a bit longer.';
+       popupMessageTarget.className = "";
+       popupMessageTarget.className = "animatePopupMessage";
+     }
+   });
+});
+</code></pre>
+
+<a name="UIPopupClose"></a>
+<h2>[].UIPopupClose</h2>
+
+<p>This method will close the popup, dispelling the mask as well. This method gets executed automatically when the user presses the cancel or continue buttons in the popup.</p>
+
+<a name="UICenterPopup"></a>
+<h2>$.UICenterPopup</h2>
+
+<p>This method is used by ChUI.js to center any active popup. You don't need to ever use it yourself.</p>
+
+<a name="UITabbar"></a>
+<h2>$.UITabbar</h2>
+
+<p>This method is used to create a tab bar interface. For arguments, it expects an id for the tab bar, the number of tabs you want, labels for the tabs, icons for the tabs (these only get display on iOS), and a selected tab. By default the first tab will be selected, so if that is your choice, you do not need to provide a value. If you want another tab to be the selected one, provide its zero-based position. Unlike a paging control, which enables you to navigate through an article's collection of sections, the tab bar is for toggling through a group of articles. A tab bar is used when your app has a small number of articles with each doing something unique and they do not navigate to other articles. </p>
+
+<pre class="prettyprint"><code>$(function() {
+   var opts = {
+     tabs : 5,
+	  imagePath : "../icons-ios/",
+	  icons : ["music", "pictures", "documents", "downloads", "favorites"],
+	  labels : ["Music", "Pictures", "Documents", "Downloads", "Favorites"],
+	  selected : 1
+   };
+   $.UITabbar(opts);
+});
+</code></pre>
+
+<a name="UISheet"></a>
+<h2>$.UISheet</h2>
+
+<p>This method is used to create a generic sheet. This is an overlay that slides across the screen, covering it. It has a handle across the top. Pressing it will close the sheet. It also has a section tag which provides vertical scrolling for any content you put within it. On iOS the sheet slides up from the bottom. On Android and Windows PHone 8 it slides down from the top. You create a sheet as follows:</p>
+
+<pre class="prettyprint"><code>$(function() {
+   // Create an empty sheet:
+   $.UISheet();
+
+   // Get the sheet and append some markup:
+   $('.sheet').find('section').append("&lt;ul class='list'&gt;&lt;/li&gt;&lt;li&gt;&lt;a class='button' href='javascript:void(null)'&gt;Save&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a class='button' href='javascript:void(null)'&gt;Delete&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a class='button' href='javascript:void(null)'&gt;Cancel&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;");
+   $('.sheet .list').append ('&lt;h2 style="text-align: center; margin: 20px;"&gt;The End&lt;/h2&gt;');
+
+   // After append the sheet to the document,
+   // register an event to handle the buttons, etc.:
+   $('.sheet .list').on('singletap', '.button', function() {
+      $.UIHideSheet();
+   });
+
+   // Initialize button to show sheet:
+   $('#showSheet').on('singletap', function() {
+      $.UIShowSheet();
+   });
+});
+</code></pre>
+
+<a name="UIShowSheet"></a>
+<h2>$.UIShowSheet</h2>
+
+<p>After creating a sheet as illustrated above, you can show it by registering the $.UIShowSheet method on a user action:</p>
+
+<pre class="prettyprint"><code>   // Initialize button to show sheet:
+   $('#showSheet').on('singletap', function() {
+      $.UIShowSheet();
+   });
+</code></pre>
+
+<a name="UIHideSheet"></a>
+<h2>$.UIHideSheet</h2>
+
+<p>This method will dispel the sheet. You can register an event to do so:</p>
+
+<pre class="prettyprint"><code>$('.sheet .list').on('singletap', '.button', function() {
+   $.UIHideSheet();
+});
+</code></pre>
+
+<a name="body"></a>
+<h2>$.body</h2>
+
+<p>This variable is a shortcut for the body element. Use it instead of $('body'). As a matter of fact, you should always assign an element to a variable when you will be accessing it multiple times, as that will be faster than doing a selector query each time.</p>
+
+<p><strong>Example:</strong></p>
+
+<pre class="prettyprint"><code>$.body.on('singleta', 'li', function() {
+   alert($(this).text());
+});
+</code></pre>
+
+<a name="UINavigationHistory"></a>
+<h2>$.UINavigationHistory</h2>
+
+<p>This is an array of the articles visited during a navigation event. It is used by ChUI.js to know which article to return to when the user hits the back button.</p>
+
+<a name="UIPanelToggle"></a>
+<h2>[].UIPanelToggle</h2>
+
+<p>This method sets up a segmented control to toggle a series of panels.  This expects the following markup: a container div, no particular class required. Within it should be a series of divs as containers for the content to be toggles. Each one of these child divs constitutes a toggleable panel. The structure should be like this:</p>
+
+<pre class="prettyprint"><code>&lt;article id="main" class="current"&gt;
+   &lt;section&gt;
+      &lt;div class='horizontal centered'&gt;
+         &lt;div class='segmented'&gt;
+            &lt;a class='button'&gt;Radioactive&lt;/a&gt;
+            &lt;a class='button'&gt;Hurt&lt;/a&gt;
+            &lt;a class='button'&gt;Permanent&lt;/a&gt;
+         &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;!-- Container for toggleable panels --&gt;
+      &lt;div id="toggle-panels"&gt;
+         &lt;!-- toggleable panel  --&gt;
+         &lt;div&gt;
+            &lt;ul class='list'&gt;
+               &lt;li&gt;
+                  &lt;h3&gt;Imagine Dragons&lt;/h3&gt;
+                  &lt;h4&gt;Radioactive&lt;/h4&gt;
+               &lt;/li&gt;
+            &lt;/ul&gt;
+         &lt;/div&gt;
+         &lt;!-- toggleable panel --&gt;
+         &lt;div&gt;
+            &lt;ul class='list'&gt;
+               &lt;li&gt;
+                  &lt;h3&gt;The Hurry and the Harm&lt;/h3&gt;
+                  &lt;h4&gt;Hurt&lt;/h4&gt;
+               &lt;/li&gt;
+            &lt;/ul&gt;
+         &lt;/div&gt;
+         &lt;!-- toggleable panel --&gt;
+         &lt;div&gt;
+            &lt;ul class='list'&gt;
+               &lt;li&gt;
+                  &lt;h3&gt;David Cook&lt;/h3&gt;
+                  &lt;h4&gt;Permanent&lt;/h4&gt;
+               &lt;/li&gt;
+            &lt;/ul&gt;
+         &lt;/div&gt;
+      &lt;/div&gt;
+   &lt;/section&gt;
+&lt;/article&gt;
+</code></pre>
+
+<p>To make the above markup work as a toggleable panel control, we do the following:</p>
+
+<pre class="prettyprint"><code>$(function() {
+   $('.segmented').UIPanelToggle('#toggle-panels',function(){$.noop;});
+});
+</code></pre>
+
+<a name="UISelectList"></a>
+<h2>[].UISelectList</h2>
+
+<p>This method turns a simple list into a selectable list. This just a fancy way of presenting the user with a group of radio buttons. In fact, ChUI.js inserts a radio button into each list item, although these are not visible to the user. You can set a selected state for the list, otherwise it will load with none selected. You can also provide a callback to execute when the user presses a list item. You can mark a list as a select list by putting the class 'select' on it. If you don't, the initialization process will add it for you.</p>
+
+<pre class="prettyprint"><code>$(function() {
+   $('#seletlist').UISelectList({
+      selected: 0,
+      callback: function() {
+         $("#response").html($(this).text());
+      }
+   });
+});
+</code></pre>
+
+<p>You can create a list with data values on the list items using the attribute: <code>data-select-value</code>. When UISelectList runs, it will attach these values onto the radio button that belongs to each list item. That way you can get the value of the radio button when the user selects that list item.</p>
+
+<p>You can add list items dynamically after the initial app load. You just need to make sure that you're added list items with everything they expect to work. The initialization added a data value to the list <code>data-select-value</code>. It also adds a hidden radio input with the form data for that item. This input needs to have the same name as the other radio inputs. If you provided a name for the radio inputs in your options, then use the same one. If you let $.UISelectList apply on automiatically, you'll need to grab that value from one of the list items to use for the new list items. If you create the new list items following all of these requirements, upon appending them to an existing selectable list, they will be selectable automatically.</p>
+
+<a name="UIStepper"></a>
+<h2>[].UIStepper</h2>
+
+<p>This method will initialize a stepper control. You create a stepper by putting the markup in your document, either manually or dynamically. See the markup below:</p>
+
+<pre class="prettyprint"><code>&lt;span class='stepper' id="digits"&gt;&lt;/span&gt;
+</code></pre>
+
+<p>To initialize it, we could do the following:</p>
+
+<pre class="prettyprint"><code>$(function() {
+   $('#digits').UIStepper({
+      start: 1,
+      end: 8,
+      defaultValue: 3
+   });
+});
+</code></pre>
+
+<a name="UIBusy"></a>
+<h2>[].UIBusy</h2>
+
+<p>This method will create a busy indicator. The appearance will vary per operating system. You can customize the busy indicator with three values: color, size and position. The position option is for when you insert the busy indicator into a nav. Giving it a position of 'right' will put it flush agains the right side of the screen. If you insert the busy indicator into a large container, you can center it using the UICenter method. Check out these examples:</p>
+
+<pre class="prettyprint"><code>$('nav').find('.busy').css('top','10px');
+$('nav').UIBusy({size: '20px', color:'#666', position: 'right'});
+
+$('#busy1').UIBusy({'color':'rgba(200,0,0,0.75)', 'size': '50px'});
+$('#busy1').find('.busy').UICenter();
+
+$('#busy2').UIBusy({size:'40px', color: 'gold'});
+$('#busy2').find('.busy').UICenter();
+
+$('#busy3').UIBusy({color: '#fff'});
+$('#busy3').find('.busy').UICenter();
+</code></pre>
+
+<p>You can create a modal busy indicator by first creating a popup and then inserting the busy indicator into it:</p>
+
+<pre class="prettyprint"><code>$(function() {
+   // When the user presses the showModalBusyIndicator button:
+   $('#showModalBusyIndicator').on($.eventStart, function() {
+      $.UIPopup({empty: true});
+      $('.popup').UIBusy({'color':'blue', 'size': '80px'})
+      setTimeout(function() {
+         $('.popup').UIPopupClose()
+      },50000000);
+   });
+});
+</code></pre>
+
+<a name="UICenter"></a>
+<h2>[].UICenter</h2>
+
+<p>This method will center an absolutely positioned element on the screen. Just execute it directly on the element you want to center. It gets used by popups.</p>
+
+<a name="UIBlock"></a>
+<h2>[].UIBlock</h2>
+
+<p>This method will create a semi-transparent mask over the screen. You can provide a value for the amount of opacity you want. It is also invoked automatically by popups and popovers. </p>
+
+<p><strong>Example:</strong></p>
+
+<pre class="prettyprint"><code>$.body.UIBlock();
+</code></pre>
+
+<a name="UIUnblock"></a>
+<h2>[].UIUnblock</h2>
+
+<p>This method will remove a mask from the screen. </p>
+
+<p><strong>Example:</strong></p>
+
+<pre class="prettyprint"><code>$.body.UIUnblock();
+</code></pre>
+
+<a name="UIPopover"></a>
+<h2>[].UIPopover</h2>
+
+<p>This method will create a popover. To create a popover, you execute this method on the element you want to display the popover. In general, a button in the nav will display a popover. You provide the popover a title. This only gets displayed on iOS. Android and Windows Phone 8 do not show titles on their version of the popover. You provide a callback that gets executed when the users presses the button that creates the popover. You can use this to populate the popover. You create a popover as follows:</p>
+
+<pre class="prettyprint"><code>// Initialize popover:
+$('#showPopover').UIPopover({
+   id: 'fruitsPopover',
+   title: "Fruits",
+   callback: fillPopover
+});
+
+// Define a callback for popover:
+var fillPopover = function(popover) {
+   // Populate Popover with content:
+   $('.popover').find('section').append(popoverContent);
+
+   // Event to execute when the user interacts with the popover:
+   popoverEventHandler();
+};
+
+// Content for popover:
+var popoverContent = "&lt;ul class='list'&gt;&lt;li&gt;&lt;h3&gt;Apples&lt;/h3&gt;&lt;/li&gt;&lt;li&gt;&lt;h3&gt;Oranges&lt;/h3&gt;&lt;/li&gt;&lt;li&gt;&lt;h3&gt;Bananas&lt;/h3&gt;&lt;/li&gt;&lt;li&gt;&lt;h3&gt;Pears&lt;/h3&gt;&lt;/li&gt;&lt;li&gt;&lt;h3&gt;Plums&lt;/h3&gt;&lt;/li&gt;&lt;li&gt;&lt;h3&gt;Cherries&lt;/h3&gt;&lt;/li&gt;&lt;li&gt;&lt;h3&gt;Apricots&lt;/h3&gt;&lt;/li&gt;&lt;li&gt;&lt;h3&gt;Lemons&lt;/h3&gt;&lt;/li&gt;&lt;li&gt;&lt;h3&gt;Peaches&lt;/h3&gt;&lt;/li&gt;&lt;li&gt;&lt;h3&gt;Pineapples&lt;/h3&gt;&lt;/li&gt;&lt;li&gt;&lt;h3&gt;Strawberries&lt;/h3&gt;&lt;/li&gt;&lt;li&gt;&lt;h3&gt;Guavas&lt;/h3&gt;&lt;/li&gt;&lt;li&gt;&lt;h3&gt;Grapefruit&lt;/h3&gt;&lt;/li&gt;&lt;/ul&gt;";
+
+
+// Function to execute when the user interacts with the popover:
+var popoverEventHandler = function() {
+  // Attach event to catch user interaction.
+  // Use singletap to allow user to scroll content.
+  $('.popover').on('singletap', function(e) {
+     var listItem;
+     if (e.target.nodeName === 'LI') {
+        $('#fruitsChoice').html(e.target.textContent.trim());
+     } else {
+        listItem = $(e.target).ancestor('li')[0];
+        $('#fruitsChoice').html(listItem.textContent.trim());
+     }
+     $.UIPopoverClose();
+  });
+};
+</code></pre>
+
+<a name="UIAlignPopover"></a>
+<h2>$.UIAlignPopover</h2>
+
+<p>This method is used by ChUI.js to center any active popover. You don't need to ever use it yourself.</p>
+
+<a name="UIPopoverClose"></a>
+<h2>$.UIPopoverClose</h2>
+
+<p>This method is used to dispel an active popover. This will also remove the mask created by UIBlock.</p>
+
+<a name="Gestures"></a>
+<h2>Gestures:</h2>
+
+<p>ChUI.js provides a number of gestures for you to use in your app. These get translated to appropriate events on each platform. They are as follows:</p>
+
+<ul class='list'>
+<li>tap</li>
+<li>singletap</li>
+<li>longtap</li>
+<li>doubletap</li>
+<li>swipe</li>
+<li>swipeleft</li>
+<li>swiperight</li>
+<li>swipeup</li>
+<li>swipedown</li>
+</ul>
+
+<p>Tap is a generic tap, this could be a singletap, doubletap or longtap event. The same with swipe, it will be either a left, right, up or down swipe. These two are not very useful unless you want to check for a very generic user interaction.</p>
+
+<p>A singletap has a delay of 150 milliseconds. In general, if you want to interact with anything that is in a scrollable container, you want to use a singletap event. This will allow you to scroll without triggering an event on any actionable items in the container. You can register a singletap and a doubletap on the same element, or a longtap too, to set up different results. Swipes work just like any other events as well.</p>
+
+<p>To use these gestures, put them in quotes just as you would any normal DOM event:</p>
+
+<pre class="prettyprint"><code>$('a').on('singletap', function() {
+   // Do stuff here
+   alert('Single Tap');
+});
+$('a').on('doubletap', function() {
+   // Do stuff here
+   alert('Double Tap');
+});
+$('a').on('longtap', function() {
+   // Do stuff here
+   alert('Long Tap');
+});
+$('a').on('swipeleft', function() {
+   // Do stuff here
+   alert('Swipe Left');
+});
+$('a').on('swiperight', function() {
+   // Do stuff here
+   alert('Swipe Right');
+});
+</code></pre>
+
+<a name="pubSub"></a>
+<h1>Pub/Sub</h1>
+<p>Pub/sub is a popular and useful programming pattern to help decouple code. This allows you to set up methods that "subscribe" to a topic, something like a radio channel. When you publish data to a topic, all methods that are subscribed to that topic will execute with that data. It thus provides an easy way to pass the same data to multiple functions without having to enclose them in one function.</p>
+
+<p>When implementing a pub/sub pattern, be careful not to over use it, as it can sometimes be difficult to debug or run tests against.</p>
+
+<a name="subscriptions"></a>
+<h2>$.subscriptions</h2>
+<p>The is a cache for all subscriptions. If you unsubscribe for a topic, the subscription will be removed.</p>
+
+<p>By convention, topics used for subscriptions use forward slashes to demark namespaces, something like a rest interface.</p>
+
+<pre class="prettyprint"><code>// Possible topics:
+'user/new'
+'user/current'
+'purchases/songs'
+'purchases/apps'</code></pre>
+
+<a name="subscribe"></a>
+<h2>$.subscribe</h2>
+<p>To subscribe to a topic, you pass two arguments, a topic and a callback to execute when data gets published. It's a good idea to put in some data checks to see what kind of data is being received. That way you can choose not to do anything, or to use only certain parts of the data. The type of data could be any valid JavaScript type: string, array, object, etc. It's up to you to figure out where this data that you publish comes from. It might reside on the server, it could be dynamically generated by the server. It might come from any number of possible sources: Ajax requests, Web services, etc.</p>
+
+<p>Below is an example of how to subscribe to a topic:</p>
+
+<pre class="prettyprint"><code>var arraySubscriber = function( data ){
+   $('.list').append('&lt;li&gt;&lt;h3&gt;' + topic + '&lt;/h3&gt;&lt;h4&gt;' + data + '&lt;/h4&gt;&lt;/li&gt;');
+var newsSubscription = $.subscribe( 'news/update', arraySubscriber );
+};
+</code></pre>
+
+<a name="publish"></a>
+<h2>$.publish</h2>
+<p>The $.publish() method lets you send data to all topics that are subscribed to a topic.</p>
+
+<pre class="prettyprint"><code>$.publish('news/update', 'The New York Stock Exchange rose an unprecedented 1000 points in just three minutes. Analysts and investors are confused and uncertain how to respond.');
+</code></pre>
+
+<a name="unsubscribe"></a>
+<h2>$.unsubscribe</h2>
+<p>After setting up a subscription to a topic, you may want to unsubscribe when certain conditions occur. You can do this with the $.unsubscribe() method. Just pass it the name to the subscription you set up, that would be one with a topic and callback as its arguments. See below:</p>
+
+<pre class="prettyprint"><code>$.unsubscribe(newsSubscription);
+</code></pre>
+<p>After unsubscribing from a topic, any further attempts to publish data to the method will do nothing.</p>
+
+<pre class="prettyprint"><code>var arraySubscriber = function(data) {
+   $('.list').append('&lt;li&gt;&lt;h3&gt;' + topic + '&lt;/h3&gt;&lt;h4&gt;' + data + '&lt;/h4&gt;&lt;/li&gt;');
+var newsSubscription = $.subscribe('news/update', arraySubscriber);
+};
+// This news item gets published:
+$.publish( 'news/update', 'The New York Stock Exchange rose an unprecedented 1000 points in just three minutes. Analysts and investors are confused and uncertain how to respond.' );
+$.unsubscribe(newsSubscription);
+// Due to being unsubscribed above, this does nothing:
+$.publish('news/update', 'We have nothing further to comment at this time.');
+</code></pre>
+
+<a name="search"></a>
+<h2>$.UISearch</h2>
+<p>This method creates a search field at the top of the article styled appropriately for each OS. You pass in a object of options to setup the search field. This will prepend the search field to the article's section that you specified with the article ID, otherwise it will prepend it to the first article of your app.</p>
+<pre class="prettyprint"><code>$.UISearch({
+  articleId: '#products',
+  id: 'productSearch',
+  placeholder: 'Find a product',
+  results: 5
+});
+</code></pre>
+
+<a name="UISetupCarousel"></a>
+<h2>$.UISetupCarousel</h2>
+<p>This method creates a swipable carousel. It uses mouse gestures to enable desktop testing. It also adjusts direction automatically when the document direction is set to "rtl" for "right-to-left" alphabets (Arabic, Hebrew, Farsi, Urdu, etc.).</p>
+<p>The carousel actually only has three panels, reducing the amount of memory it requires. As the user swipes, the widget updates the position and content of the panels on either side of the current panel. To initialze the carousel, you pass it an object of key-value parameters:</p>
+<pre class="prettyprint"><code>var panels = [
+  "&lt;h2&gt;Panel 1&lt;/h2&gt;&lt;h2&gt;&lt;/h2&gt;&lt;img src='../images/american-football.jpg'&gt;",
+  "&lt;h2&gt;Panel 2&lt;/h2&gt;&lt;img src='../images/couple.jpg'&gt;",
+  "&lt;h2&gt;Panel 3&lt;/h2&gt;&lt;img src='../images/daisy.jpg'&gt;",
+  "&lt;h2&gt;Panel 4&lt;/h2&gt;&lt;img src='../images/dependent.jpg'&gt;",
+  "&lt;h2&gt;Panel 5&lt;/h2&gt;&lt;img src='../images/dreamy.jpg'&gt;",
+  "&lt;h2&gt;Panel 6&lt;/h2&gt;&lt;img src='../images/girl.jpg'&gt;",
+  "&lt;h2&gt;Panel 7&lt;/h2&gt;&lt;img src='../images/lacrosse.jpg'&gt;",
+  "&lt;h2&gt;Panel 8&lt;/h2&gt;&lt;img src='../images/hot-air-balloon.jpg'&gt;
+]
+{
+  target: '#carousel',
+  panels: panels,
+  loop: true,
+  pagination: true
+}
+</code></pre>
+<p>The target is a wrapper div that will hold the carousel. The carousel itself is just and unordered list. Each list item will be a panel in the carousel. You provide content for the panels by passing in an array of markup as strings. As long as the markup is valid and can fit within the panel, it should be fine. If you intend to put more content than can fit in a panel, just style the list items for the carousel so that they are scrollable like this:</p>
+<pre class="prettyprint"><code>.carousel-track > li {
+  overflow-y: auto !important;
+}
+</code></pre>
+
+<p>By default the carousel has its "loop" property set to cycle infinitely. If you want to make it only swipe between the first and last, but not past them, pass in a false vale for the loop attribute:</p>
+<pre class="prettyprint"><code>{
+  target: '#carousel',
+  panels: panels,
+  loop: false
+}
+</code></pre>
+
+<p>Carousels can have pagination. By default they do not. You need to pass a pagination value of true:</p>
+<pre class="prettyprint"><code>{
+  target: '#carousel',
+  panels: panels,
+  loop: false,
+  pagination: true
+}
+</code></pre>
+
+<p>When pagination is set to true, a pagination indicator is output for each carousel panel. The user can navigate the carousel by tapping on the pagination indicators. Also, as the user swipes through the carousel, the appropriate pagination indicators will be highlighted. Please be aware that on a mobile device, if you have more than 18 paginations, it will be difficult for the user to accurately select one to navigate the carousel. Carousels work best with fifteen or less indicators.</p>
+
+<p>When you initialize a carousel, each carousel is a unique instance of $.UICarousel. This is stored on the carousel wrapper indicated by the target attribute in the setup function. You can retrieve the instance of the carousel like this (assuming we have a carousel wrapper with the id "myCarousel":</p>
+<pre class="prettyprint"><code>var myCarousel = $('#myCarousel').data('carousel');
+$('button5').on('singletap', function() {
+  // Go to panel number 6:
+  myCarousel.goToPanel(5);
+});
+</code></pre>
+<p>The dimensions of the carousel are controlled by CSS, so you can change the height and width to fit your needs. Please be aware that if you make a carousel too big for a mobile screen, the user may be in a situation where he or she cannot scroll vertically to see other content above or below the carousel. Test on various screen sizes to make sure the carousel doesn't prevent access to other content. You can always use media queries to change the size of the carousel based on the devices dimensions. To style the dimensions, just put the CSS directly in your application. You can use OS classes to target each operating system:</p>
+<pre class="prettyprint"><code>.isAndroid .carousel {
+  width: 240px;
+  height: 320px;
+}
+.isiOS .carousel {
+  width: 320px;
+  height: 300px;
+}
+.isWindows .carousel {
+  width: 320px;
+  height: 300px;
+}
+</code></pre>
+</article>
+<script>
+   (function() {
+      prettyPrint();
+   })();
+</script>
+</body>
+</html>

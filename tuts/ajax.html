@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ajax</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../prettify/prettify.css">
+  <script type='text/javascript' src='../prettify/prettify.js'></script>
+  <script type='text/javascript' src='../prettify/lang-css.js'></script>
+</head>
+<body>
+<article>
+<h4>Tutorials</h4>
+<h5>ChocolateChip-UI version 3.5.3</h5>
+<h1>AJAX</h1>
+
+<p>Ajax is the way you can get data into your app . Otherwise your content would be static. ChocolateChip provides a Ajax method and several shortcuts for performing common Ajax operations. Ajax operations allow you to get, post, update and delete file on a remote server. </p>
+
+<p>The main Ajax method is $.ajax(). Below are the possible parameters you can pass to it:</p>
+
+<ul class='list'>
+<li>url : 'the/path/here',</li>
+<li>type : ('GET', 'POST', PUT, 'DELETE'),</li>
+<li>data : myData,</li>
+<li>async : 'synch' || 'asynch',</li>
+<li>user : username (string),</li>
+<li>password : password (string),</li>
+<li>dataType : ('html', 'json', 'text', 'script', 'xml'),</li>
+<li>headers : {},</li>
+<li>success : callbackForSuccess,</li>
+<li>error : callbackForError</li>
+</ul>
+
+<p>Here is the Ajax format:</p>
+
+<pre class="prettyprint"><code>$.ajax({
+    url : (a valid url),
+    type : (GET, POST, PUT, DELETE), (optional)
+    async : (true or false), (optional)
+    params : (any data you wish to include), (optional)
+    success : success,
+    error : error, (optional)
+});
+</code></pre>
+
+<h2>Get:</h2>
+
+<p>If no type is provided, $.ajax will default to a GET request. In that case, the bare minimum to perform a get operation would be a valid url, and a success callback.</p>
+
+< class="prettyprint"><code>$.ajax({
+   url : "/docs/announcement.html",
+   success : function(data) {
+      // Insert the fragment into the page:
+      $("#content").html(data);
+   }
+});
+</code></pre>
+
+<p>If there was a problem get the file, you could also include an error callback. You could use this to inform the user that there was a problem, or any type of clean up of the client side data.</p>
+
+<pre class="prettyprint"><code>$.ajax({
+   url : "announcement.html",
+   success : function(data) {
+      // Insert the fragment into the page:
+      $("#content").html(data);
+   },
+   error: function(data) {
+      $("#content").html("&lt;h4&gt;There was an error while trying to get the file.&lt;/h4&gt;");
+   }
+});
+</code></pre>
+
+<p>Or:</p>
+
+<pre class="prettyprint"><code>$.ajax({
+   url : "data.html",
+   success : function(data) {
+      content.html(data);
+   },
+   error: function(data) {
+      content.html("&lt;h4&gt;There was an error while trying to get the file.&lt;/h4&gt;");
+      if (data.status === 404) {
+         content.append('&lt;h5&gt;The file does not exist.&lt;/h5&gt;');
+      } else if (data.status === 401 || data.status === 403) {
+         content.append('&lt;h5&gt;You do not have permission to get this file.&lt;/h5&gt;');
+      }
+   }
+});
+</code></pre>
+
+<h2>Post</h2>
+
+<p>Here's the format for a post:</p>
+
+<pre class="prettyprint"><code>$.ajax({
+   url: '/echo/html/',
+   type: 'POST',
+   data: "name=John&amp;location=Boston",
+   success: function(data) {
+      alert('Load was performed.');
+   }
+});
+</code></pre>
+
+<p>Depending on how the server is setup, you may need to post a session variable to authenticate that you are logged in. Often this will get sent in the headers object using the cookie that was set when you logged in. You may need to actually get the session cookie from the browser. If you know the name the server sets for the session when you log in, you can get it from the browser before doing the post. If you don't, you may need to examine the cookie set for that domain in your browser by using the Web inspector. Here's a simple method you can use to get a cookie by name:</p>
+
+<pre class="prettyprint"><code>function getCookie(name) {
+    var parts = document.cookie.split(name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+}
+</code></pre>
+
+<p>If the session cookie was named 'loggedInForNow', you could get its value, then use that in your post:</p>
+
+<pre class="prettyprint"><code>var sessionCookie = getCookie('loggedInForNow');
+$.ajax({
+   url: '/products/new',
+   type: 'POST',
+   headers: {'Cookie' : sessionCookie },
+   data: "name=John&amp;location=Boston",
+   success: function(data) {
+      alert('Your data was posted');
+   }
+});
+</code></pre>
+
+<p>If you need to send JSON to the server, you need to pass it through JSON.stringify first.</p>
+
+<pre class="prettyprint"><code>// JSON data object:
+var myData = { ... };
+
+// Stringify the JSON:
+var strData = JSON.stringify(myData);
+
+// Send the stringified JSON to the server:
+$.ajax({
+   type: "POST",
+   url: '/products/new',
+   data: strData,
+   dataType: 'json',
+   success: function() {
+      alert( "Your data was posted.");
+   }
+});
+</code></pre>
+
+<p>If you need to make an asynchronous POST, just include the async property in post object:</p>
+
+<pre class="prettyprint"><code>$.ajax({
+   type: "POST",
+   url: '/products/new',
+   data: strData,
+   dataType: 'json',
+   async: false,
+   success: function() {
+      alert( "Your data was posted." );
+   }
+});
+</code></pre>
+
+<p>Please note, you may need to consult your server documentation to send an authorization token correctly. </p>
+
+<h2>Put</h2>
+
+<p>A PUT action while update data on the server by sending the data that needs to be changed. For example, if you want to update the email of a user, you would post the user's id and the new email address. The data might be like this:</p>
+
+<pre class="prettyprint"><code>{ userID: 'Ab13v938g1', email: 'me@me.com'}
+</code></pre>
+
+<p>You can perform a PUT by changing the type:</p>
+
+<pre class="prettyprint"><code>var newEmail = JSON.stingify({ userID: 'Ab13v938g1', email: 'me@me.com'});
+$.ajax({
+   type: "PUT",
+   url: '/products/new',
+   data: newEmail,
+   dataType: 'json',
+   success: function() {
+      alert( "Your data was updated on the server." );
+   }
+});
+</code></pre>
+
+<p>If you need authentication, you'll need to do whatever is appropriate for you server. Look at the examples for POST for guidance and consult your server documentation for its requirements to perform a PUT.</p>
+
+<h2>Delete</h2>
+
+<p>A DELETE will request the server to delete a file, or data from a database. It's a similar format to POST and PUT. As with them, you may need to send some kind of authorization token in the headers object. Consult your server documentation to find out what the requirements are to perform a DELETE. In this example, 'dataForDeletion' could be a product id, or a file name. </p>
+
+<pre class="prettyprint"><code>$.ajax({
+   url: '/delete.php',
+   type: 'DELETE',
+   data: dataForDeletion,
+   success: function(data) {
+      alert('The data was deleted!');
+   }
+});
+</code></pre>
+
+<p>Depending on your server, you may not be able to use a DELETE, but may need to send the data for the deletion via a POST or GET.</p>
+
+<h2>$.get</h2>
+
+<p>This is a shortcut for performing a Ajax GET request. It requires two parameters, a url and a callback, which will get executed on success.</p>
+
+<pre class="prettyprint"><code>$.get( "/docs/announcement.html", function(data) {
+   // Insert the fragment into the page:
+   $("#content").html(data);
+});
+</code></pre>
+
+<h2>$.getJSON</h2>
+
+<p>This is a shortcut for doing an Ajax GET request for dataType of JSON. It expects a url and a success callback:</p>
+
+<pre class="prettyprint"><code>$.getJSON('/data/products.json', function(data) {
+   var items = [];
+   for (key in data) {
+      items.push('&lt;li id="' + key + '"&gt;' + data[key] + '&lt;/li&gt;');
+   });
+
+   var list = $.make('&lt;ul class="new-product"&gt;&lt;/li&gt;');
+   list.append(items);
+   $('body').append(list);
+});
+</code></pre>
+
+<h2>$.JSONP</h2>
+
+<p>JSONP is a format that allows you to make cross-domain request for JSON data. There are many service that off data in this format: JSONP works differently from a normal GET request in that the callback is sent with the request, hence the expression: JSON with Padding. This method expects two arguments: a url and a callback to execute once the data has returned. Normally, the url should end with the phrase: <code>&callback=?</code>. However, there are some services that expect a slightly different ending. Please check the documentation for any API before trying to implement a JSONP request.</p>
+
+<p>Because this data is being executing as soon as it is returned, it does open your app up to the possibility of a cross-site scripting attack. So, make sure you trust the source of the data you are requesting. Although JSONP has been a convenient way to get data for some time, a better approach is to use the modern alternative: <a href='http://www.w3.org/TR/cors/'>CORS</a>. You can learn <a href='http://enable-cors.org/server.html'>how to set up</a> CORS.</p>
+
+<p>Because the data lives on a remote server, you'll need to read the documentation for the service to understand its format so that you can output it to your app.</p>
+
+<pre class="prettyprint"><code>var url = 'http://www.geonames.org/postalCodeLookupJSON?postalcode=94102&country=US&callback=?';
+$.JSONP(url, function(data){
+   $('.list').append('&lt;li&gt;&lt;h3&gt;My Location&lt;/h3&gt;&lt;h4&gt;' + data.postalcodes[0].adminName2 + ', ' + data.postalcodes[0].adminName1 + '&lt;/h4&gt;&lt;/li&gt;');
+});
+$.JSONP('https://api.github.com/users/yui?callback=?', function(data) {
+   $('.list').append('&lt;li&gt;&lt;h3&gt;The name of the library&lt;/h3&gt;&lt;h4&gt;' + data.data.name + '&lt;/h4&gt;&lt;/li&gt;');
+});
+$.JSONP('http://www.geonames.org/postalCodeLookupJSON?postalcode=94102&country=US&callback=?', function(data){
+   $('.list').append('&lt;li&gt;&lt;h3&gt;My Location&lt;/h3&gt;&lt;h4&gt;' + data.postalcodes[0].adminName2 + ', ' + data.postalcodes[0].adminName1 + '&lt;/h4&gt;&lt;/li&gt;');
+});      
+</code></pre>
+
+<h2>$.post</h2>
+
+<p>This is a shortcut for doing a POST. It can take three parameters: the url, the data and a callback to execute on success.</p>
+
+<pre class="prettyprint"><code>$.post( "/docs/handleNewData.py", 
+   {"firstName": "Wobba", "lastName": "Phet"}, 
+   function(data) {
+   // Insert the fragment into the page:
+      $("#content").html(data);
+});
+</code></pre>
+
+<h3>Example</h3>
+<p>Try out this live example of a GET request on <a href="http://codepen.io/rbiggs/pen/JaLHx">Codepen</a></p>
+
+</article>
+
+<script>
+   (function() {
+      prettyPrint();
+   })();
+</script>
+</body>
+</html>

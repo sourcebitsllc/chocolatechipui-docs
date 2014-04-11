@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Templates</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../prettify/prettify.css">
+  <script type='text/javascript' src='../prettify/prettify.js'></script>
+  <script type='text/javascript' src='../prettify/lang-css.js'></script>
+</head>
+<body>
+<article>
+<h4>Tutorials</h4>
+<h5>ChocolateChip-UI version 3.5.3</h5>
+<h1>Templates</h1>
+
+<p>ChocolateChip-UI provides its own template module. Templates are essential for efficiently creating markup in your app with dynamic content. There are many template engines out there. They are not all equal. In fact, some of the more famous and popular ones are down right slow. ChocolateChip-UI is not the fastest, but it's faster than most. And it's small and part of the framework. </p>
+
+<p>If you prefer another template solution, feel free to use it. Be aware that some template engines require jQuery, mostly for Ajax or DOM access. If the template engine you want to use has a jQuery dependency, you might be able to make some slight modification to the part that checks for jQuery to get it to work with ChocolateChip. </p>
+
+<p>By their very nature, single page apps will not have complicated template needs, so ChocolateChip-UI's template module should fill the bill.</p>
+
+<p>There are several ways you can create a template. You can define it as a string assigned to a variable. You can assign it to the <code>$.templates</code> object. You can define it inside a script tag. You could even store you templates as an external file that you import as a script tag or though an Ajax request. Do what makes sense for you.</p>
+
+<p>Creating and rendering a template is a three stage process. First you write the template. Then you must parse it. This turns the string template into a function that can output markup matched up with data passed to it. And finally you execute that parsed template function with data and output the result to the page:</p>
+
+<pre class="prettyprint"><code>// This assumes that masterData is an array
+// of people's first and last names.
+
+// Define the template:
+var masterTemplate = 
+'&lt;li&gt;[[= data.firstName ]] [[= data.lastName ]]&lt;/li&gt;';
+// Prase the template:
+var myTmpl8 = $.template(masterTemplate);
+// Loop through the data and output the template:
+masterData.forEach(function(ctx) {
+  // Pass the current chunk of data
+  // and output the result to the document:
+  $('.master ul').append(myTmpl8(ctx));
+});
+</code></pre>
+
+<p>ChocolateChip uses paris of square brackets as delimiters: <code>[[ ... ]]</code>. These allow you to include executable JavaScript in your templates. The following template would do nothing but launch an alert when the variable name is present:</p>
+
+<pre class="prettyprint"><code>var template1 = '[[ if (data.name) { ]]\
+[[ alert('You have a name!) ]]\
+[[ } ]]';
+</code></pre>
+
+<p>To output a variable into your template's markup you use an equals sign after the opening square brackets pair: <code>[[= ... ]]</code>.</p>
+
+<h2>Creating Templates</h2>
+
+<p>The most straightforward way to create a template is to define it as a string. If the template will be more than one line, you will need to put a back space on each line, except for the last. Because of the way the parsing is done, to refer to a data variable in the template, you need to use a name as the base. The default is <code>data</code>. You can use any other name that makes sense for the data you are using and pass that name to the parse function as the last parameter.</p>
+
+<pre class="prettyprint"><code>// Expected data: { "firstName" : "Joe", "lastName" : "Bodoni"}
+// Define a template and assign it to the variable 'myTemplate':
+var myTemplate = '&lt;li&gt;&lt;h3&gt;[[= data.lastName ]], [[= data.firstName ]]&lt;/h3&gt;&lt;/li&gt;';
+</code></pre>
+
+<p>You could also just assign it to ChocolateChip's $.template object:</p>
+
+<pre class="prettyprint"><code>$.template.myTemplate = '&lt;li&gt;&lt;h3&gt;[[= data.lastName ]], [[=data.firstName ]]&lt;/h3&gt;&lt;/li&gt;';
+</code></pre>
+
+<p>To parse the template we just pass it to the $.template function:</p>
+
+<pre class="prettyprint"><code>var parsedTemplate = $.template(myTemplate);
+</code></pre>
+
+<p>Or:</p>
+
+<pre class="prettyprint"><code>var parsedTemplate = $.template($.templates.myTemplate);
+</code></pre>
+
+<p>You could also use the $.template object as a cache for you parsed templates. You would do this during load time. The advantage of stored pre-parsed templates in this way is that they are globally available are ready to use at any time:</p>
+
+<pre class="prettyprint"><code>// Define the temlpate:
+var myTemplate = '&lt;li&gt;&lt;h3&gt;[[= data.lastName ]], [[= data.firstName ]]&lt;/h3&gt;&lt;/li&gt;';
+// Parse it and cache it in $.templates:
+$.templates.parseTempate = $.template(myTemplate);
+</code></pre>
+
+<h2>Custom data names</h2>
+
+<p>When parsing a template, you can also define a custom name for the data in your template. You would also need to use that custom name in your template or it will generate and error:</p>
+
+<pre class="prettyprint"><code>// Use 'user' instead of 'data':
+$.template.myTemplate = '&lt;li&gt;&lt;h3&gt;[[= user.lastName ]], [[= user.firstName ]]&lt;/h3&gt;&lt;/li&gt;';
+// Provide 'user' as custom name when parsing:
+var parsedTemplate = $.template(myTemplate, 'user');
+</code></pre>
+
+<p>Presuming we had a JSON object for students like this, we can easily put together a template to output it:</p>
+
+<pre class="prettyprint"><code>var studentObj = {
+   "students": [
+      { 
+         "firstName":"Joe",
+         "lastName": "Bodoni",
+         "major":"Physics" 
+       }, 
+       { 
+         "firstName":"Suzy",
+         "lastName": "Que",
+         "major":"Chemistry" }, 
+       { 
+         "firstName":"John",
+         "lastName": "Doe",
+         \"major":"Mathematics" 
+       }
+   ],
+   "university" : "Palo Alto",
+   "year": "1950"
+}
+
+// 'student' will represent each iteration of the "Students" array above:
+var studentsTpl = '&lt;li&gt;&lt;h3&gt;[[= student.lastName]], [[= student.firstName ]]&lt;/ h3&gt;&lt;h4&gt;[[= student.major ]]&lt;/h4&gt;&lt;/li&gt;';
+var parsedStudentTmp = $.template(studentsTpl, 'student');
+
+var list = $('#studentList');
+// Iterated over the Students array:
+studentObj.students.forEach(function(ctx) {
+   // Append template with data:
+   list.append(parsedStudentTmp(ctx));
+});
+</code></pre>
+
+<h2>Using a Script Tag as a template</h2>
+
+<p>As mentioned earlier, you can store you template in a script tag. To get the template, you use a selector to get the tag and then grab its text content as the template. Remember to give the tag a custom type. This will prevent the browser from showing the contents of the script tag in the document. Browsers ignore the contents of script tags with an unknown type. We recommend using 'text/x-template', but you can use whatever you want, as long as it is not a know type. In the example below we gave the script and id so we can easily get it.</p>
+
+<pre class="prettyprint"><code>&lt;script id='studentTemplate' type='text/x-template'&gt;
+   &lt;li&gt;&lt;h3&gt;[[= student.lastName]], [[= student.firstName ]]&lt;/h3&gt;&lt;h4&gt;[[= student.major ]]&lt;/h4&gt;&lt;/li&gt;
+&lt;/script&gt;   
+
+var studentTemplate = $('#studentTemplate').text();
+var parsedStudents = $.template(studentTemplate, 'student');
+var list = $('#studentList');
+// Iterated over the Students array:
+studentObj.students.forEach(function(ctx) {
+    // Append template with data:
+    list.append(parsedStudentTmp(ctx));
+});
+</code></pre>
+
+<h2>JavaScript in Templates</h2>
+
+<p>ChocolateChip allows you to execute JavaScript code inside your template while it is being rendered. You could use this for some type of boolean check:</p>
+
+<p>// Supposing the following data structure:
+songs = [
+   {
+      title: 'whatever',
+      artist: 'whoever',
+      album: 'something',
+      description: 'blah blah',
+      genre: 'pop'
+   },
+   etc.
+];</p>
+
+<pre class="prettyprint"><code>var songs = "&lt;li&gt;\
+[[ if (song.genre === 'pop') { ]]\
+   &lt;li&gt;\
+      &lt;h3&gt;[[= song.title ]]&lt;/h3&gt;\
+      &lt;h4&gt;[[= song.artist ]]&lt;/h4&gt;\
+      &lt;p&gt;[[= song.detail ]]&lt;/h4&gt;\
+   &lt;/li&gt;\
+[[ } else { ]]\
+   &lt;li&gt;\
+      &lt;h3&gt;No Match&lt;/h3&gt;\
+   &lt;/li&gt;\
+[[ } ]]";
+</code></pre>
+
+<p>Or, as a script template:</p>
+
+<pre class="prettyprint"><code>&lt;script id='songTemplate' type='text'/x-template'&gt;
+   &lt;li&gt;
+   [[ if (song.genre === 'pop') { ]]
+      &lt;li&gt;
+         &lt;h3&gt;[[= song.title ]]&lt;/h3&gt;
+         &lt;h4&gt;[[= song.artist ]]&lt;/h4&gt;
+         &lt;p&gt;[[= song.detail ]]&lt;/h4&gt;
+      &lt;/li&gt;
+   [[ } else { ]]
+      &lt;li&gt;
+         &lt;h3&gt;No Match&lt;/h3&gt;\
+      &lt;/li&gt;
+   [[ } ]]
+&lt;/script&gt;
+</code></pre>
+
+<h3>Example</h3>
+<p>You can try out this live example of templates on <a href="http://codepen.io/rbiggs/pen/JaLHx"></a>Codepen.</a></p>
+</article>
+
+
+<script>
+   (function() {
+      prettyPrint();
+   })();
+</script>
+</body>
+</html>

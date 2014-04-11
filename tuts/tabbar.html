@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tabbar</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../prettify/prettify.css">
+  <script type='text/javascript' src='../prettify/prettify.js'></script>
+  <script type='text/javascript' src='../prettify/lang-css.js'></script>
+</head>
+<body>
+<article>
+<h4>Tutorials</h4>
+<h5>ChocolateChip-UI version 3.5.3</h5>
+<h1>Tab Bar</h1>
+
+<p>ChocolateChip-UI provides the tab bar module as a convient way to implement an app with a limited set of screens through which the user can toggle. Unlike a navigation list, which allows the user to drill down to other screens, the tab bar interface presents the user with a small set of screen that are toggled by pressing the tab bar buttons. If you have used the iTunes app on iOS, this is the same experience. </p>
+
+<p>The tab bar interface is implemented differently for each operating system. On iOS the tab bar is always at the bottom of the screen and its buttons have text and icons. Android and Windows Phone 8 always display the tab bar at the top of the screen and without icons. When you initialize the tab bar interface, ChocolateChip-UI takes care of making the appropriate adjustments for each OS.</p>
+
+<p>Be aware that the portrait mode of mobile devices is quite limited. As such we recommend you do not try to put more than five tabs into a tab bar app. If you need more than for tabs, consider making your last tab a paging control. That will allow the user to page through multiple sections within that same article. See the paging tutorial for information about how to implement it. If you do implement a paging article, we strongly suggest you make it the last tab for a better user experience.</p>
+
+<p>To create a tab bar interface, just put together your app with the typical structure of navs and articles, which will constitute the screens the tab bar toggles. Then, in your script tag, include an initialization script to set the tab bar up. The tab bar method expects the following values:</p>
+
+<ul class='list'>
+<li>the number of tabs (an integer)</li>
+<li>the labels for the tabs (an array of quoted strings)</li>
+<li>the path to where you have icons for the tab buttons stored (a valid url)</li>
+<li>a name for each icon (this will allow you to style each tab button with an icon)</li>
+<li>
+</ul>
+
+<p>a selected tab (one-based, if no value is provided, the first tab will be selected)</p>
+
+<pre class="prettyprint"><code>$(function() {
+   var opts = {
+      tabs : 5,
+      icons : ["music", "pictures", "documents", "downloads", "favorites"],
+      labels : ["Music", "Pictures", "Documents", "Downloads", "Favorites"],
+      selected : 1
+  };
+  $.UITabbar(opts);
+});
+</code></pre>
+
+<p>Based on the above code, here is some CSS to style the tab buttons:</p>
+
+<pre class="prettyprint"><code>.tabbar &gt; .button.music &gt; .icon  {
+   -webkit-mask-image: url('../images/icons/Head_phones.svg');
+}
+.tabbar &gt; .button.pictures &gt; .icon  {
+   -webkit-mask-image: url('../images/icons/Camera.svg');
+}
+.tabbar &gt; .button.documents &gt; .icon  {
+   -webkit-mask-image: url('../images/icons/Documents.svg');
+}
+.tabbar &gt; .button.downloads &gt; .icon  {
+   -webkit-mask-image: url('../images/icons/Download.svg');
+}
+.tabbar &gt; .button.favorites &gt; .icon  {
+   -webkit-mask-image: url('../images/icons/Favorite.svg');
+}     
+</code></pre>
+
+<p>You have several options of how to implement icons in the tab bar buttons. You could just use a colored png image. You could use a gray scale image as an mask image with a background color. This allows you to easily change the color of the icon on hover/touch. Of you could use an SVG image in either of these way. We recommend SVG for icons because they are vector-based, resolution independent and scalable.</p>
+
+<h3>Using a Nav List with Tab Bar</h3>
+<p>If you have more screens that can fit in the limit of five tabs, you can make the last tab a navigation list. For the tab label put 'More' and for the icon name put 'more', ChocolateChip-UI will automatically provide the icon for this tab. Then, for that tab, put in a navigation list that directs the user to the extra screens. Because this is a navigation list, each article that it points to should have a 'Back' button in its nav so that the user can return to the navigation list. Please examine the <code>tabbar-nav.html</code> file in the examples folders to see how this is put together.</p>
+
+<p>The icon for the 'More' tab is an SVG data url on Android and iOS. On Windows it is part of the system font 'SegoeUI Symbol'. Here is how to change the color of the 'More' tab icon to whatever you want:</p>
+<pre class="prettyprint"><code>/* Android: */
+.tabbar > .button.more::before { 
+  background-color: red;
+}
+/* iOS: */
+.tabbar > .button.more > .icon {
+  background-color: red;
+}
+/* Windows Phone 8: */
+.tabbar > .button.more::before {
+  color: red;
+}
+</code></pre>
+
+<h3>Note</h3>
+
+<p>Tab bar icons will not be displayed on Android or Windows Phone 8. Icons in tab bar buttons is an iOS only feature. Changing the tab bar interface to show icons in the tab bar buttons on Android and Windows Phone 8 is a direct violation of the Human Interface Guidelines of both Google and Microsoft. However, if you add a 'More' tab for a navigation list, the 'more' icon will be displayed instead of the text label. On iOS, both the icon and the text will appear as with other tabs.</p>
+
+<h3>Example</h3>
+<p>Try out this live example on <a href="http://codepen.io/rbiggs/pen/HckJl">Codepen</a></p>
+
+<h3>Pub/Sub</h3>
+
+<p>When toggling tabs, ChocolateChip-UI publishes to two channels which you can subscribe to using the built-in sub/sub methods. The channels are:</p>
+
+<ul>
+  <li>chui/navigate/leave</li>
+  <li>chui/navigate/enter</li>
+</ul>
+
+<p>By subscribing to these, you can get the ids of the article you are leaving and the article you are bringing forward.</p>
+<pre class="prettyprint"><code>$(function() {
+   // Function for forward navigation:
+   var subscribeNavForward = function(topic, id) {
+      var article = $('#' + id).prev().find('h1').text();
+      alert('Welcome to ' + article);
+   }
+   // Function for back navigation:
+   var subscribeNavReturn = function(topic, id) {
+      var article = $('#' + id).prev().find('h1').text();
+      alert('Welcome back to ' + article);
+   };
+   // Subscribe to forward enter channel:
+   var navForwardSubscription = $.subscribe('chui/navigate/enter', subscribeNavForward);
+   // Subscribe to back enter channel:
+   var navReturnSubscription = $.subscribe('chui/navigateBack/enter', subscribeNavReturn);
+});
+</code></pre>
+</article>
+
+<script>
+   (function() {
+      prettyPrint();
+   })();
+</script>
+</body>
+</html>

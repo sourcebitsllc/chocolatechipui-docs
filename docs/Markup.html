@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Markup</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../prettify/prettify.css">
+  <script type='text/javascript' src='../prettify/prettify.js'></script>
+  <script type='text/javascript' src='../prettify/lang-css.js'></script>
+</head>
+<body>
+<article>
+<h4>Documentation</h4>
+<h5>ChocolateChip-UI version 3.5.3</h5>
+<h1>ChUI Markup</h1>
+<ul class='submenu'>
+   <li><a href="#article">article</a></li>
+   <li><a href="#navbar">nav (navbar)</a></li>
+   <li><a href="#section">section</a></li>
+   <li><a href="#navigation_states">navigation states</a></li>
+   <li><a href="#container_layout">container layout</a></li>
+   <li><a href="#h1">h1 (navbar title)</a></li>
+   <li><a href="#h2">h2 (list title</a></li>
+   <li><a href="#h3">h3 (list item title)</a></li>
+   <li><a href="#h4">h4 (list item subtitle)</a></li>
+   <li><a href="#h5">h5</a></li>
+   <li><a href="#normal_case">normal case</a></li>
+   <li><a href="#button">button</a></li>
+   <li><a href="#back_button">back button</a></li>
+   <li><a href="#align_flush">align-flush</a></li>
+   <li><a href="#p">p (list detail)</a></li>
+   <li><a href="#list">list</a></li>
+   <li><a href="#li">li</a></li>
+   <li><a href="#nav_indicators">nav indicators</a></li>
+   <li><a href="#detail_disclosure_in_list">list detail disclosure</a></li>
+   <li><a href="#comp">comp (composite layout)</a></li>
+   <li><a href="#show_detail_comp">comp show-detail</a></li>
+   <li><a href="#switched_list">switched list</a></li>
+   <li><a href="#nav_indicator_comp">comp nav indicator</a></li>
+   <li><a href="#couter_date">counter/date</a></li>
+   <li><a href="#counter_with_nav_indicator">counter with nav</a></li>
+   <li><a href="#date_time">date/time</a></li>
+   <li><a href="#date_time_counter">date/time/counter</a></li>
+   <li><a href="#busy">busy</a></li>
+   <li><a href="#segmented">segmented</a></li>
+   <li><a href="#paging">paging</a></li>
+   <li><a href="#popup">popup</a></li>
+   <li><a href="#popover">popover</a></li>
+   <li><a href="#mask">mask</a></li>
+   <li><a href="#select_list">select list</a></li>
+   <li><a href="#deletable_list">deletable list</a></li>
+   <li><a href="#switch">switch</a></li>
+   <li><a href="#stepper">stepper</a></li>
+   <li><a href="#tabbar">tabbar</a></li>
+   <li><a href="#tabbar_icons">tabbar icons</a></li>
+   <li><a href="#toolbar">toolbar</a></li>
+   <li><a href="#range">range</a></li>
+   <li><a href="#sheet">sheet</a></li>
+   <li><a href="#slideout">slide-out</a></li>
+   <li><a href="#splitlayout">splitlayout</a></li>
+   <li><a href="#grids">CSS Grids</a></li>
+</ul>
+<p>ChocolateChipUI uses the following HTML5 tags for creating all of its layouts and widgets:</p>
+
+<ul class='list'>
+<li>article</li>
+<li>nav</li>
+<li>section</li>
+<li>div</li>
+<li>aside</li>
+<li>header</li>
+<li>footer</li>
+<li>p</li>
+<li>span</li>
+<li>a</li>
+<li>ul</li>
+<li>li</li>
+<li>h1 - h5</li>
+</ul>
+
+<p>Except for the <em>a</em> tag and <em>span</em> tag, these are block elements. By adding classes to these tags, ChocolateChip-UI provides them with additional properties for layout and user interaction. As such, you can easily extend ChocolateChip-UI by creating your own classes for these tag to add new layouts, widgets or behaviors.</p>
+
+<h2>Right-to-Left Alphabets</h2>
+
+<p>If you need to support right-to-left alphabets, such as Arabic, Farsi, Urdu or Hebrew, all you have to do is add the attribute <code>dir="rtl"</code> to the HTML tag of your app. ChocolateChip-UI will automatically adjust your layouts, navigation and user interactions for proper behavior for a right-to-left scenario. Please be aware that JavaScript does not allow mathematical operations on non-ascii numbers. So, if you need to do so, you'll need to handle it with normal numbers first, then convert them to the numerical system appropriate to the alphabet you are using. Or you can just leave the numbers in their default. If your numbers are being switch around in the wrong order, put them in their own span and define their dir as "ltr":</p>
+
+<pre class="prettyprint"><code>&lt;h2&gt;السائر: &lt;span dir='ltr'&gt;1-8&lt;/span&gt; حد&lt;/h2&gt;
+</code></pre>
+
+<a name="article"></a>
+<h2>article</h2>
+
+<p>This is the basic building block of ChocolateChip-UI. It is used to create the software equivalent of a view. Think of it as everything on the screen between the nav bar and the bottom of the screen. If your app is very simple, you may only need one article tag. However, if you have various screens that you want to present to the user, you'll need to use a tab bar interface or a navigation list. These allow the user to switch from one article to another with animations appropriate to the device platform.</p>
+
+<p>When using a navigation list, ChocolateChip-UI attaches three class to the articles to indicate their navigation state: previous, current, next. Similarly, the tab bar interface attaches the two classes, current and next. As a developer, you don't have to do anything to make this happen, the interface handles this for you automatically.</p>
+
+<pre class="prettyprint"><code>&lt;article id='main' class='current'&gt;
+    // article content here
+&lt;/article&gt;
+&lt;article id='pictures' class='next'&gt;
+    // article content here
+&lt;/article&gt;
+</code></pre>
+
+<p>Every article should have a unique id so that it can be identified by the navigation system. These must be valid HTML ids. At load time, ChocolateChip-UI checks to see if you have manually set the navigation state of your articles. If not, it will set the first article as current and the others as next. This will mean that initially you app may momentarily load in a state of disarray before it is arranged properly. As such, we strongly recommend that you always put a state on each article so that it loads correctly.</p>
+
+<a name="navbar"></a>
+<h2>nav (navbar)</h2>
+
+<p>The nav tag creates a navbar used to hold the article's title, as well as any interactive buttons which you may require for its article:</p>
+
+<pre class="prettyprint"><code>&lt;nav class='current'&gt;
+   &lt;h1&gt;My App&lt;/h1&gt;
+   &lt;a class='button' id='editButton'&gt;Edit&lt;/a&gt;
+&lt;/nav&gt;
+</code></pre>
+
+<p>At load time, ChocolateChip-UI creates a global nav that it prepends to your app as the first child of the body tag. This is the visible background of all you other navs. They get positioned over it. You can see it in the Web inspector. It's the only nav that has an id of 'globarNav' and has no content.</p>
+
+<p>To associate a nav with an article, simply place it before its article. An app with multiple articles will have this kind of structure:</p>
+
+<pre class="prettyprint"><code>&lt;body&gt;
+   &lt;nav class='current'&gt;
+      &lt;h1&gt;My App&lt;/h1&gt;
+   &lt;/nav&gt;
+   &lt;article id='main' class='current'&gt;
+      &lt;!-- Content here --&gt;
+   &lt;/article&gt;
+   &lt;nav class='next'&gt;
+      &lt;h1&gt;My App&lt;/h1&gt;
+   &lt;/nav&gt;
+   &lt;article id='Music' class='next'&gt;
+      &lt;!-- Content here --&gt;
+   &lt;/article&gt;
+   &lt;nav class='next'&gt;
+      &lt;h1&gt;My App&lt;/h1&gt;
+   &lt;/nav&gt;
+   &lt;article id='Movies' class='next'&gt;
+      &lt;!-- Content here --&gt;
+   &lt;/article&gt;
+&lt;/body&gt;
+</code></pre>
+
+<a name="section"></a>
+<h2>section</h2>
+
+<p>The section tag is always the first child of an article. It provides the vertical scrolling when the content exceeds the viewable screen. The section tag is the container for all the content that you will present to the user.</p>
+
+<a name="navigation_states"></a>
+<h2>current, previous, next</h2>
+
+<p>These are the classes that ChocolateChip-UI uses to manage the visible appearance of your layouts. They are used on articles, navs, and paging sections. (See the article examples above for usage.)</p>
+
+<a name="container_layout"></a>
+<h2>Container Layout</h2>
+
+<p>The following classes are used for designating layout containers. You can use these on a section or div tag.</p>
+
+<h3>horizontal</h3>
+
+<p>When put on a block element, this class will display its contents distributed horizontally.</p>
+
+<h3>vertical</h3>
+
+<p>When put on a block element, this class will display its contents stacked vertically.</p>
+
+<h3>centered</h3>
+
+<p>When used with the horizontal class, this class will center the contents horizontally in the container.</p>
+
+<h3>scroller-vertical</h3>
+
+<p>When put on a div or other block element, this class will make the container scroll vertically.</p>
+
+<h3>scroller-horizontal</h3>
+
+<p>When put on a div or other block element, this class will make the container scroll horizontally.</p>
+
+<a name="h1"></a>
+<h2>h1 (navbar title)</h2>
+
+<p>This is the title in the nav bar.</p>
+
+<a name="h2"></a>
+<h2>h2 (list title)</h2>
+
+<p>Use this as the title of a list. Place it directly befor the list that it represents.</p>
+
+<pre class="prettyprint"><code>&lt;h2&gt;Fruits&lt;/h2&gt;
+&lt;ul class='list'&gt;
+    &lt;li&gt;Apples&lt;/li&gt;
+    &lt;li&gt;Orange&lt;/li&gt;
+    &lt;li&gt;Bananas&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<a name="h3"></a>
+<h2>h3 (list item title)</h2>
+
+<p>Use this as the title of a list item.</p>
+
+<pre class="prettyprint"><code>&lt;ul class='list' id='vegetables'&gt;
+   &lt;li&gt;
+      &lt;h3&gt;Letuce&lt;/h3&gt;
+   &lt;/li&gt;
+   &lt;li&gt;
+      &lt;h3&gt;Tomatoes&lt;/h3&gt;
+   &lt;/li&gt;
+   &lt;li&gt;
+      &lt;h3&gt;Onions&lt;/h3&gt;
+   &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<a name="h4"></a>
+<h2>h4 (list item subtitle)</h2>
+
+<p>Use this as the subtitle of a list item.</p>
+
+<pre class="prettyprint"><code>&lt;ul class='list' id='vegetables'&gt;
+   &lt;li&gt;
+      &lt;h3&gt;Letuce&lt;/h3&gt;
+      &lt;/h4&gt;Type: leaf&lt;/h4&gt;
+   &lt;/li&gt;
+   &lt;li&gt;
+      &lt;h3&gt;Tomatoes&lt;/h3&gt;
+      &lt;/h4&gt;Type: fruit&lt;/h4&gt;
+   &lt;/li&gt;
+   &lt;li&gt;
+      &lt;h3&gt;Onions&lt;/h3&gt;
+      &lt;/h4&gt;Type: root&lt;/h4&gt;
+   &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<a name="h5"></a>
+<h2>h5</h2>
+
+<p>You can use this for any other lower titling needs you might have.</p>
+
+<a name="normal_case"></a>
+<h2>normal-case</h2>
+
+<pre class="prettyprint"><code>By default the h2 before a list is always in uppercase. Putting this class on it will force it to display normal case.
+
+
+&lt;h2 class='normal-case&gt;Fruits&lt;/h2&gt;
+&lt;ul class='list'&gt;
+   &lt;li&gt;Apples&lt;/li&gt;
+   &lt;li&gt;Orange&lt;/li&gt;
+   &lt;li&gt;Bananas&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<a name="button"></a>
+<h2>button</h2>
+
+<p>This class is placed on an anchor tag to mark it as a button. The button will be styled appropriately for the device's operating system.</p>
+
+<pre class="prettyprint"><code>&lt;a href='whatever' class='button'&gt;Whatever&lt;/a&gt;
+</code></pre>
+
+<p>For navigation purposes you can use the following classes on your buttons. They will get the appropriate look for the device operating system:</p>
+
+<a name="back_button"></a>
+<ul>
+<li>back (used to return to previous article)</li>
+<li>backTo (used for non-linear returns)</li>
+</ul>
+
+<p>The back and backTo buttons look identical on all platforms. There purpose is different. The back button automatically returns the user to the previous article. The backTo button does not. It is used for returning the user to an arbitrary position in the navigation history that you decide. For example, if the user has navigated through several screens of a process and you want to give him the option of returning to the beginning, you would use the backTo button along with a bound event that would trigger the navigation to a specific article using the method $.UINavigateBackToArticle(). See the documentation for this method in ChUI.js and read the tutorial on navigation to see how to implement it. Also, the example navigation-backto.html shows all the possible navigation techniques in action.</p>
+
+<pre class="prettyprint"><code>&lt;nav class='current'&gt;
+   &lt;a class='button back'&gt;Back&lt;/a&gt;
+   &lt;h1&gt;Candies&lt;/h1&gt;
+&lt;/nav&gt;
+</code></pre>
+
+<pre class="prettyprint"><code>&lt;nav class='current'&gt;
+   &lt;a class='button backTo'&gt;Back&lt;/a&gt;
+   &lt;h1&gt;Candies&lt;/h1&gt;
+&lt;/nav&gt;
+</code></pre>
+
+<a name="align_flush"></a>
+<p>When you put a button in the nav and want it to be flush against the right side of the screen, you can put the class 'align-flush' on it:</p>
+
+<pre class="prettyprint"><code>&lt;nav class='current'&gt;
+   &lt;a class='button back'&gt;Back&lt;/a&gt;
+   &lt;h1&gt;Songs&lt;/h1&gt;
+   &lt;a class='button align-flush'&gt;Edit&lt;/a&gt;
+&lt;/nav&gt;
+</code></pre>
+
+<a name="p"></a>
+<h2>p (list detail)</h2>
+
+<p>The paragraph tag is used in a list item as the item detail, as well as after a list as a footer. It can also be used as the message container in a popup or sheet. You can put more than one p tag in a list item or after a list for accomodate your needs.</p>
+
+<a name="list"></a>
+<h2>list</h2>
+
+<p>The ul tag (unordered list) is the element used for displaying tabular data. To make it for layout always put the class 'list' on it. Otherwise it will appear as a normal unordered list with bullets. </p>
+
+<pre class="prettyprint"><code>&lt;ul class='list'&gt;
+   &lt;li&gt;Apples&lt;/li&gt;
+   &lt;li&gt;Orange&lt;/li&gt;
+   &lt;li&gt;Bananas&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<a name="li"></a>
+<h2>li</h2>
+
+<p>The list item is the cell for you data. You can put the following elements it them and they will stack vertically in order: img, h2, h3, p.</p>
+
+<pre class="prettyprint"><code>&lt;ul class='list'&gt;
+   &lt;li&gt;
+      &lt;img src='/images/photos/me.jpg' width='100'&gt;
+      &lt;h3&gt;Me&lt;/h3&gt;
+      &lt;h4&gt;Thing I like&lt;/h4&gt;
+      &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.&lt;/p&gt;
+   &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<a name="nav_indicators"></a>
+<p>If you want to make a simple navigation list, just put the nav class on the list items to indicate that. On iOS these display the disclosure indicator. On Android and Windows Phone 8 these are ignored.</p>
+
+<pre class="prettyprint"><code>&lt;ul class='list'&gt;
+   &lt;li class='nav'&gt;
+      &lt;h3&gt;People&lt;/h3&gt;
+   &lt;/li&gt;
+   &lt;li class='nav'&gt;
+      &lt;h3&gt;Places&lt;/h3&gt;
+   &lt;/li&gt;
+   &lt;li class='nav'&gt;
+      &lt;h3&gt;Things&lt;/h3&gt;
+   &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<a name="detail_disclosure_in_list"></a>
+<p>You can also make a list item show a detail disclosre by putting the class 'show-detial' on it:</p>
+
+<pre class="prettyprint"><code>&lt;ul class='list'&gt;
+   &lt;li class='show-detail'&gt;
+      &lt;h3&gt;People&lt;/h3&gt;
+   &lt;/li&gt;
+   &lt;li class='show-detail'&gt;
+      &lt;h3&gt;Places&lt;/h3&gt;
+   &lt;/li&gt;
+   &lt;li class='show-detail'&gt;
+      &lt;h3&gt;Things&lt;/h3&gt;
+   &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<a name="comp"></a>
+<h3>comp (composite layout)</h3>
+
+<p>If you have layout needs that are more complicated than the simple stacking order of the default list item, you can put the 'comp' class on the list item. Comp stands for complex or composite. This makes the list item spread its items across horizontally, allowing you to create columns inside the list item. To do this you can use several combinations of asides and divs. The aside is for secondary data and the div is for the main data:</p>
+
+<pre class="prettyprint"><code>aside - div
+div - aside
+aside - div - aside
+</code></pre>
+
+<p>Note that with the comp list item style, the last aside always displays its content horizontally. This is done using flexible box model styles. If you have layout needs not provided by this structure, create some classes and style with CSS to cover your needs. Here are some examples of comp list items:</p>
+
+<pre class="prettyprint"><code>&lt;li class='comp' data-goto='people'&gt;
+   &lt;div&gt;
+      &lt;h3&gt;People&lt;/h3&gt;
+      &lt;h4&gt;Your Friends&lt;/h4&gt;
+   &lt;/div&gt;
+   &lt;aside&gt;
+      &lt;span class='nav'&gt;&lt;/span&gt;
+   &lt;/aside&gt;
+&lt;/li&gt;
+</code></pre>
+
+<p>In the above example, notice that the aside has a span with a class of 'nav'. On iOS this will be vertically centered to the height of the list item. On Android and Windows Phone 8 this will not be displayed.</p>
+
+<pre class="prettyprint"><code>&lt;li class='comp'&gt;
+   &lt;div&gt;
+      &lt;h3&gt;Places&lt;/h3&gt;
+      &lt;h4&gt;Interesting Destinations&lt;/h4&gt;
+      &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.&lt;/p&gt;
+   &lt;/div&gt;
+   &lt;aside&gt;
+      &lt;span class='nav'&gt;&lt;/span&gt;
+   &lt;/aside&gt;
+&lt;/li&gt;
+
+&lt;li class='comp'&gt;
+   &lt;aside&gt;
+      &lt;img title='Hurry and Harm' src="../images/music/Hurry and Harm.png" height="80px"&gt;
+   &lt;/aside&gt;
+   &lt;div&gt;
+      &lt;h3&gt;The Hurry and the Harm&lt;/h3&gt;
+      &lt;h4&gt;Hurt&lt;/h4&gt;
+   &lt;/div&gt;
+   &lt;aside&gt;
+      &lt;span class='show-detail'&gt;&lt;/span&gt;
+   &lt;/aside&gt;
+&lt;/li&gt;
+</code></pre>
+
+<a name="show_detail_comp"></a>
+<h3>show-detail</h3>
+
+<p>Sometimes you want to let the user know that there is some detail information that they can see by tapping a list item. For this you can put the 'show-detail' class on the list item, or you can put a span with the class as the last item in the list item:</p>
+
+<pre class="prettyprint"><code>&lt;li class='comp'&gt;
+   &lt;aside&gt;
+      &lt;img title='Imagine Dragons' src="../images/music/Imagine Dragons.png" height="80px"&gt;
+   &lt;/aside&gt;
+   &lt;div&gt;
+      &lt;h3&gt;Imagine Dragons&lt;/h3&gt;
+      &lt;h4&gt;Radioactive&lt;/h4&gt;
+      &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.&lt;/p&gt;
+   &lt;/div&gt;
+   &lt;aside&gt;
+      &lt;span class='show-detail'&gt;&lt;/span&gt;
+   &lt;/aside&gt;
+&lt;/li&gt;
+</code></pre>
+
+<a name="switched_list"></a>
+<h3>switched</h3>
+
+<p>In certain situations you might want to stress a list item's subtitle over its title. You can do this by putting the 'switched' class on the list item. This will visually switch the two around so that the subtitle comes first and is larger than the title, while displaying them on the same line:</p>
+
+<pre class="prettyprint"><code>&lt;li class='switched'&gt;
+   &lt;h3&gt;People&lt;/h3&gt;
+   &lt;h4&gt;Your Friends&lt;/h4&gt;
+&lt;/li&gt;
+</code></pre>
+
+<a name="nav_indicator_comp"></a>
+<h3>nav (class)</h3>
+
+<p>This is a class, not the element. You put it on a list item when it will navigate to another article. This will display the iOS left chevron automatically. No navigation marker will be show on Android or Windows, as they do not use these affordances. If you are doing a comp layout, you can put the 'nav' class on a span and put that in the last aside. This will result in the chevron being center vertical to the height of the list item, which looks better for list items with a lot of content.</p>
+
+<p>Here's the nav class directly on a list:</p>
+
+<pre class="prettyprint"><code>&lt;li class='nav'&gt;
+   &lt;h3&gt;Deserts&lt;/h3&gt;
+&lt;/li&gt;
+</code></pre>
+
+<p>Here's the nav class on a span in a comp layout:</p>
+
+<pre class="prettyprint"><code>&lt;li class='comp'&gt;
+   &lt;div&gt;
+      &lt;h3&gt;Recipes&lt;/h3&gt;
+   &lt;/div&gt;
+   &lt;aside&gt;
+      &lt;h4&gt;Deserts&lt;/h4&gt;
+      &lt;span class='nav'&gt;&lt;/span&gt;
+   &lt;/aside&gt;
+&lt;/li&gt;
+</code></pre>
+
+<a name="couter_date"></a>
+<h3>counter/date-time</h3>
+
+<p>ChocoalteChip-UI provides two class to handle displaying special data types in your list items: counter and data-time. Counter is used to display a numerical value, such as the number of messages associated with that list item. Date-time is used to display a date or time value. This could be numerical or text. To implement either of these, put their class on a span in the last aside. You can have them both in the same aside if needed. See the examples below:</p>
+
+<a name="counter_with_nav_indicator"></a>
+<p><strong>Counter with nav</strong></p>
+
+<pre class="prettyprint"><code>&lt;li class='comp'&gt;
+   &lt;div&gt;
+      &lt;h3&gt;Recipes&lt;/h3&gt;
+   &lt;/div&gt;
+   &lt;aside&gt;
+      &lt;h4&gt;Deserts&lt;/h4&gt;
+      &lt;span class='counter'&gt;43&lt;/span&gt;
+      &lt;span class='nav'&gt;&lt;/span&gt;
+   &lt;/aside&gt;
+&lt;/li&gt;
+</code></pre>
+
+<a name="date_time"></a>
+<p><strong>Date-time:</strong></p>
+
+<pre class="prettyprint"><code>&lt;li class='comp'&gt;
+   &lt;div&gt;
+      &lt;h3&gt;To Do&lt;/h3&gt;
+   &lt;/div&gt;
+   &lt;aside&gt;
+      &lt;h4&gt;Apointments&lt;/h4&gt;
+      &lt;span class='date-time'&gt;Monday&lt;/span&gt;
+      &lt;span class='nav'&gt;&lt;/span&gt;
+   &lt;/aside&gt;
+&lt;/li&gt;
+
+&lt;h2&gt;Shows&lt;/h2&gt;
+&lt;li class='comp'&gt;
+   &lt;div&gt;
+      &lt;h3&gt;Comedy&lt;/h3&gt;
+   &lt;/div&gt;
+   &lt;aside&gt;
+      &lt;h4&gt;SNL&lt;/h4&gt;
+      &lt;span class='date-time'&gt;8:00 PM&lt;/span&gt;
+      &lt;span class='nav'&gt;&lt;/span&gt;
+   &lt;/aside&gt;
+&lt;/li&gt;
+</code></pre>
+
+<a name="date_time_counter"></a>
+<p><strong>Combination date-time and counter:</strong></p>
+
+<pre class="prettyprint"><code>&lt;li class='comp'&gt;
+   &lt;aside&gt;
+      &lt;img src="../images/ios/icon-weather.png" height='40px'&gt;
+   &lt;/aside&gt;
+   &lt;div&gt;
+      &lt;h3&gt;Weather&lt;/h3&gt;
+   &lt;/div&gt;
+   &lt;aside&gt;
+      &lt;h4&gt;Alerts&lt;/h4&gt;
+      &lt;span class='counter'&gt;2&lt;/span&gt;
+      &lt;span class='nav'&gt;&lt;/span&gt;
+   &lt;/aside&gt;
+&lt;/li&gt;
+</code></pre>
+
+<p>When placed on a container, the content will be clipped and display and ellipsis when it exceeds the width of the container. For ellipsis to work the container must have some kind of width declared. It will not work if the width is at auto.</p>
+
+<a name="busy"></a>
+<h2>busy</h2>
+
+<p>You never need to put a busy indicator tag in your document. ChocolateChip-UI have a special method to do that: $.UIBusy(). This method will output a div that with that class for iOS and Android that gets styles to look like the native activity indicator of each platform. On Windows Phone 8, ChocolateChip-UI outputs a native Windows 8 progress bar. You can provide a color for you indicators that will be applied appropriately for each operating system.See ChUI.js for more details.</p>
+
+<a name="segmented"></a>
+<h2>segmented</h2>
+
+<p>You can create a segmented control by putting the class 'segmented' on a div. It should have at least two children, which must be links with the class 'button'. Please be aware that mobile devices in portrait orientation may not be able to display segmented controls with more than three buttons. If you need to show more than three or four items, consider using a Paging control. At load time, ChocolateChip-UI initializes any segmented control markup so that the buttons select and deselect properly. You can also attach a delegate event to the segmented control to handle user interaction.</p>
+
+<p>You can also create a segmented control dynamically using the $.UICreateSegmented() method. See ChUI.js for more details.</p>
+
+<p><strong>Example:</strong></p>
+
+<pre class="prettyprint"><code>&lt;div style='' class='horizontal centered'&gt;
+   &lt;div class='segmented'&gt;
+      &lt;a class='button'&gt;Radioactive&lt;/a&gt;
+      &lt;a class='button'&gt;Hurt&lt;/a&gt;
+      &lt;a class='button'&gt;Permanent&lt;/a&gt;
+   &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<a name="paging"></a>
+<h2>paging</h2>
+
+<p>The class 'paging' is used to assemble a paging control. You put this on a segmented control in the article's nav. You must also indicate the orientation for the paging control. You have two choices: horizontal or vertical. Here is what it should look like:</p>
+
+<pre class="prettyprint"><code>&lt;nav&gt;
+   &lt;h1&gt;Paging&lt;/h1&gt;
+   &lt;div class='segmented paging horizontal align-flush'&gt;
+      &lt;a class='button' href='javascript:void(null)' title='previous panel'&gt;&lt;/a&gt;
+      &lt;a class='button' href='javascript:void(null)' title='next panel'&gt;&lt;/a&gt;
+   &lt;/div&gt;
+&lt;/nav&gt;
+</code></pre>
+
+<p>For this to work, ChocolateChip-UI expects that the nav's article will have a series of sections that you want to page through. Depending on whether you put horizontal or vertical, the sections will slide in and out horizontally or vertically. There is no limit on how many sections the control can page. In the example below you can see the structure for the article. </p>
+
+<pre class="prettyprint"><code>&lt;article id="main" class="current paging"&gt;
+   &lt;section&gt;
+      &lt;h2&gt;First Article&lt;/h2&gt;
+      &lt;ul class='list'&gt;
+      &lt;li&gt;
+         &lt;h3&gt;Thing One&lt;/h3&gt;
+      &lt;/li&gt;
+       &lt;/ul&gt;
+    &lt;/section&gt;
+    &lt;section&gt;
+      &lt;h2&gt;Second Article&lt;/h2&gt;
+      &lt;ul class='list'&gt;
+      &lt;li&gt;
+         &lt;h3&gt;Item One&lt;/h3&gt;
+      &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/section&gt;
+    &lt;section&gt;
+      &lt;h2&gt;Third Article&lt;/h2&gt;
+      &lt;ul class='list'&gt;
+        &lt;li&gt;
+           &lt;h3&gt;Item 1&lt;/h3&gt;
+           &lt;cellsubtitle&gt;Item 1 Subtitle&lt;/cellsubtitle&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/section&gt;
+&lt;/article&gt;
+</code></pre>
+
+<p>After getting your markup complete you need to initialize it with this method: $.UIPaging(). Since the paging control requires initialization to work, you could create all the parts dynamically, then execute $.UIPaging(). See ChUI.js for more details.</p>
+
+<a name="popup"></a>
+<h2>popup</h2>
+
+<p>The popup control is created dynamically by the $.UIPopup method. It creates a div with the class 'popup'. It has two states, indicated by the following clases: opened, closed.</p>
+
+<p>The popup has a header tag with an h1 inside it for the title. There is a div with the class 'panel' that holds a p tag. This is where the popup's message is displayed. Lastly is a footer tag which holds at least one button for closing the popup. You could also initialize it with a second button to perform some action.  This control gets created with the $.UIPopup method. See ChUI.js for more details.</p>
+
+<a name="popover"></a>
+<h2>popover</h2>
+
+<p>The popover is a type of menu control. You create it using the UIPopover method. It's really just an empty container for you to present the user with a series of actionable items. On iOS it has the typical appearance of a popover with a pointer off the top. On Android it resembles a typical drop down spinner. On Windows Phone 8 it resembles a typical popup menu. The popover has a nav with an h1 tag for its title, this is for the default behavior expected for an iOS popover. This header is not displayed on Android or Windows Phone 8. Lastly, it has a section tag. This will be a vertically scrollable area. You can append whatever you want in there. Use a delegated event to handle the user interactions. See ChUI.js for more details. </p>
+
+<a name="mask"></a>
+<h2>mask</h2>
+
+<p>A div with the class 'mask' will cover the screen and be semi-transparent and click-proof. You create it using the $.UIBlock() method. You can specify the opacity. This gets created automatically for you when you create a popup, popover or modal busy control. See ChUI.js for more details.</p>
+
+<a name="select_list"></a>
+<h2>select list</h2>
+
+<p>When a list has the class 'select', you are able to click on its list items to select them. A select list is really just a fancy way of displaying a group of radio buttons. As a matter of fact, in the background ChocolateChip-UI adds a radio button to each list item of a select list. You need to initialize a select list with the method UISelectList(). PUtting the class 'select' on the list is optional. If you execute UISelectList on a list and it doesn't have the class, it will add it. This method creates selection indicators appropriate for each operating system. See ChUI.js for more details.</p>
+
+<a name="deletable_list"></a>
+<h2>deletable list</h2>
+
+<p>Another type of list allows the user to delete list items. This could be any list. You use the method $.UIDeletable to set that up. It creates a deletion indicator for each list item, along with a delete button. These all get styled appropriate for the operating systems. When a list is initialized for allowing deletable items, it has the class 'deletable'. See ChUI.js for more details.</p>
+
+<a name="switch"></a>
+<h2>switch</h2>
+
+<p>The switch control is an inline element. You can create one manually using a span with the class 'switch', and including an input of type checkbox inside the span. See the markup below:</p>
+
+<pre class="prettyprint"><code>&lt;li class='comp'&gt;
+   &lt;div&gt;
+      &lt;h3&gt;Sleep&lt;/h3&gt;
+   &lt;/div&gt;
+   &lt;aside&gt;
+      &lt;span class="switch on" id="sleepSwitch"&gt;
+         &lt;input type="checkbox" value="Sleep" name="sleepSwitch"&gt;
+      &lt;/span&gt;
+   &lt;/aside&gt;
+&lt;/li&gt;
+</code></pre>
+
+<p>You can also create switches dynamically using the UISwitch method. See ChUI.js for more details.</p>
+
+<a name="stepper"></a>
+<h2>stepper</h2>
+
+<p>A stepper is a control for offering the user a very small set of values to manipulate. It is not appropriate for long value lists. In that case you should use the HTML select element with options for values. This will display the appropriate popup for each operating system.</p>
+
+<p>A stepper is just a span with the class 'stepper':</p>
+
+<pre class="prettyprint"><code>&lt;span class='stepper' id="digits"&gt;&lt;/span&gt;
+</code></pre>
+
+<p>You need to initialize it with the UIStepper method, which allows you to define its start and end values. This will create an increase and decrease button with a label to display the current value between them. See ChUI.js for more details.</p>
+
+<a name="tabbar"></a>
+<h2>tabbar</h2>
+
+<p>A tab bar is a div with the class 'tabbar'. You create a tab bar using the UITabbar method. On iOS the tab bar is at the bottom of the screen. To adjust the articles to its presence, the method also adds a class 'hasTabBar' to the body tag. ChocolateChip-UI's CSS will then adjust everything for you. For Android and Windows Phone 8, the tab bar get placed at the top, and ChocolateChip-UI adjusts your layouts to manage that properly.</p>
+
+<p>The tab bar holds up to five buttons. You designate these in the options pass to the UITabbar method. You can also indicate icons to use for each button. On iOS the tab bar usually display an icon with the button text. You can supply that when you execute the method. Any icons provided for iOS will be ignored on Android and Windows Phone 8, as these do not use icons in their respective tab bars. See ChUI.js for more details.</p>
+
+<a name="tabbar_icons"></a>
+<h3>Icons in Tab Bar Buttons</h3>
+
+<p>On Android and Windows Phone 8, both Microsoft and Google have designed their tab bars to have no room for icons. The tabs are plain text only. On iOS tab bar buttons are expected to have icons. ChocolateChip-UI check to see if the device is running desktop Safari or iOS. If it is, in injects a span with the class <code>icon</code> inside of each tab button. You can use this along with the buttons class to define a background image. You can use a png, or SVG, or event a symbol font. Go to tutorials and read the section on <em>icons</em>. Also, take a look at the iOS tab bar example in Safari to see how it works on iOS. Use the Safari Web inspector to examine the structure.</p>
+
+<a name="toolbar"></a>
+<h2>Toolbar</h2>
+
+<p>A toolbar can accompany an article tag. You designate a toolbar by using a <code>div</code> with the class <code>toolbar</code>. The toolbar should be the first tag after the article it belongs to. You can use a toolbar any any layout, except for tab bar apps, as the tab bar already occupies the place where the toolbar would be on all supported Operating Systems.</p>
+
+<p>If the article and its nav have a class of current, the toolbar should have a class of <code>current</code>, overwise it should have a class of <code>next</code> like other articles and navs.</p>
+
+<p>A toolbar is a convenient container for hold buttons and icons that the user can use to interact with content in an article.</p>
+
+<pre class="prettyprint">   &lt;article&gt;
+      &lt;section&gt;
+      &lt;!-- Your content here --&gt;
+      &lt;/section&gt;
+   &lt;/article&gt;
+   &lt;div class="toolbar next"&gt;
+      &lt;a class='button' href="javascript.void(null)"&gt;Food&lt;/a&gt;
+      &lt;a class='button' href="javascript.void(null)"&gt;Ingredients&lt;/a&gt;
+   &lt;/div&gt;
+</pre>
+
+<a name="range"></a>
+<h2>range</h2>
+
+<p>The range control is a normal HTML5 range input. Just put an input of type 'range'. Set its value, as well as its min and max values. If you want it to increase and decrease in set amounts, you can also provide a step attribute. See the examples below:</p>
+
+<pre class="prettyprint"><code>&lt;input type="range" id="rangeControl1" value="10" min="0" max="40"&gt;
+&lt;input type="range" id="rangeControl2" step='5' value="20" min="0" max="40"&gt;
+</code></pre>
+
+<p>You can attach an event listener for 'change' to get the value when it changes. ChocolateChip-UI styles these so that they look appropriate for the device operating system.</p>
+
+<a name="sheet"></a>
+<h2>sheet</h2>
+
+<p>ChocolateChip-UI provides a generic sheet control. This is an overlay that slides over the screen. This is a container for you to provide the user with actions or options to affect the content currently on the screen.</p>
+
+<p>It consists of a div with the class 'sheet' and has two children: a div of class 'handle' and a section. The handle is interactive. If the user touches it, the sheet will close. The section tag creates a vertically scrollable container. You can put anything in it that you want: lists, buttons, etc.</p>
+
+<p>You create a sheet using the $.UISheet() method. Then populate it by inserting markup in its section tag:</p>
+
+<pre class="prettyprint"><code>$.UISheet();
+   $('.sheet').find('section').append("&lt;ul class='list'&gt;&lt;/li&gt;");
+   $('.sheet .list').append("&lt;li&gt;&lt;a class='button' href='javascript:void(null)'&gt;Save&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a class='button' href='javascript:void(null)'&gt;Delete&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a class='button' href='javascript:void(null)'&gt;Cancel&lt;/a&gt;&lt;/li&gt;");
+   $('.sheet .list').append ('&lt;h2 style="text-align: center; margin: 20px;"&gt;The End&lt;/h2&gt;');
+
+$('.sheet .list').on('singletap', '.button', function() {
+   $.UIHideSheet();
+});
+</code></pre>
+
+<p>You would show the sheet using any user initiated event, probably with a button. See ChUI.js for more details on how to create sheets.</p>
+
+<a name="slideout"></a>
+<h2>slide-out</h2>
+
+<p>A slide-out is a special type of app layout which offers the user a slide out menu as the means to toggling the content on the screen. You would use this type of app layout instead of a navigation list or tab bar. It is initialized at load time with the $.UISlideout method. Structurally, you build your app like you would for a multi-article app, using navs followed by articles. The $.UISlideout method will create a button with the class <code>.side-out-button</code> which it inserts in the global nav, making it available at all times. When the user presses this slide out button, the slide out will, surprise!, slide out from the side.</p>
+
+<p>A slide is a div with the class 'slide-out' and a section tag within. This section is the container for what the slide out will display. The slide out can hold anything you want, however, as a navigation control you would do best by doing the following. After creating the slide out, populate it with a list or lists. If you have more than one list, consider giving each list a corresponding h2 as its title. That way you can create a title list of available choices. On each list item you'll need to put the attribute: <code>data-show-article</code>. This attribute is the id of the article that a list item will reveal when the user presses it.</p>
+
+<pre class="prettyprint"><code>&lt;h2&gt;Music&lt;/h2&gt;
+&lt;ul class='list'&gt;
+   &lt;li data-show-article='ImagineDragons'&gt;
+      &lt;h3&gt;Imagine Dragons&lt;/h3&gt; 
+   &lt;/li&gt;
+   &lt;li data-show-article='WillyMoon'&gt;
+      &lt;h3&gt;Willy Moon&lt;/h3&gt; 
+   &lt;/li&gt;
+   &lt;li data-show-article='Kiss'&gt;
+      &lt;h3&gt;This Kiss&lt;/h3&gt; 
+   &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>You initialize a slide-out with the $.UISlideout() method. This will create the basic slide out, its toggle button and the toggling of articles when the user presses a list item with an attribute of 'data-show-article' inside of it.</p>
+
+<a name="splitlayout"></a>
+<h2>splitlayout</h2>
+
+<p>ChocolateChip-UI provides a split layout specifically for tablets. To create a split layout, you first put the class 'splitlayout' on the body tag. Then you put in a nav and an article with the class 'master', followed by another nav and an article with the class 'detail'.</p>
+
+<p>The master article is for the user to select different items to see in detail, which will be displayed in the detail article. Examine the following example carefully:</p>
+
+<pre class="prettyprint"><code>&lt;body class='splitlayout'&gt;
+   &lt;nav&gt;
+      &lt;h1&gt;Pick One&lt;/h1&gt;
+   &lt;/nav&gt;
+   &lt;article class='master'&gt;
+      &lt;section id="scroller2"&gt;
+         &lt;ul class='list'&gt;
+         &lt;/ul&gt;
+      &lt;/section&gt;
+   &lt;/article&gt;
+   &lt;nav&gt;
+      &lt;h1 id='detailTitle'&gt;Detail 1&lt;/h1&gt;
+   &lt;/nav&gt;
+   &lt;article class='detail' class='master'&gt;
+      &lt;section&gt;
+         &lt;ul class='list'&gt;
+      &lt;/section&gt;
+   &lt;/article&gt;
+&lt;/body&gt;
+</code></pre>
+
+<p>Open up the file splitlayout.html in the examples folder to see how to make it work.</p>
+
+<a name="grids"></a>
+<h2>Grids</h2>
+<p>ChocolateChip-UI version 3.5.1 has CSS Grids to enable you to create more complex layouts. These are specifically for use on tablets. Most apps targetting phones will be fine with the layouts provided by lists and comp lists.</p>
+
+<p>ChocolateChip-UI uses the flexible box model to create grids. This means you should be aware of two things. 1. You're layouts will be proportinal to the available screen real estate. 2. Browsers may not align rows of grids to pixel perfection.</p>
+
+<p>ChocolateChip-UI uses a series of classes to enable you do define your grids. The basic build block is <code>.grid</code>. Putting this tag on a div will mark it as a container for a serious of columns arranged in a row side by side.</p>
+
+<pre class="prettyprint"><code>&lt;div class="grid"&gt;&lt;/div&gt;
+</code></pre>
+
+<p>You create columns by putting the class "col" on a tag:</p>
+
+<pre class="prettyprint"><code>&lt;div class="grid"&gt;
+   &lt;div class="col"&gt;&lt;/div&gt;
+   &lt;div class="col"&gt;&lt;/div&gt;
+   &lt;div class="col"&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>You define the width of columns using a flex class. The grid row is designed to hold up to ten columns, so the maximum sum of all your flex values must not be greater than ten. If there are more than can fit on the row, they will extend off to the right. You can change this behavior by added the class "<a href="#wrap">wrap</a>" to the grid.</p>
+
+<p>The available flex classes are:</p>
+<ul class='list'>
+   <li>flex-1</li>
+   <li>flex-2</li>
+   <li>flex-3</li>
+   <li>flex-4</li>
+   <li>flex-5</li>
+   <li>flex-6</li>
+   <li>flex-7</li>
+   <li>flex-8</li>
+   <li>flex-9</li>
+   <li>flex10</li>
+</ul>
+
+<h3>Equal Heigth Columns</h3>
+<p>By default if one column has more content than others and is therefore taller, the other columns will stretch to match its height.</p>
+
+<p>A grid with ten columns equal width:</p>
+<pre class="prettyprint"><code>&lt;div class="grid"&gt;
+   &lt;div class="col flex-1"&gt;&lt;/div&gt;
+   &lt;div class="col flex-1"&gt;&lt;/div&gt;
+   &lt;div class="col flex-1"&gt;&lt;/div&gt;
+   &lt;div class="col flex-1"&gt;&lt;/div&gt;
+   &lt;div class="col flex-1"&gt;&lt;/div&gt;
+   &lt;div class="col flex-1"&gt;&lt;/div&gt;
+   &lt;div class="col flex-1"&gt;&lt;/div&gt;
+   &lt;div class="col flex-1"&gt;&lt;/div&gt;
+   &lt;div class="col flex-1"&gt;&lt;/div&gt;
+   &lt;div class="col flex-1"&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>A grid with 3 columns equal width:</p>
+<pre class="prettyprint"><code>&lt;div class="grid"&gt;
+   &lt;div class="col flex-1"&gt;&lt;/div&gt;
+   &lt;div class="col flex-1"&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>Other possible columns width proportions:</p>
+<pre class="prettyprint"><code>&lt;div class="grid"&gt;
+ &lt;div class="col flex-6"&gt;&lt;p&gt;6&lt;/p&gt;&lt;/div&gt;
+ &lt;div class="col flex-4"&gt;&lt;p&gt;4&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="grid"&gt;
+ &lt;div class="col flex-7"&gt;&lt;p&gt;7&lt;/p&gt;&lt;/div&gt;
+ &lt;div class="col flex-3"&gt;&lt;p&gt;3&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="grid"&gt;
+ &lt;div class="col flex-8"&gt;&lt;p&gt;8&lt;/p&gt;&lt;/div&gt;
+ &lt;div class="col flex-2"&gt;&lt;p&gt;2&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<a name="wrap"></a>
+<p>To allow colums that exceed the grid width to wrap to the next row, just put the class "wrap" on the grid. Please note that the columns will exapnd to fill their available space base on their flex values.</p>
+
+<pre class="prettyprint"><code>&lt;div class="grid wrap"&gt;
+   &lt;div class="col flex-1"&gt;&lt;p&gt;1&lt;/p&gt;&lt;/div&gt;
+   &lt;div class="col flex-1"&gt;&lt;p&gt;1&lt;/p&gt;&lt;/div&gt;
+   &lt;div class="col flex-1"&gt;&lt;p&gt;1&lt;/p&gt;&lt;/div&gt;
+   &lt;div class="col flex-4"&gt;&lt;p&gt;4&lt;/p&gt;&lt;/div&gt;
+   &lt;div class="col flex-5"&gt;&lt;p&gt;5&lt;/p&gt;&lt;/div&gt;
+   &lt;div class="col flex-3"&gt;&lt;p&gt;3&lt;/p&gt;&lt;/div&gt;
+   &lt;div class="col flex-1"&gt;&lt;p&gt;1&lt;/p&gt;&lt;/div&gt;
+   &lt;div class="col flex-1"&gt;&lt;p&gt;1&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h3>Fixed Width Columns</h3>
+<p>You can also create a mix of flexible and fixed width columns. Just put a class on the columns you want to have a fixed with and define that width. They will retain that width, forcing the other columns to adjust their width to the available space.</p>
+
+<p>Please take a look at grid.html in the examples to see the different ways that you can implement grids.</p>
+
+</article>
+
+<script>
+   (function() {
+      prettyPrint();
+   })();
+</script>
+</body>
+</html>

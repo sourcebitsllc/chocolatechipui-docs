@@ -1,0 +1,33 @@
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  -webkit-text-size-adjust: none;
+  font: 20px/1.5em "GillSans-Light", "GillSans", Helvetica, Calibri, sans-serif;
+  color: #464646;
+  background-color: #fafafa;
+}
+
+h1, h1 + h2 {
+  margin: 10px 0;
+}
+h1, h2, h3, h4, h5 {
+  color: #6a6767;
+  font-family: 'Gill Sans', HelveticaNeue, Calibri, sans-serif;
+  font-weight: normal;
+}
+article {
+  min-height: 500px;
+  padding: 40px 20px 80px;
+  max-width: 780px;
+  margin: 0 auto;
+  min-height: 800px !important;
+  box-sizing: border-box;
+}
+article > h4:first-of-type {
+  margin: 0;
+}
+article > h4:first-of-type + h5 {
+  margin: 0;
+}

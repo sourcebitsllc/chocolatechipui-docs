@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Documentation</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./prettify/prettify.css">
+  <script type='text/javascript' src='./prettify/prettify.js'></script>
+  <script type='text/javascript' src='./prettify/lang-css.js'></script>
+  <style>
+    h5 {
+      font-size: 24pt;
+    }
+  </style>
+</head>
+<body>
+<article>
+  <section>
+<h5>ChocolateChip-UI version 3.5.3</h5>
+<h1>Documentation</h1>
+<menu>
+    <ul>
+      <li class='hasSubmenu'><a id='building' href='./docs/building.html' class='mainLink selected'>Building</a>
+        <ul class='submenu'>
+          <li><a href="./docs/building.html#installNodejs">Install Nodejs &amp; Gulpjs</a></li>
+          <li><a href="./docs/building.html#installBuildModules">Install Build Modules</a></li>
+          <li><a href="./docs/building.html#building">Building ChUI</a></li>
+          <li><a href="./docs/building.html#customProject">Custom Project</a></li>
+          <li><a href="./docs/building.html#gruntjs">Building with Gruntjs</a></li><li><a href="./docs/building.html#bowerSupport">Bower Support</a></li>
+        </ul>
+      </li>
+      <li class='hasSubmenu'><a id='markup' href='./docs/Markup.html' class='mainLink'>Markup</a>
+        <ul class='submenu'>
+          <li><a href="./docs/Markup.html#article">article</a></li>
+          <li><a href="./docs/Markup.html#navbar">nav (navbar)</a></li>
+          <li><a href="./docs/Markup.html#section">section</a></li>
+          <li><a href="./docs/Markup.html#navigation_states">navigation states</a></li>
+          <li><a href="./docs/Markup.html#container_layout">container layout</a></li>
+          <li><a href="./docs/Markup.html#h1">h1 (navbar title)</a></li>
+          <li><a href="./docs/Markup.html#h2">h2 (list title</a></li>
+          <li><a href="./docs/Markup.html#h3">h3 (list item title)</a></li>
+          <li><a href="./docs/Markup.html#h4">h4 (list item subtitle)</a></li>
+          <li><a href="./docs/Markup.html#h5">h5</a></li>
+          <li><a href="./docs/Markup.html#normal_case">normal case</a></li>
+          <li><a href="./docs/Markup.html#button">button</a></li>
+          <li><a href="./docs/Markup.html#back_button">back button</a></li>
+          <li><a href="./docs/Markup.html#align_flush">align-flush</a></li>
+          <li><a href="./docs/Markup.html#p">p (list detail)</a></li>
+          <li><a href="./docs/Markup.html#list">list</a></li>
+          <li><a href="./docs/Markup.html#li">li</a></li>
+          <li><a href="./docs/Markup.html#nav_indicators">nav indicators</a></li>
+          <li><a href="./docs/Markup.html#detail_disclosure_in_list">list detail disclosure</a></li>
+          <li><a href="./docs/Markup.html#comp">comp (composite layout)</a></li>
+          <li><a href="./docs/Markup.html#show_detail_comp">comp show-detail</a></li>
+          <li><a href="./docs/Markup.html#switched_list">switched list</a></li>
+          <li><a href="./docs/Markup.html#nav_indicator_comp">comp nav indicator</a></li>
+          <li><a href="./docs/Markup.html#couter_date">counter/date</a></li>
+          <li><a href="./docs/Markup.html#counter_with_nav_indicator">counter with nav</a></li>
+          <li><a href="./docs/Markup.html#date_time">date/time</a></li>
+          <li><a href="./docs/Markup.html#date_time_counter">date/time/counter</a></li>
+          <li><a href="./docs/Markup.html#busy">busy</a></li>
+          <li><a href="./docs/Markup.html#segmented">segmented</a></li>
+          <li><a href="./docs/Markup.html#paging">paging</a></li>
+          <li><a href="./docs/Markup.html#popup">popup</a></li>
+          <li><a href="./docs/Markup.html#popover">popover</a></li>
+          <li><a href="./docs/Markup.html#mask">mask</a></li>
+          <li><a href="./docs/Markup.html#select_list">select list</a></li>
+          <li><a href="./docs/Markup.html#deletable_list">deletable list</a></li>
+          <li><a href="./docs/Markup.html#switch">switch</a></li>
+          <li><a href="./docs/Markup.html#stepper">stepper</a></li>
+          <li><a href="./docs/Markup.html#tabbar">tabbar</a></li>
+          <li><a href="./docs/Markup.html#tabbar_icons">tabbar icons</a></li>
+          <li><a href="./docs/Markup.html#toolbar">toolbar</a></li>
+          <li><a href="./docs/Markup.html#range">range</a></li>
+          <li><a href="./docs/Markup.html#sheet">sheet</a></li>
+          <li><a href="./docs/Markup.html#slideout">slide-out</a></li>
+          <li><a href="./docs/Markup.html#splitlayout">splitlayout</a></li>
+          <li><a href="./docs/Markup.html#grids">CSS Grids</a></li>
+        </ul>
+      </li>
+      <li class='hasSubmenu'><a id='chuijs' href='./docs/Chuijs.html' class='mainLink'>ChUI.js</a>
+<ul class='submenu'>
+  <li><a href="./docs/Chuijs.html#events">Events</a></li>
+  <li><a href="./docs/Chuijs.html#Uuid">$.Uuid</a></li>
+  <li><a href="./docs/Chuijs.html#UITrackHashNavigation">$.UITrackHashNavigation</a></li>
+  <li><a href="./docs/Chuijs.html#UISetHashOnUrl">$.UISetHashOnUrl</a></li>
+  <li><a href="./docs/Chuijs.html#UIGoBackToArticle">$.UIGoBackToArticle</a></li>
+  <li><a href="./docs/Chuijs.html#UIGoBack">$.UIGoBack</a></li>
+  <li><a href="./docs/Chuijs.html#isNavigating">$.isNavigating</a></li>
+  <li><a href="./docs/Chuijs.html#UIGoToArticle">$.UIGoToArticle</a></li>
+  <li><a href="./docs/Chuijs.html#NavigationEnd">NavigationEnd Event</a></li>
+  <li><a href="./docs/Chuijs.html#UIDeletable">$.UIDeletable</a></li>
+  <li><a href="./docs/Chuijs.html#UIPaging">$.UIPaging</a></li>
+  <li><a href="./docs/Chuijs.html#UISlideout">$.UISlideout</a></li>
+  <li><a href="./docs/Chuijs.html#UISlideout_populate">$.UISlideout.populate</a></li>
+  <li><a href="./docs/Chuijs.html#UICreateSwitch">$.UICreateSwitch</a></li>
+  <li><a href="./docs/Chuijs.html#UISwitch">[].UISwitch</a></li>
+  <li><a href="./docs/Chuijs.html#UICreateSegmented">$.UICreateSegmented</a></li>
+  <li><a href="./docs/Chuijs.html#UISegmented">[].UISegmented</a></li>
+  <li><a href="./docs/Chuijs.html#UIPopup">$.UIPopup</a></li>
+  <li><a href="./docs/Chuijs.html#UIPopupClose">[].UIPopupClose</a></li>
+  <li><a href="./docs/Chuijs.html#UICenterPopup">$.UICenterPopup</a></li>
+  <li><a href="./docs/Chuijs.html#UITabbar">$.UITabbar</a></li>
+  <li><a href="./docs/Chuijs.html#UISheet">$.UISheet</a></li>
+  <li><a href="./docs/Chuijs.html#UIShowSheet">$.UIShowSheet</a></li>
+  <li><a href="./docs/Chuijs.html#UIHideSheet">$.UIHideSheet</a></li>
+  <li><a href="./docs/Chuijs.html#body">$.body</a></li>
+  <li><a href="./docs/Chuijs.html#UINavigationHistory">$.UINavigationHistory</a></li>
+  <li><a href="./docs/Chuijs.html#UIPanelToggle">[].UIPanelToggle</a></li>
+  <li><a href="./docs/Chuijs.html#UISelectList">[].UISelectList</a></li>
+  <li><a href="./docs/Chuijs.html#UIStepper">[].UIStepper</a></li>
+  <li><a href="./docs/Chuijs.html#UIBusy">[].UIBusy</a></li>
+  <li><a href="./docs/Chuijs.html#UICenter">[].UICenter</a></li>
+  <li><a href="./docs/Chuijs.html#UIBlock">[].UIBlock</a></li>
+  <li><a href="./docs/Chuijs.html#UIUnblock">[].UIUnblock</a></li>
+  <li><a href="./docs/Chuijs.html#UIPopover">[].UIPopover</a></li>
+  <li><a href="./docs/Chuijs.html#UIAlignPopover">$.UIAlignPopover</a></li>
+  <li><a href="./docs/Chuijs.html#UIPopoverClose">$.UIPopoverClose</a></li>
+  <li><a href="./docs/Chuijs.html#Gestures">Gestures</a></li>
+  <li><a href="./docs/Chuijs.html#pubSub">Pub/Sub</a></li>
+  <li><a href="./docs/Chuijs.html#subscriptions">$.subscriptions</a></li>
+  <li><a href="./docs/Chuijs.html#subscribe">$.subscribe</a></li>
+  <li><a href="./docs/Chuijs.html#publish">$.publish</a></li>
+  <li><a href="./docs/Chuijs.html#unsubscribe">$.unsubscribe</a></li>
+  <li><a href="./docs/Chuijs.html#search">$.UISearch</a></li>
+  <li><a href="./docs/Chuijs.html#UISetupCarousel">$.UISetupCarousel</a></li>
+</ul>
+      </li>
+      <li><a id='chuicss' class='mainLink' href='./docs/ChuiCss.html'>ChUI.css</a></li>
+      <li><a id='jquerysupport' class='mainLink' href='./docs/jQuerySupport.html'>jQuery</a></li>
+      <li class='hasSubmenu'><a id='platformsupport' href='./docs/PlatformSpecific.html' class='mainLink'>Platform Support</a>
+        <ul class='submenu'>
+          <li><a href="./docs/PlatformSpecific.html#theme_switching">Theme Switching</a></li>
+          <li><a href="./docs/PlatformSpecific.html#php">PHP</a></li>
+          <li><a href="./docs/PlatformSpecific.html#nodejs">NodeJS</a></li>
+          <li><a href="./docs/PlatformSpecific.html#custom_css_os">Customized CSS per OS</a></li>
+          <li><a href="./docs/PlatformSpecific.html#android_branding">Android branding</a></li>
+          <li><a href="./docs/PlatformSpecific.html#desktop_testing">Desktop testing</a></li>
+        </ul>
+      </li>
+      <li><a id='extending' class='mainLink' href='./docs/Extending.html'>Extending</a></li>
+    </ul>
+</menu>
+
+<h1>Tutorials</h1>
+  <menu>
+      <ul>
+        <li><a id='ajax' href='./tuts/ajax.html' class='selected'>Ajax</a></li>
+        <li><a id='events' href='./tuts/events.html'>Event Management</a></li>
+        <li><a id='icons' href='./tuts/icons.html'>Icons</a></li>
+        <li><a id='layouts' href='./tuts/layouts.html'>Layouts</a></li>
+        <li><a id='navigation' href='./tuts/navigation.html'>Navigation</a></li>
+        <li><a id='paging' href='./tuts/paging.html'>Paging</a></li>
+        <li><a id='splitlayout' href='./tuts/splitlayout.html'>Split Layout</a></li>
+        <li><a id='tabbar' href='./tuts/tabbar.html'>Tab Bar</a></li>
+        <li><a id='templates' href='./tuts/templates.html'>Templates</a></li>
+        <li><a id='templates' href='./tuts/requirejs.html'>RequireJS</a></li>
+      </ul>
+  </menu>
+  </section>
+</article>
+</body>
+</html>

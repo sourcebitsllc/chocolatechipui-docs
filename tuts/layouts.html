@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Layouts</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../prettify/prettify.css">
+  <script type='text/javascript' src='../prettify/prettify.js'></script>
+  <script type='text/javascript' src='../prettify/lang-css.js'></script>
+</head>
+<body>
+<article>
+<h4>Tutorials</h4>
+<h5>ChocolateChip-UI version 3.5.3</h5>
+<h1>Layouts</h1>
+
+<p>ChocolateChip-UI provides a layout module to enable you to create the layouts you need. It uses an unordered list with the class <code>list</code>. This means you can use a normal ordered or unordered list inside of ChocolateChip-UI's layout lists and they will display as expected. </p>
+
+<p>To create a layout is very simple. Just put an unordered list with the class 'list', then add content to the list items. The default list layout stacks its content vertically. Also all <code>h3</code>, <code>h4</code> and <code>p</code> tags will wrap their contents when it is longer than can fit on the line. Layout lists expect the following possible containers for content:</p>
+
+<ul class='list'>
+<li>h3 (the list item title)</li>
+<li>h4 (the list item subtitle)</li>
+<li>p (the list item detail or description)</li>
+</ul>
+
+<p>List with list item titles:</p>
+
+<pre class="prettyprint"><code>&lt;ul class='list'&gt;
+    &lt;li&gt;
+        &lt;h3&gt;People&lt;/h3&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;h3&gt;Places&lt;/h3&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;h3&gt;Food&lt;/h3&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>List with list item titles and subtitles:</p>
+
+<pre class="prettyprint"><code>&lt;ul class='list'&gt;
+    &lt;li&gt;
+        &lt;h3&gt;People&lt;/h3&gt;
+        &lt;h4&gt;Your Friends&lt;/h4&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;h3&gt;Places&lt;/h3&gt;
+        &lt;h4&gt;Interesting Destinations&lt;/h4&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;h3&gt;Food&lt;/h3&gt;
+        &lt;h4&gt;Restaurants&lt;/h4&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>Here is a list with various content types:</p>
+
+<pre class="prettyprint"><code>&lt;ul class='list'&gt;
+    &lt;li&gt;
+        &lt;img title='Blues' src="../images/music/Willy Moon.png" height='100px'&gt;
+        &lt;h3&gt;Willy Moon&lt;/h3&gt;
+        &lt;h4&gt;Yeah Yeah&lt;/h4&gt;
+        &lt;p&gt;Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;img title='Classical' src="../images/music/The Olms.png" height='100px'&gt;
+        &lt;h3&gt;The Olms&lt;/h3&gt;
+        &lt;h4&gt;Wanna Feel It&lt;/h4&gt;
+        &lt;p&gt;Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.&lt;/p&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>You can create a list header by putting an <code>h2</code> tag right before it. Similarly, you can create a list footer by putting a <code>p</code> tag immediately after the list. A list header is display with all caps and is cut off with ellipsis if it is longer than can fit on the screen. You can set the header to display its actual capitalization by putting the class <code>normal-case</code>.</p>
+
+<p>List with header:</p>
+
+<pre class="prettyprint"><code>&lt;h2&gt;
+    Basic tableheader with a bunch of stuff in here
+&lt;/h2&gt;
+&lt;ul class='list'&gt;
+    &lt;li&gt;
+        &lt;h3&gt;People&lt;/h3&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;h3&gt;Places&lt;/h3&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;h3&gt;Food&lt;/h3&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Building</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../prettify/prettify.css">
+  <script type='text/javascript' src='../prettify/prettify.js'></script>
+  <script type='text/javascript' src='../prettify/lang-css.js'></script>
+</head>
+<body>
+<article>
+<p>List with header using the class <code>normal-case</code>:</p>
+
+<pre class="prettyprint"><code>&lt;h2 class='normal-case'&gt;
+    Basic tableheader with a bunch of stuff in here
+&lt;/h2&gt;
+&lt;ul class='list'&gt;
+    &lt;li&gt;
+        &lt;h3&gt;People&lt;/h3&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;h3&gt;Places&lt;/h3&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;h3&gt;Food&lt;/h3&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>List with footer (You can have more than one <code>p</code> tag after a list.):</p>
+
+<pre class="prettyprint"><code>&lt;ul class='list'&gt;
+    &lt;li&gt;
+        &lt;h3&gt;People&lt;/h3&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;h3&gt;Places&lt;/h3&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;h3&gt;Food&lt;/h3&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A quick summary about all of the items in this list. You can put as much as you like in here and the text will simply wrap around.&lt;/p&gt;
+&lt;p&gt;To create a footer, just put a paragraph tag right after the list. And yes, as you can see, you can put multiple paragraphs after the list for more complex list footers.&lt;/p&gt;
+</code></pre>
+
+<p>This simple technique provides a consistent way to implement layouts with little effort. However, if you need more precise layouts for placement of list item content, ChocolateChip-UI provides another layout option: comp list items. Comp stands for composite or complex. You can designate a list as comp by adding the class <code>comp</code>. When a list item has this class, you can insert several list item containers to create various types of layouts. There are thee possible combinations of containers for comp layouts:</p>
+
+<ul>
+<li>div + aside</li>
+<li>aside + div</li>
+<li>aside + div + aside</li>
+</ul>
+
+<p>A div will always be used to hold the list item <code>h3</code>, <code>h4</code> and <code>p</code>. Asides are always used for secondary material, such as images, counters or date-time markers. If you wanted to have a list item show an image on the side with the <code>h3</code>, etc. next to it, you would put the image in an aside, followed by a div with the <code>h3</code>, etc. When using comp layouts, if the width of the container for the <code>h2</code> and <code>h3</code> is shorter than their content, they will be clipped with an ellipsis. This is more likely to happen in portrait orientation. Switching to landscape orientation will usually reveal the clipped text, unless it is really long.</p>
+
+<p>Here's a basic comp layout</p>
+
+<pre class="prettyprint"><code>&lt;ul class='list'&gt;
+    &lt;li class='comp'&gt;
+        &lt;aside&gt;
+            &lt;img title='Imagine Dragons' src="../images/music/Imagine Dragons.png" height="80px"&gt;
+        &lt;/aside&gt;
+        &lt;div&gt;
+            &lt;h3&gt;Imagine Dragons&lt;/h3&gt;
+            &lt;h4&gt;Radioactive&lt;/h4&gt;
+        &lt;/div&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>In the above example, notice that we only provided a height for the image. This will mean that all images will be the same height, though not necessarily the same width. If the images are different widths, the div with the <code>h3</code> and <code>h4</code> will automatically adjust its width to accomodate the image. You could also apply a width to the image instead of a height. Then all cells would be the same width, though their height would vary depending on the image height. You could also control the height or width of the images through a CSS declaration. </p>
+
+<p>Here's another possible list item layout where the subtitle is displayed to the right of the title by putting it in a aside. By default the content in the last aside is always displayed spread horizontally and centered vertically:</p>
+
+<pre class="prettyprint"><code>&lt;ul class='list'&gt;
+    &lt;li class='comp' data-goto='people'&gt;
+        &lt;div&gt;
+            &lt;h3&gt;People&lt;/h3&gt;
+        &lt;/div&gt;
+        &lt;aside&gt;
+            &lt;h4&gt;Your Friends&lt;/h4&gt;
+        &lt;/aside&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>There are times where you want to indicate a value on a list item. This may be the price, the weight or the number of items it will reveal. You can provide that information in a <code>counter</code> tag. This is just a span tag with the class <code>counter</code>. You put that in and aside after the list item's div:</p>
+
+<pre class="prettyprint"><code>&lt;ul class='list'&gt;
+    &lt;li class='comp'&gt;
+        &lt;div&gt;
+            &lt;h3&gt;People&lt;/h3&gt;
+        &lt;/div&gt;
+        &lt;aside&gt;
+            &lt;h4&gt;Your Friends&lt;/h4&gt;
+            &lt;span class='counter'&gt;23&lt;/span&gt;
+        &lt;/aside&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>You can also provide a date-time value using a span with the class <code>date-time</code>:</p>
+
+<pre class="prettyprint"><code>&lt;ul class='list'&gt;
+    &lt;li class='comp'&gt;
+        &lt;div&gt;
+            &lt;h3&gt;Meetings&lt;/h3&gt;
+        &lt;/div&gt;
+        &lt;aside&gt;
+            &lt;h4&gt;Personal&lt;/h4&gt;
+            &lt;span class='date-time'&gt;Monday&lt;/span&gt;
+        &lt;/aside&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>And here's a comp layout with an <code>aside</code>, <code>div</code> and <code>aside</code>:</p>
+
+<pre class="prettyprint"><code>&lt;ul class='list'&gt;
+    &lt;li class='comp'&gt;
+        &lt;aside&gt;
+            &lt;span class='icon weather'&gt;&lt;/span&gt;
+        &lt;/aside&gt;
+        &lt;div&gt;
+            &lt;h3&gt;Weather&lt;/h3&gt;
+        &lt;/div&gt;
+        &lt;aside&gt;
+            &lt;h4&gt;Alerts&lt;/h4&gt;
+            &lt;span class='counter'&gt;2&lt;/span&gt;
+        &lt;/aside&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>Sometimes you may want to emphasize the subtitle visually over the title. You can do with with the switched class on the list items. This type of layout only expects the title and subtitle as content. </p>
+
+<pre class="prettyprint"><code>&lt;ul class='list'&gt;
+    &lt;li class='switched'&gt;
+        &lt;h3&gt;People&lt;/h3&gt;
+        &lt;h4&gt;Your Friends&lt;/h4&gt;
+    &lt;/li&gt;
+    &lt;li class='switched'&gt;
+        &lt;h3&gt;Places&lt;/h3&gt;
+        &lt;h4&gt;Interesting Destinations&lt;/h4&gt;
+    &lt;/li&gt;               
+&lt;/ul&gt;
+</code></pre>
+
+<h2>Navigation Indicators</h2>
+
+<p>iOS uses navigation indicators to inform the user that a pressing a list item will result in navigation to another screen. ChocolateChip-UI provides a simple way to provide this visual feedback. For simple list layouts, just put the class 'nav' on the list item. This will display a right pointing chevron on iOS. Please note that this will be hidden on Android and Windows Phone 8 as these are foreign to those operating systems.</p>
+
+<pre class="prettyprint"><code>&lt;ul class='list'&gt;
+    &lt;li class='nav'&gt;
+        &lt;h3&gt;People&lt;/h3&gt;
+    &lt;/li&gt;
+    &lt;li class='nav'&gt;
+        &lt;h3&gt;Places&lt;/h3&gt;
+    &lt;/li&gt;
+    &lt;li class='nav'&gt;
+        &lt;h3&gt;Food&lt;/h3&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>If you have a number of items in your you list, the placement of the navigation indicator might appear off. If you would prefer that it was vertically centered to the height of the list item, you can accomplish this by using a comp layout and putting a span with a class of <code>nav</code> in each list item. Since these are navigation items, they have the <code>data-goto</code> attribute indicating what article they will go to. Read the tutorial on navigation to learn how this works.</p>
+
+<pre class="prettyprint"><code>&lt;ul class='list'&gt;
+    &lt;li class='comp' data-goto='people'&gt;
+        &lt;div&gt;
+            &lt;h3&gt;People&lt;/h3&gt;
+            &lt;h4&gt;Your Friends&lt;/h4&gt;
+        &lt;/div&gt;
+        &lt;aside&gt;
+            &lt;span class='nav'&gt;&lt;/span&gt;
+        &lt;/aside&gt;
+    &lt;/li&gt;
+    &lt;li class='comp' data-goto='places'&gt;
+        &lt;div&gt;
+            &lt;h3&gt;Places&lt;/h3&gt;
+            &lt;h4&gt;Interesting Destinations&lt;/h4&gt;
+        &lt;/div&gt;
+        &lt;aside&gt;
+            &lt;span class='nav'&gt;&lt;/span&gt;
+        &lt;/aside&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>Sometimes you may want to indicate that a list item will reveal some greater detail about an item. You can show this with the <code>show-detail</code> class. For simple lists just put it on the list item:</p>
+
+<pre class="prettyprint"><code>&lt;ul class='list'&gt;
+    &lt;li class='show-detail'&gt;
+        &lt;h3&gt;People&lt;/h3&gt;
+    &lt;/li&gt;
+    &lt;li class='show-detail'&gt;
+        &lt;h3&gt;Places&lt;/h3&gt;
+    &lt;/li&gt;
+    &lt;li class='show-detail'&gt;
+        &lt;h3&gt;Food&lt;/h3&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>Unlike the navigation indicator for iOS, this will be display on Android and Windows Phone 8. For comp layouts you can use a span with the class <code>show-detail</code> in the last aside:</p>
+
+<pre class="prettyprint"><code>&lt;ul class='list'&gt;
+    &lt;li class='comp' data-goto='#detail'&gt;
+        &lt;aside&gt;
+            &lt;img title='Imagine Dragons' src="../images/music/Imagine Dragons.png" height="80px"&gt;
+        &lt;/aside&gt;
+        &lt;div&gt;
+            &lt;h3&gt;Imagine Dragons&lt;/h3&gt;
+            &lt;h4&gt;Radioactive&lt;/h4&gt;
+        &lt;/div&gt;
+        &lt;aside&gt;
+            &lt;span class='show-detail'&gt;&lt;/span&gt;
+        &lt;/aside&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>Open up the layout examples and see how they are put together and how they display in browser and on devices. If you find yourself in a situation where none of these layouts cover your needs, feel free to create a new class for any of the layout containers. Open up the CSS file and copy the style of the closest thing to what you need. Then modify the new class to suit your purposes. Remember, this is just markup and CSS. Customize it to suit your needs.</p>
+
+</article>
+
+<script>
+   (function() {
+      prettyPrint();
+   })();
+</script>
+</body>
+</html>

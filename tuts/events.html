@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Events</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../prettify/prettify.css">
+  <script type='text/javascript' src='../prettify/prettify.js'></script>
+  <script type='text/javascript' src='../prettify/lang-css.js'></script>
+</head>
+<body>
+<article>
+<h4>Tutorials</h4>
+<h5>ChocolateChip-UI version 3.5.3</h5>
+<h1>Event Management</h1>
+
+<p>Events are what brings your app to life. Otherwise it would be no better than a print out of your app. ChocolateChip-UI provides a number of ways for you to add events to your app. The most basic events that it provides are:</p>
+
+<ul class='list'>
+<li>$.eventStart</li>
+<li>$.eventMove</li>
+<li>$.eventEnd</li>
+<li>$.eventCancel</li>
+</ul>
+
+<p>Because you will probably start testing your app in a desktop browser, ChocolateChip-UI provides this interface that abstracts out events for desktop and mobile. On deskop <code>$.evenStart</code> is a <code>mousedown</code> event, <code>$.eventMove</code> is a <code>mousemove</code>, <code>$.eventEnd</code> is a <code>mouseup</code> and <code>$.eventCancel</code> is a <code>mousecancel</code>. On touch devices these would be equivalent to <code>touchstart</code>, <code>touchmove</code>, <code>touchend</code> and <code>touchcancel</code>. On Windows 8 and Windows Phone 8, these will be equivalent to <code>MSPointerDown</code>, <code>MSPointerMove</code>, <code>MSPointerUP</code> and <code>MSPointerCancel</code>.</p>
+
+<p>You use these just like you would use normal events, except you don't enclose them in quotes:</p>
+
+<pre class="prettyprint"><code>$.('.button').on($.eventStart, function() {
+   // Do stuff when the user interacts with the button.
+});
+</code></pre>
+
+<p>With this abstraction you can get a mousedown, touchstart and MSPointerDown event depending on which platform you are on. </p>
+
+<p>On mobile devices there is a 45O millisecond delay from the time the user clicks to the execution of the click event. This results in interactions that feel sluggish and annoying. Many developers there prefer to use either touchstart or touchend events registered on buttons and other interactive controls. There is one problem with this approach: scrolling. If you have content in a scrollable container and attach a touchstart or touchend event, as soon as you try to scroll your content and touch an element with these, you could immediately cause the touch event to execute. This makes it extremely hard to scroll interactive content. To get around this problem, ChocolateChip-UI has a gestures module.</p>
+
+<p>ChocolateChip-UI provides the following gestures: <code>tap</code>, <code>singletap</code>, <code>doubletap</code>, <code>longtap</code>, <code>swipe</code>, <code>swipeleft</code>, <code>swipeup</code>, <code>swiperight</code>, <code>swipedown</code>. You use these just as you would any other event:</p>
+
+<pre class="prettyprint"><code>$('.list li').on('swiperight', function() {
+    // perform some action with the user
+    // swipe to the right on a list item.
+});
+</code></pre>
+
+<p>Instead of using a $.eventStart or $.eventEnd event for your controls in scrollable containers, we recommend you use the singletap event. </p>
+
+<p>The singletap event has a delay of 150 milliseconds, this give sthe user enough time to initiate a scroll event and thus prevent any interaction with items in the scrolling container. Actually, navigation lists specifically use singletaps to register their events. This lets you flick your finger to scroll a navigation list without firing a navigation event. But if you touch a navigation list item and do not scroll, a singletap gets registered and navigation occurs.</p>
+
+<p>Look at the gestures demo in the examples to see how to use them. </p>
+
+</article>
+
+<script>
+   (function() {
+      prettyPrint();
+   })();
+</script>
+</body>
+</html>

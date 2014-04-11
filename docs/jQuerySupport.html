@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>jQuery Support</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../prettify/prettify.css">
+  <script type='text/javascript' src='../prettify/prettify.js'></script>
+  <script type='text/javascript' src='../prettify/lang-css.js'></script>
+</head>
+<body>
+<article>
+<h4>Documentation</h4>
+<h5>ChocolateChip-UI version 3.5.3</h5>
+<h1>jQuery</h1>
+
+<h2>Choose Your Source</h2>
+<style>
+   h2 { text-transform: none; }
+</style>
+
+<p>ChocolateChip-UI is requires jQuery 2.0.3 or later. Proper functionality cannot be guaranteed for earlier versions. When using any jQuery plugins, please check that they were with jQuery 2.0.3 and later.</p>
+
+<h2>Setup</h2>
+<p>To build ChocolateChip-UI is as simple as typing "grunt. Open up your terminal, navigate to the downloaded repository. Run <code>npm install</code>. Then run <code>grunt</code>. This will build out a version of ChocolateChip-UI using a CDN version of jQuery version 2.0.3. If you want to use a different CDN or use a local copy, you just need to open up the file "package.json". Look for the value <code>"jquery":</code>:
+
+<pre class="prettyprint"><code>"jquery": {
+   "url": "http://code.jquery.com/jquery-2.0.3.min.js"
+},</code></pre>
+
+ Change the url value to what you need for your project. Then save and run <code>grunt</code> in the terminal and you'll have your project with all examples using the path you provided. For information about setting up Grunt for building, please see the project's README.</p>
+
+</article>
+
+<script>
+   (function() {
+      prettyPrint();
+   })();
+</script>
+</body>
+</html>

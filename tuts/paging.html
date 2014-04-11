@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Paging</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../prettify/prettify.css">
+  <script type='text/javascript' src='../prettify/prettify.js'></script>
+  <script type='text/javascript' src='../prettify/lang-css.js'></script>
+</head>
+<body>
+<article>
+<h4>Tutorials</h4>
+<h5>ChocolateChip-UI version 3.5.3</h5>
+<h1>Paging</h1>
+
+<p>ChocolateChip-UI provides a simple way to implement paging trough multiple sections of an article. In general, an article has but a single section, which implement's the vertical scrolling container for the article's content. But if you want to allow the user to access multiple sections of content within the same article, you can use the paging control.</p>
+
+<p>The setup is very simple. You take a normal <code>article</code> and instead of one <code>section</code>, give it as many as you need. The paging control will take care of the paging for you. When using the paging control, each section can have whatever layout is suitable for the content it holds.</p>
+
+<pre class="prettyprint"><code>&lt;article id="main" class="current paging"&gt;
+   &lt;section&gt;
+      &lt;h2&gt;First Article&lt;/h2&gt;
+      &lt;ul class='list'&gt;
+      &lt;li&gt;
+         &lt;h3&gt;Thing One&lt;/h3&gt;
+      &lt;/li&gt;
+      &lt;/ul&gt;
+   &lt;/section&gt;
+   &lt;section&gt;
+      &lt;h2&gt;Second Article&lt;/h2&gt;
+      &lt;ul class='list'&gt;
+      &lt;li&gt;
+         &lt;h3&gt;Item One&lt;/h3&gt;
+      &lt;/li&gt;
+      &lt;/ul&gt;
+   &lt;/section&gt;
+   &lt;section&gt;
+      &lt;h2&gt;Third Article&lt;/h2&gt;
+      &lt;ul class='list'&gt;
+         &lt;li&gt;
+            &lt;h3&gt;Item 1&lt;/h3&gt;
+            &lt;cellsubtitle&gt;Item 1 Subtitle&lt;/cellsubtitle&gt;
+         &lt;/li&gt;
+      &lt;/ul&gt;
+   &lt;/section&gt;
+&lt;/article&gt;
+</code></pre>
+
+<p>In that article's nav put a segmented control with the extra class of <code>paging</code> and a class indicating the orientation for the paging: <code>horizontal</code> or <code>vertical</code>. Since you're putting the segmented control as the last item in the nav, you want to put the class <code>align-flush</code> on it as well:</p>
+
+<pre class="prettyprint"><code>&lt;div class='segmented paging horizontal align-flush'&gt;
+   &lt;a class='button' href='javascript:void(null)' title='previous panel'&gt;&lt;/a&gt;
+   &lt;a class='button' href='javascript:void(null)' title='next panel'&gt;&lt;/a&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>Next mark the article as capable of paging by putting the paging class on it:</p>
+
+<pre class="prettyprint"><code>&lt;article id="deserts" class="current paging"&gt;
+</code></pre>
+
+<p>Then you just need to initialize the structure at load time:</p>
+
+<pre class="prettyprint"><code>$(function() {
+   $.UIPaging();
+});
+</code></pre>
+
+<p>And that's all there is to implementing a paging control.</p>
+
+<h3>Example</h3>
+<p>Try out this live example on <a href="http://codepen.io/rbiggs/pen/mChfd">Codepen</a></p>
+
+</article>
+
+<script>
+   (function() {
+      prettyPrint();
+   })();
+</script>
+</body>
+</html>

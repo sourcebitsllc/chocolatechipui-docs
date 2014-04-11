@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Icons</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../prettify/prettify.css">
+  <script type='text/javascript' src='../prettify/prettify.js'></script>
+  <script type='text/javascript' src='../prettify/lang-css.js'></script>
+</head>
+<body>
+<article>
+<h4>Tutorials</h4>
+<h5>ChocolateChip-UI version 3.5.3</h5>
+<h1>Icons</h1>
+
+<p>Icons are a common feature on all operating systems. If you want to display icons in your app, there are a number of ways to do this. Of course the simplest way is just to put and image in your markup. The problem is that an icon on one operating system may not look appropriate on another. Also it isn't easy to make an image provide hover and touch states without some JavaScript hackery. For icons you have three possibilities: background images, mask images and symbol fonts.</p>
+
+<h2>Background Images</h2>
+
+<p>And better solution is to use a background image. You could use a png image, or an SVG image. We strongly recommend SVG images because they are resolution independent and can be scaled to any size. If you have Adobe Illustrator, you can make your icon in it and then save it as a plain SVG image. If you have a small set of icons, it makes sense to convert them into data-urls which you can include in your CSS. This means that there is no delay for loading separate images. There will never arise a situation where the images don't load, unless the stylesheet failed to load.</p>
+
+<p>If you're using png, you can use any number of online Website to convert them into data-urls. After converting a png into 64 bit format, past it into your background image style:</p>
+
+<pre class="prettyprint"><code>.myIcon {
+   background-image: url(data:image/png; base64, iVBORw0KGgoAAAANSUhEUgA...);
+}
+</code></pre>
+
+
+<p>In the above example, the data was purposefully cut off to save space. Data-urls can look large, as large as a long paragraph of text. But they are more efficient for single page apps since they are loaded and parsed only one.</p>
+
+<p>You could also use an SVG as a data-url. The advantage of SVG is that, besides being a vector image, it is not a binary file by a text format similar to HTML. You can open the SVG image in a text editor and copy it out to paste in your background image style. An SVG image has this format:</p>
+
+<pre class="prettyprint"><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+   &lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
+   &lt;svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 48 48" xml:space="preserve"&gt;
+   &lt;polygon points="35,25 17,11 17,39 "/&gt;
+&lt;/svg&gt; 
+</code></pre>
+
+<p>For creating a data-url, you are only interested in the part beging with <code>&lt;svg&gt;</code> and ending in <code>&lt;/svg&gt;</code>. Copy the entire svg tag into a text editor, then remove all line endings and replace any tabs with spaces. This should have turned your SVG text into one continuous string, otherwise check for any remaining new line and delete it. For your SVG data-url you'll need the following format:</p>
+
+<pre class="prettyprint"><code>background-image: url('data:image/svg+xml;utf8,');
+</code></pre>
+
+<p>Paste the single line SVG text right after utf8, and before the final single quote:</p>
+
+<pre class="prettyprint"><code>url('data:image/svg+xml;utf8, &lt;svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 48 48" xml:space="preserve"&gt;&lt;polygon points="35,25 17,11 17,39 "/&gt;&lt;/svg&gt;');
+</code></pre>
+
+<p>ChocolateChip-UI provides the class <code>icon</code> to provide initial styling for icons. Put that on a <code>span</code>, give it an additional classes to indicate the image it will display and you are done. You can also style your icons with a background color. ChocolateChip-UI adds rounded corners to icons for iOS. On Android it makes the icon circular, and for Windows Phone 8 they are perfectly squared. You can change any of this behavior by modify the icon style or creating your own class. Please examine the example <code>Composite Layout 9</code> to see how these are implemented for each platform.</p>
+
+<h2>Mask Images</h2>
+
+<p>For iOS and Android the Webkit browsers provide mask images as another way to display icons. You provide the image as a mask. You also need to provide a background color, otherwise there will be nothing to mask. A mask image works exactly like a mask in any image editor: black is transparent and  while is opaque. A gray scale will result in a mask with transparency for how the color shows though. When using a mask image and background color, you can effective change the color of your icons at any time by simply changing the background color.</p>
+
+<p>Here is the format:</p>
+
+<pre class="prettyprint"><code>-webkit-mask-image: url('data:image/svg+xml;utf8,&lt;svg version="1.1" id="svg2" xmlns:svg="http://www.w3.org/2000/svg"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="48px" height="48px"  viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve"&gt; &lt;g id="g4"&gt; &lt;/g&gt; &lt;g id="layer2"&gt; &lt;path id="path7" d="M28.038, 8.381l2.674, 2.599L18.545, 23.146l12.086, 12.086l-2.593, 2.679L17.909, 27.782l-4.636-4.636l4.636-4.636  L28.038,8.381z"/&gt; &lt;/g&gt; &lt;/svg&gt; ');
+</code></pre>
+
+<p>You can also provide styles for position, size, etc.:</p>
+
+<pre class="prettyprint"><code>-webkit-mask-repeat: no-repeat;
+-webkit-mask-position: 50% 50%;
+-webkit-mask-size: 80% 80%;
+background-color: #007aff;
+</code></pre>
+
+<p>You can use a png or an SVG as a mask image. However, Windows Phone 8 has no support for any kind of image mask. Instead it uses symbol fonts.</p>
+
+<h2>Symbol Fonts</h2>
+
+<p>The most versatile way to create icons is by using a symbol font. A font can hold far more icons that you will probably every need for your app. To use the font for icons you just output the font directly into the icon tag, or output it as a pseudo element. Actually, this is what Windows 8 and Windows Phone 8 do for icons. They come with a special Segoe-UI Symbol font that provides all the icons for the operating system. The ChocolateChip-UI theme for Windows Phone 8 actually uses the native Segoe-UI Symbol font for some of the system level icons, such as the Windows back button.</p>
+
+<p>Using a symbol font has the advantage that you can change the color of the icon by changing the font color. And you can scale your font icons up or down by merely changing the font size. </p>
+
+<p>Creating your own symbol font is a good choice. There are a number of options from free to commercial prices for Websites and software to create custom fonts. You really only need the most basic font abilities because you are not making a font that needs custom leading, kerning and ligatures. If you create a TrueType or OpenType font, you'll need to convert it to WOFF format for use with your app. This can be done on Website that offer this service for free. </p>
+
+<p>A symbol font has the advantage that all your icons are in one file, so it only needs to load once.</p>
+
+<p>Here is how the show-detail indicator is created. A font value is put in a pseudo-element and then styles to resemble an icon:</p>
+
+<pre class="prettyprint"><code>.list &gt; li.show-detail::after {
+   content: 'i';
+   display: block;
+   height: 20px;
+   width: 22px;
+   border-radius: 20px;
+   border: solid 1px #007aff;
+   color: #007aff;
+   font: bold 14px/0 'Times', serif;
+   -webkit-box-sizing: border-box;
+   box-sizing: border-box;
+   padding: 10px 8px;
+   position: absolute;
+   top: 10px;
+   right: 15px;
+}
+</code></pre>
+
+<p>And there the iOS back button, where the font character is expressed in Unicode:</p>
+
+<pre class="prettyprint"><code>a.button.back::before {
+   content: '\2303';
+   font-family: 'HelveticaNeue-Light', Courier;
+   font-weight: 100;
+   display: block;
+   height: 10px;
+   width: 10px;
+   -webkit-transform: rotate(-90deg);
+   position: absolute;
+   left: -2px;
+   top: 17px;
+   font-size: 24pt;
+}
+</code></pre>
+
+<p>And here's the same back button for Windows 8:</p>
+
+<pre class="prettyprint"><code>a.button.back::before {
+   font-family: "Segoe UI Symbol";
+   font-weight: normal;
+   content: "\E0D5";
+   vertical-align: 50%;
+   font-size: 14pt;
+   display: block;
+   margin-left: -3px;
+}
+</code></pre>
+
+</article>
+<script>
+   (function() {
+      prettyPrint();
+   })();
+</script>
+</body>
+</html>

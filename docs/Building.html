@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Building</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../prettify/prettify.css">
+  <script type='text/javascript' src='../prettify/prettify.js'></script>
+  <script type='text/javascript' src='../prettify/lang-css.js'></script>
+</head>
+<body>
+<article>
+<h4>Documentation</h4>
+<h5>ChocolateChip-UI version 3.5.3</h5>
+<h1>Building ChocolateChip-UI</h1>
+
+<ul class='submenu'>
+  <li><a href="#installNodejs">Install Nodejs &amp; Gulpjs</a></li>
+  <li><a href="#installBuildModules">Install Build Modules</a></li>
+  <li><a href="#building">Building ChUI</a></li>
+  <li><a href="#customProject">Custom Project</a></li>
+  <li><a href="#gruntjs">Building with Gruntjs</a></li><li><a href="#bowerSupport">Bower Support</a></li>
+</ul>
+
+<h3>Setup with Gulp or Bower</h3>
+
+<p>ChocolateChip-UI uses the Gulp Node module to enable building the framework. ChocolateChip-UI has no dependency on Nodejs or Gulpjs for running, so you do not need them in your project.</p>
+
+<a name="installNodejs"></a>
+<h2>Install Nodejs &amp; Gulpjs</h2>
+
+<p>First go to the <a target="blank" href='http://nodejs.org'>Node</a> site. You'll see an install button on the page. This will install the correct version of Node for you if you are on a Mac or Windows PC. Please note that if you are on a Windows 8 device, this will not work with WinRT. Furthermore, for Windows 8, you must use the browser on the desktop, not in the Modern UI Start Screen.</p>
+
+<p>After Node is finished installing, you need to install the Grunt command line interface, which is a node module for task management. On the Mac, open your terminal.</p>
+
+<pre class="prettyprint">sudo npm install -g gulp<code>
+</code></pre>
+
+<p>On Windows, open the command prompt and run this:</p>
+
+<pre class="prettyprint">npm install -g gulp<code>
+</code></pre>
+
+<p>When you hit Return (Mac), the terminal will ask you for your password. Enter it and hit return. On Windows, enter the command and hit Enter. In both cases you will see a list of messages output to the terminal. If there are no errors, you're ready to build. Using the terminal, change to the folder where ChocolateChip-UI is. You can do that by typing <code>cd </code> into the terminal, leaving a space after it, then dragging the folder to the terminal. When you see the path to the folder appear after the cd command, hit return. You will now be inside that folder. That is where you need to be to run build scripts. Before you can build, you need to install a number of Node modules that Grunt will use to do the work.</p>
+
+<a name="installBuildModules"></a>
+<h3>Install the Build Modules</h3>
+
+<p>First you need to install the modules that the Grunt script uses to build. You do this by runing the following command in your terminal:
+
+<pre class="prettyprint"><code>npm install</code></pre>
+
+You'll see a really long list of things being installed. And, if you have the folder open, you'll see a directory named "node_modules" appear. Once the install is finished you're ready to build.</p>
+
+<a name="building"></a>
+<h3>Building ChUI</h3>
+
+<p>Build is really simple. Just type "gulp" in the terminal and hit return. This will cause a complete version of ChocolateChip-UI to be built into the folder. This will include the ChocolateChipJS library, themes for iOS, Android and Windows, examples for iOS, Android and Windows, and unit tests for ChocolateChipJS.</p>
+
+<pre class="prettyprint"><code>// Build everything, including examples:
+gulp
+</code></pre>
+
+<p>You can also build only ChUI.js and the three themes:</p>
+
+<pre class="prettyprint"><code>// Build the ChUI without examples:
+gulp chui
+</code></pre>
+
+<p>You can also build just the CSS themes. This is useful if you are modifying the LESS files to create a custom theme for branding.</p>
+
+<pre class="prettyprint"><code>// Build the three themes:
+gulp less
+</code></pre>
+
+<p>If you intend to edit the ChUI LESS files to customize the look and feel for branding, you can tell gulp to watch those for any changes you make. When you save a LESS file after making changes, watch will automatically regenerate the CSS for you. Use the following command:</p>
+
+<pre class="prettyprint"><code>// Build ChUI.js:
+gulp watch
+</code></pre>
+
+<p>If you've made changes to the ChUI.js source files and want to regenerate it, or you just want to create the ChUI.js file, use this command:</p>
+
+<pre class="prettyprint"><code>// Build ChUI.js:
+gulp js
+</code></pre>
+
+<h3>Right-to-left Examples</h3>
+<p>If you are supporting a right-to-left alphabet, such as Arabic, Farsi, Urdu or Hebrew, you can build right-top-left examples to see how they work. Note these are mostly in Standard Arabic. To build them, use the following command:</p>
+
+<pre class="prettyprint"><code>// Build right-to-left examples:
+gulp --dir rtl
+</code></pre>
+
+<a name="customProject"></a>
+<h3>Custom Project</h3>
+
+<p>So far we've been building everything directly inside the folder of the repository. This is not very practical. You can build your project outside this folder by providing a path to where you want your project to be. This could be on your desktop, or any other place. To do this, open the package.json file and look for the property "projectPath". Currently the value is empty. By providing a path, your project will be built in the place indicated. This will give you a clean install of ChocolateChip-UI withough node modules, source files, etc. You can then add any other resources you need into this folder and begin development of your app.</p>
+
+<p>Here is an example of a possible path for a Mac and Windows project path using the username "joe". Please change "joe" to your own username on your Mac or Windows PC.</p>
+
+<pre class="prettyprint"><code>// For a custom Mac project:
+"projectPath": "/Users/<strong>joe</strong>/Desktop/MyProject/"
+</code></pre>
+
+<p>Please note, for Windows you need to escape the backslashes with another backslash.</p>
+
+<pre class="prettyprint"><code>// For a custom Windows project:
+"projectPath": "C:\\Users\\<strong>joe</strong>\\Desktop\\MyProject\\"
+</code></pre>
+
+<a name="gruntjs"></a>
+
+<h3>Setup with Grunt</h3>
+
+<p>ChocolateChip-UI uses the Grunt Node module to enable building the framework. This is only used for building. ChocolateChip-UI has no dependency on Nodejs or Grunt for running, so you do not need them in your project. Below we will outline how you can build the framework in various ways to suit your development needs.</p>
+
+<a name="installNodejs"></a>
+<h2>Install Nodejs &amp; Grunt-CLI</h2>
+
+<p>First go to the <a href="http://nodejs.org">Node</a> site. You'll see an install button on the page. This will install the correct version of Node for you if you are on a Mac or Windows PC. Please note that if you are on a Windows 8 device, this will not work with WinRT. Furthermore, for Windows 8, you must use the browser on the desktop, not in the Modern UI Start Screen.</p>
+
+<p>After Node is finished installing, you need to install the Grunt command line interface, which is a node module for task management. On the Mac, open your terminal.</p>
+
+<pre class="prettyprint">sudo npm install -g grunt-cli<code>
+</code></pre>
+
+<p>On Windows, open the command prompt and run this:</p>
+
+<pre class="prettyprint">npm install -g grunt-cli<code>
+</code></pre>
+
+<p>When you hit Return (Mac) or Enter (Windows), the terminal will ask you for your password. Enter it and hit return. You will see a list of messages output to the terminal. If there are no errors, you're ready to build. Using the terminal, change to the folder where ChocolateChip-UI is. You can do that by typing <code>cd </code> into the terminal, leaving a space after it, then dragging the folder to the terminal. When you see the path to the folder appear after the cd command, hit return. You will now be inside that folder. That is where you need to be to run build scripts. Before you can build, you need to install a number of Node modules that Grunt will use to do the work.</p>
+
+<a name="installBuildModules"></a>
+<h3>Install the Build Modules</h3>
+
+<p>First you need to install the modules that the Grunt script uses to build. You do this by runing <code>npm install</code> in the terminal. Just type that, or copy/paste and hit Return. You'll see a really long list of things being installed. And, if you have the folder open, you'll see a directory named "node_modules" appear. This is where they are being installed. Once the install is finished you're ready to build.</p>
+
+<a name="building"></a>
+<h3>Building ChUI</h3>
+
+<p>Build is really simple. Just type "grunt" in the terminal and hit return. This will cause a complete version of ChocolateChip-UI to be built into the folder. This will include the ChocolateChipJS library, themes for iOS, Android and Windows, examples for iOS, Android and Windows, and unit tests for ChocolateChipJS.</p>
+
+<pre class="prettyprint"><code>// Build everything, including examples:
+grunt
+</code></pre>
+
+<p>You can also build only ChUI.js and the three themes:</p>
+
+<pre class="prettyprint"><code>// Build the ChUI without examples:
+grunt chui
+</code></pre>
+
+<p>Recompile the ChUI.js files, useful if you've made changes to the source files:</p>
+<pre class="prettyprint"><code>// Build ChUI.js from source:
+grunt chuijs
+</code></pre>
+
+<p>You can also build just the CSS themes. This is useful if you are modifying the LESS files to create a custom theme for branding.</p>
+
+<pre class="prettyprint"><code>// Build the Android theme:
+grunt android
+</code></pre>
+
+<pre class="prettyprint"><code>// Build the iOS theme:
+grunt ios
+</code></pre>
+
+<pre class="prettyprint"><code>// Build the Windows Phone 8 theme:
+grunt win
+</code></pre>
+
+<p>Process all LESS themes and create minified versions</p>
+<pre class="prettyprint"><code>// Build all three themes:
+grunt android ios win
+</code></pre>
+
+<p>Examine the Gruntfile in your repo to see all available build options.</p>
+
+<h2>Right-to-left Support</h2>
+
+<a name="bower"></a>
+<p>If you need to use a right-to-left alphabet, such as Arabic, Farsi, Urdu or Hebrew, all you have to do is add the attribute <code>dir="rtl"</code> to your app's HTML tag. To see right-to-left examples read the build instructions above.</p>
+
+<a name="bowerSupport"></a>
+<h2>Bower Support</h2>
+
+<p>Why use Bower? You can set up a ChUI app without having to download the source files and run a build script. You can use our Bower file to do this. It will download all the depenedencies to get a basic ChocolateChip-UI app going. This will only include chui.js, the three themes, and a compatible version of jQuery. You can then create a document however you like linking to these files. If you want to see the working examples, etc., download the source files and run the Grunt script as described above.</p>
+
+<p>To user Bower, first create the folder for you project and name it appropriately. Use your terminal/command prompt to move to the new project's folder. Make sure you have <a href="http://bower.io">Bower</a> installed. Then just enter the following command in your terminal:</p>
+
+<pre class="prettyprint"><code>bower install https://github.com/sourcebits-robertbiggs/bower-chui.git
+</code></pre>
+
+<p>The above will create a folder named "bower_components" inside your folder. Inside of it will be a folder for ChUI and jQuery. You will need to link your app to these directories to get ChUI working for you.</p>
+
+<p>You can use Bower tagging to dowload a specific version of ChocolateChip-UI. The repository starts with ChocolateChip-UI version 3.5.0. You can access a version as follows:</p>
+
+
+<pre class="prettyprint"><code>bower install https://github.com/sourcebits-robertbiggs/bower-chui.git#3.5.0
+</code></pre>  
+</article>
+<script>
+  (function() {
+    prettyPrint();
+  })();
+</script>
+</body>
+</html>

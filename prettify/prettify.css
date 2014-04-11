@@ -1,0 +1,66 @@
+/* Pretty printing styles. Used with prettify.js. */
+
+/* SPAN elements with the classes below are added by prettyprint. */
+.pln { color: #880000 }  /* plain text */
+
+@media screen {
+  .str { color: #555 }  /* string content */
+  .kwd { color: #2a77da }  /* a keyword */
+  .com { color: #f6282a }  /* a comment */
+  .typ { color: #fa9f4f }  /* a type name */
+  .lit { color: #066 }  /* a literal value */
+  /* punctuation, lisp open bracket, lisp close bracket */
+  .pun { color: #3677b6 }
+  .opn, .clo { color: #660 }
+  .tag { color: #205dc4 }  /* a markup tag name */
+  .atn { color: #ed9646 }  /* a markup attribute name */
+  .atv { color: #2c2c2c }  /* a markup attribute value */
+  .dec, .var { color: #ed9646 }  /* a declaration; a variable name */
+  .fun { color: red }  /* a function name */
+}
+
+/* Use higher contrast and text-weight for printable form. */
+@media print, projection {
+  .str { color: #060 }
+  .kwd { color: #006; font-weight: bold }
+  .com { color: #600; font-style: italic }
+  .typ { color: #404; font-weight: bold }
+  .lit { color: #044 }
+  .pun, .opn, .clo { color: #440 }
+  .tag { color: #006; font-weight: bold }
+  .atn { color: #404 }
+  .atv { color: #060 }
+}
+
+/* Put a border around prettyprinted code snippets. */
+pre.prettyprint { padding: 10px; border: 1px solid #bbb;
+    box-sizing: border-box;  
+    background-color: #fff;
+	 white-space: pre-wrap;
+	 font-size: 11pt; }
+
+/* Specify class=linenums on a pre to get line numbering */
+ol.linenums { margin-top: 0; margin-bottom: 0; margin-left: 16px; } /* IE indents via margin-left */
+/* Alternate shading for lines */
+li.L1,
+li.L3,
+li.L5,
+li.L7,
+li.L9 { background: #fafafa }
+pre li {
+    color: #aaa;
+}
+@media screen and (min-width: 320px) and (max-width: 640px) {
+	pre.prettyprint {
+		font-size: 9pt !important;
+		font-family: monospace;
+		word-break: break-all;
+		white-space: wrap !important;
+	}
+	ol.linenums {
+		list-style: none;
+		margin: 0;
+		-webkit-margin-before: 0;
+		padding: 0;
+	}
+}

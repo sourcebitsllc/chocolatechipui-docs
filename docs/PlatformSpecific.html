@@ -1,0 +1,159 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Platform Specific</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../prettify/prettify.css">
+  <script type='text/javascript' src='../prettify/prettify.js'></script>
+  <script type='text/javascript' src='../prettify/lang-css.js'></script>
+</head>
+<body>
+<article>      
+  <h4>Documentation</h4>
+  <h5>ChocolateChip-UI version 3.5.3</h5>  
+  <h1>Support Multiple Platforms</h1>
+  <ul class='submenu'>
+    <li><a href="#theme_switching">Theme Switching</a></li>
+    <li><a href="#php">PHP</a></li>
+    <li><a href="#nodejs">NodeJS</a></li>
+    <li><a href="#custom_css_os">Customized CSS per OS</a></li>
+    <li><a href="#android_branding">Android branding</a></li>
+    <li><a href="#desktop_testing">Desktop testing</a></li>
+  </ul>
+  <a name="theme_switching"></a>
+  <h2>Theme Switching</h2>
+  <p>ChocolateChip-UI was designed to allow you to write one app with data and user interactions which you can deploy to iOS, Android and Windows Phone 8. The only difference between each platform is the CSS file: chui.css. This means that when the user requests your app from the server, you can determine which browser and operating system they are on and provide them the appropriate theme. Because this is done on the server before the page is sent, the user sees only the appropriate theme load.</p>
+  <p>There are too server stacks to show how to do this for all of them. But if you have any experience writing back end code for your server, you should be able to figure out how to switch themes based on the examples here. We present two ways to do user agent sniffing on the server: with PHP and NodeJS.</p>
+  <p>Please note that these are very basic tests for the user agent. There are many solid solutions available for server-side user agent sniffing. You just need to find out what is available for your setup.</p>
+
+  <a name="php"></a>
+  <h2>PHP</h2>
+  <p></p>
+
+  <pre class="prettyprint">&lt;!DOCTYPE html&gt;
+  &lt;html lang="en"&gt;
+  &lt;head&gt;
+     &lt;meta charset="utf-8"&gt;
+     &lt;meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"&gt;
+     &lt;meta name="apple-mobile-web-app-capable" content="yes"&gt;
+     &lt;title&gt;Demo&lt;/title&gt;
+     &lt;script src="/choco/scripts/chocolatechip.js"&gt;&lt;/script&gt;
+     &lt;script src="/choco/scripts/iscroll.js"&gt;&lt;/script&gt;
+     &lt;?php
+        $agent = $_SERVER['HTTP_USER_AGENT'];
+        $browser = null;
+        $agent = $_SERVER['HTTP_USER_AGENT'];
+        $browser = null;
+
+        if (preg_match("/android/i", $agent))
+         {
+           echo '&lt;link rel="stylesheet" href="../c3/chui/chui.android-3.0.css"&gt;';
+         }
+         elseif (preg_match("/Trident/i", $agent) && (preg_match("/MSIE 10/i", $agent) || pre_match("/MSIE 11/i", $agent))
+         {
+           echo '&lt;link rel="stylesheet" href="../chui/chui.win-3.0.css"&gt;';
+         }
+         elseif (preg_match("/Apple/i", $agent))
+         {
+           echo '&lt;link rel="stylesheet" href="../chui/chui.ios-3.0.css"&gt;';
+         }
+           echo '&lt;link rel="stylesheet" href="../chui/chui.ios-3.0.css"&gt;';          {
+         }
+     ?&gt;
+  &lt;/head&gt;</pre>
+          
+  <a name="nodejs"></a>
+  <h2>NodeJS</h2>
+  <p>The following example uses the Express framework for NodeJS, with the EJS template engine. To get the user agent on the page being rendered is easy with Express. When handling the routing for the page, grab the user agent from the headers object and attach it to the response object being sent to your page. This will make the user agent available to the page during rendering.</p>
+
+  <pre class="prettyprint">exports.demo = function(req, res){
+    res.render('demo', { title: 'ChocolateChip-UI', userAgent: req.headers['user-agent'] });
+  };</pre>
+
+  <p>Here we access the user agent string sent to the page in the userAgent variable. Based on whether we detect Android, iOS or Windows Phone, we output the appropriate stylesheet link:</p>
+   
+  <pre class="prettyprint">&lt;!DOCTYPE html&gt;
+  &lt;html lang="en"&gt;
+  &lt;head&gt;
+     &lt;meta charset="utf-8"&gt;
+     &lt;meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"&gt;
+     &lt;meta name="apple-mobile-web-app-capable" content="yes"&gt;
+     &lt;meta name="msapplication-tap-highlight" content="no"&gt;
+     &lt;title&gt;Demo&lt;/title&gt;
+     &lt;!-- Examine header userAgent to decide which stylesheet to use --&gt;
+     &lt;% if (/android/i.test(userAgent) || /chrome/i.test(userAgent)) { %&gt;
+     &lt;link rel="stylesheet" href="/chui/chui.android-3.0.css"&gt;
+     &lt;% } else if (/safari/i.test(userAgent)) { %&gt;
+     &lt;link rel="stylesheet" href="/chui/chui.ios-3.0.css"&gt;
+     &lt;% } else if (/trident/i.test(userAgent)) { %&gt;
+     &lt;link rel="stylesheet" href="/chui/chui.win-3.0.css"&gt;
+     &lt;% } %&gt;
+  &lt;/head&gt;
+  </pre>
+
+  <a name="custom_css_os"></a>
+  <h1>Customized CSS per OS</h1>   
+  <h2>OS-Specific Classes</h2>
+  <p>When testing your app on multiple devices, you may find that you need to make some style adjustments for one operating system. ChocolateChip-UI makes these easy by automatically putting the following classes on the body tag when your document loads: isiOS, isAndroid and isWin. This allows you to write OS-specific styles in your app that will only be rendered when your app is on that OS.</p>
+
+  <p>isiOS will render for both iOS and desktop Safari. isAndroid will render for Android and desktop Chrome. isWin will render for Windows Phone 8 and IE10-11.</p>
+  <p>In the demo page we use the following code to style icons with or without border radii, depending on the operating system:</p>
+
+  <pre class="prettyprint">/* Border Radius for each OS: */
+  .isiOS .icon {
+     /* rounded corners for iOS */
+     border-radius: 10px;
+  }
+  .isAndroid .icon {
+     /* circular for Android */
+     border-radius: 50%;
+  }
+  .isWin .icon {
+     /* square for Windows Phone 8 */
+     border-radius: 0;
+  }</pre>
+
+  <a name="android_branding"></a>
+  <h2>Android Branding</h2>
+  <p>Android apps use the app icon along with the back button for navigation purposes. By default ChUI uses the default green Android logo for the back button's app icon. You will want to override this for your app.</p>
+  <p><img class='android-branding' src="../screens-android/android-back.png" alt="Default Android Back Button"></p>
+  <p>The icon should be at least 35 pixels square. As long as your icon is squared, it will expand or contract to fit the back icon section. To handle different resolutions it would be best to use either a high resolution image scaled down by the CSS or an SVG. We are using an SVG as the icon for ChUI because SVG provided the maximum scallability for screen sizes and resolution density. Below are some typical examples of Android back buttons with app icons:</p>
+  <p><img class='android-branding' src='../screens-android/Android-msg.png'></p>
+  <p><img class='android-branding' src='../screens-android/Android-cal.png'></p>
+  <p><img class='android-branding' src='../screens-android/Android-movies.png'></p>
+
+  <p>To change the app icon in the Back button, open up the Android stylesheet: <code>src/themes/andoid/button.less</code>. Look for the line defining: <code>&.back::after, &.backTo::after</code>. Change the image url to one pointing to your app's icon:</p>
+
+  <pre class="prettyprint">background: transparent url(../images/icons/MySuperAnroidAppIcon.svg) no-repeat;</pre>
+
+  <p>If you want to change the color the the back caret mark to better match your branding, you can do so in the corresponding LESS file. Open up src/themes/android/buttons.less and look for <code>@{buttonBoxShadow}</code> as both the stroke and fill value of @backButtonSVG on line 4. For its hover color, change the value of <code>@{buttonTextHoverColor}</code> for the stroke and fill of @backButtonSVGHover on line 5. Then continue below to create the CSS.</p>
+
+  <p>Rebuild the CSS theme by running the following command in the terminal.</p>
+
+  <pre class="prettyprint">gulp less
+  </pre>
+
+  <p>This will recreate your Android theme in both normal and minified versions with the back button now displaying your own app icon.</p>
+
+  <a name="desktop_testing"></a>
+  <h2>Desktop testing</h2>
+  <p>You can use desktop browsers for initial testing of respective operating systems. For iOS use Safari, for Android use Chrome, for Windows Phone 8 use IE10 or IE11. If you find a particular control not responding, you may need to open the browser's Web inspector to change the user agent to an appropriate mobile device.</p>
+  <p>Sometimes a layout or its controls will look fine on mobile, but be a little off on desktop browsers. To remedy this situation you can use the method <code>$.UIDesktopCompat</code>. This will put a class of <code>isAndroid isChrome isDesktopChrome</code> on desktop Chrome and a class of <code>isiOS isDesktopSafari</code> on desktop Safari. Using these you can make adjustments to your local styles so that the layouts look alright on desktop while testing.
+  <pre class="prettyprint">$(function() {
+    $.UIDesktopCompat()
+});
+  </pre>  
+    
+  <p>On a Mac you can test iOS using Safari. After enabling the developer tools, you can go to the Developer menu and change the user agent to iOS. This will cause ChocolateChip-UI to work like on iOS, but with mouse interactions. To test for Android on the Mac, use Chrome. Open Chrome's Web inspector and then it's settings panel and set the user agent to Android. Touch events will be mapped to mouse events. If you need to test for Windows Phone 8 on a Mac, look into setting up Parallels, VMWare or any other virtual machine manager and install Windows 8. Using IE 10 or 11 should work just fine. If some touch interaction does not seem to be working, open IE DOM Explorer and set the user agent to Windows Phone.</p>
+  <p>On Windows you can use Chrome to test for both iOS and Android. Be aware that Chrome on Window 8 does not take full advantage of Microsoft's pointer events. As such, if the Windows device you are using supports mouse and touch, you may find that Chrome becomes confused about which events to track. You can get around this issue by opening the Web inspector, then the settings panel. There you can set the user agent to iOS or Android. In the lower right part of the settings screen is a checkbox: "Emulate touch events". Check this and Chrome will switch all mouse interactions to emulate touch events. From there on your interactions with ChocolateChip-UI on Chrome for Windows 8 should be fine.</p>
+  <p>Regardless of how you test your app on the desktop, ultimately you will need to test it on devices. This will require that you host your app from a server to which your mobile devices can connect.</p>
+  <p>Desktop browser may sometimes render things differently than how they will look when displayed on actual mobile devices, so, if you see some visual glitch, before trying to compensate for it, check it on the target device platform. For example, running Windows Phone theme on the mac in Safari or Chrome will not display properly as these do not support features specific to IE. And the Windows Back button icon will be missing. Similarly, on Windows, iOS Back button will not display correctly either. </p>
+</article>
+<script>
+   (function() {
+      prettyPrint();
+   })();
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ChUI CSS</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../prettify/prettify.css">
+  <script type='text/javascript' src='../prettify/prettify.js'></script>
+  <script type='text/javascript' src='../prettify/lang-css.js'></script>
+</head>
+<body>
+<article>
+<h4>Documentation</h4>
+<h5>ChocolateChip-UI version 3.5.3</h5>
+<h1>ChUI.css</h1>
+
+<style>
+   h2 { text-transform: none; }
+</style>
+
+<h2>OS-Specific Themes</h2>
+
+<p>ChocolateChip-UI solves the problem of cross-platform app development by using themes to change the look and feel of an app to match the operating system it is running on. Because a theme is just CSS, it is easy to modify or extend a theme by adding new classes that you can use with existing widgets. If you are good with JavaScript, you might even craft your own widgets and style them with new styles. You can add the new styles to each theme.</p>
+
+<h2>Customize or Brand Your Theme</h2>
+
+<p>ChocolateChip-UI uses LESS to define the CSS styles. Just look for the file "colors.less" in side each theme folder. The theme LESS can be found at "src/theme." At the start of colors.less you'll find this: <code>@appTint: #81cfeb;</code>. By changing that color value and reprocess the less you'll get a theme with a different accent color from the default. Remember to change this value in the colors.less file for all three themes.</p>
+
+<h3>Download a Custom Theme</h3>
+
+<p> If you'd like to create a your own color theme, we have a <a href="https://github.com/sourcebits-robertbiggs/chui-red">custom red theme</a> that you can download and use as the basis for yours. You'll just need to open each theme's "color.less" file and change the hex value of "@appTint" to the color you desire.</p>
+
+</article>
+<script>
+   (function() {
+      prettyPrint();
+   })();
+</script>
+</body>
+</html>
